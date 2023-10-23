@@ -1,0 +1,12 @@
+{
+  "ua": {
+    "searchInput": {
+      "placeholder": "Пошук (англійською)"
+    }
+  },
+  "en": {
+    "searchInput": {
+      "placeholder": "Search"
+    }
+  }
+}

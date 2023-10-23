@@ -1,0 +1,14 @@
+{
+  "ua": {
+    "modeName": {
+      "darkMode": "Темна тема",
+      "lightMode": "Світла тема"
+    }
+  },
+  "en": {
+    "modeName": {
+      "darkMode": "Dark mode",
+      "lightMode": "Light mode"
+    }
+  }
+}
