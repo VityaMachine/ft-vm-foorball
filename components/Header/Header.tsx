@@ -16,7 +16,7 @@ import LanguageChanger from "../HeaderFooterComponents/HeaderComponents/Language
 export default function Header() {
   return (
     <AppBar
-      position="static"
+      position="fixed"
       sx={{
         bgcolor: "#0F1924",
         height: {
@@ -100,6 +100,8 @@ export default function Header() {
           <ModeSwitcher />
         </Box>
 
+
+        {/* Icon mobile menu   */}
         <Box
           sx={{
             display: {

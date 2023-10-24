@@ -25,7 +25,7 @@ export default function LanguageChanger() {
   const { language, changeLanguageHandler } = useContext(LanguageContext);
 
   return (
-    <ButtonGroup sx={{}}>
+    <ButtonGroup sx={{ mr: '5px'}}>
       <StyledButton
         disabled={language === "ua"}
         onClick={() => {
