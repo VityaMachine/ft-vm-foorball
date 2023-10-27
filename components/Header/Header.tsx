@@ -2,16 +2,15 @@ import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-import IconButton from "@mui/material/IconButton";
-import MenuIcon from "@mui/icons-material/Menu";
 
 import Search from "../HeaderFooterComponents/HeaderComponents/Search/Search";
 
 import Image from "next/image";
 import logo from "@/images/logo.png";
-import ModeSwitcher from "../HeaderFooterComponents/HeaderComponents/ModeSwitcher/ModeSwitcher";
 import Link from "next/link";
-import LanguageChanger from "../HeaderFooterComponents/HeaderComponents/LanguageChanger/LanguageChanger";
+
+import MobileMenuButton from "../HeaderFooterComponents/HeaderComponents/MobileMenuButton/MobileMenuButton";
+import SettingsButton from "../HeaderFooterComponents/HeaderComponents/SettingsMenuButton/SettingsMenuButton";
 
 export default function Header() {
   return (
@@ -22,30 +21,45 @@ export default function Header() {
         height: {
           xs: "56px",
           sm: "90px",
-        }
+        },
       }}
     >
       <Toolbar
         sx={{
           display: "flex",
           justifyContent: "space-between",
-          flexDirection: {
-            xs: "row-reverse",
-            md: "row",
-          },
+          flexDirection: "row",
         }}
       >
+        {/* Icon mobile menu   */}
+        <Box
+          sx={{
+            display: {
+              xs: "flex",
+              md: "none",
+            },
+
+            // width: '33%',
+            width: {
+              md: "33%",
+            },
+          }}
+        >
+          <MobileMenuButton />
+        </Box>
+
         {/* logo */}
         <Box
           sx={{
             display: "flex",
-            ml: {
-              xs: "22px",
-            },
             alignItems: "center",
             width: {
               md: "33%",
             },
+            // width: '33%',
+            // minWidth: {
+            //   md: "232px",
+            // },
           }}
         >
           <Link href="/" className="flex items-center">
@@ -67,25 +81,33 @@ export default function Header() {
               />
             </Box>
 
-            <Typography
-              variant="h6"
-              noWrap
-              component="div"
-              sx={{ display: { xs: "none", md: "block" } }}
-            >
+            <Typography variant="h6" noWrap component="div">
               VM FOOTBALL
             </Typography>
           </Link>
         </Box>
 
         {/* search */}
-        <Search />
-
-        {/* mode switcher */}
         <Box
           sx={{
             display: {
               xs: "none",
+              md: "flex",
+            },
+            alignItems: 'center',
+            justifyContent: 'center',
+            width: {
+              md: "33%",
+            },
+          }}
+        >
+          <Search />
+        </Box>
+
+        {/* settings btn */}
+        <Box
+          sx={{
+            display: {
               md: "flex",
             },
             width: {
@@ -96,33 +118,10 @@ export default function Header() {
             mt: "5px",
           }}
         >
-          <LanguageChanger />
-          <ModeSwitcher />
-        </Box>
+          <SettingsButton />
 
-
-        {/* Icon mobile menu   */}
-        <Box
-          sx={{
-            display: {
-              xs: "flex",
-              md: "none",
-            },
-
-            width: {
-              md: "33%",
-            },
-          }}
-        >
-          <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="menu"
-            sx={{ mr: 2 }}
-          >
-            <MenuIcon />
-          </IconButton>
+          {/* <LanguageChanger />
+          <ModeSwitcher /> */}
         </Box>
       </Toolbar>
     </AppBar>

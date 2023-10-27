@@ -38,7 +38,9 @@ export default function Search() {
         p: "2px 4px",
         display: "flex",
         alignItems: "center",
-        width: 400,
+        justifyContent: 'center',
+        width: "100%",
+        maxWidth: 450,
         bgcolor: "rgba(255, 255, 255, 0.15)",
       }}
       onSubmit={submitHandler}

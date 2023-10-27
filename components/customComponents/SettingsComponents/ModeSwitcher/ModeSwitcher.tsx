@@ -41,7 +41,7 @@ export default function ModeSwitcher() {
       >
         <Typography
           sx={{
-            color: !isDarkMode ? "#fff" : "",
+            // color: !isDarkMode ? "#fff" : "",
             fontSize: "14px",
           }}
         >
@@ -49,7 +49,7 @@ export default function ModeSwitcher() {
             ? textContent.modeName.darkMode
             : textContent.modeName.lightMode}
         </Typography>
-        {isDarkMode ? <DarkModeIcon /> : <WbSunnyIcon sx={{ color: "#fff" }} />}
+        {isDarkMode ? <DarkModeIcon /> : <WbSunnyIcon />}
       </Button>
     </Box>
   );
