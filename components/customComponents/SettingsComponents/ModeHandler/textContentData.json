@@ -1,0 +1,10 @@
+{
+  "ua": {
+    "btnLight": "Світла тема",
+    "btnDark": "Темна тема"
+  },
+  "en": {
+    "btnLight": "Light mode",
+    "btnDark": "Dark mode"
+  }
+}

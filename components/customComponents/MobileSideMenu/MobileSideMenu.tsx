@@ -24,7 +24,7 @@ export default function MobileSideMenu() {
       <Box
         sx={{
           width: {
-            xs: "230px",
+            xs: "255px",
             sm: "270px",
           },
         }}

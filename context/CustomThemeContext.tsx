@@ -8,6 +8,7 @@ import ThemeRegistry from "@/themes/ThemeRegistry";
 export const CustomThemeContext = createContext<ThemeContext>({
   isDarkMode: false,
   toggleMode: () => {},
+  modeHandler: (mode: "dark" | "light") => {},
 });
 
 export default function CustomThemeProvider({
@@ -20,7 +21,7 @@ export default function CustomThemeProvider({
   //   if (typeof window !== "undefined") {
   //     const savedMode = localStorage.getItem("vm-football-darkmode");
   //     if (!savedMode) {
-        
+
   //       return false;
   //     }
 
@@ -55,9 +56,19 @@ export default function CustomThemeProvider({
     });
   };
 
+  const modeHandler = (mode: "dark" | "light") => {
+    if (mode === "dark") {
+      setIsDarkMode(true);
+      localStorage.setItem("vm-football-darkmode", JSON.stringify(true));
+    }
 
+    if (mode === "light") {
+      setIsDarkMode(false);
+      localStorage.setItem("vm-football-darkmode", JSON.stringify(false));
+    }
+  };
 
-  const providerValue = { isDarkMode, toggleMode };
+  const providerValue = { isDarkMode, toggleMode, modeHandler };
 
   return (
     <CustomThemeContext.Provider value={providerValue}>

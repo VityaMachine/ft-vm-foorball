@@ -13,35 +13,51 @@ import flagEN from "@/images/langFlags/eng.svg";
 
 import { LanguageContext } from "@/context/LanguageContext";
 
-const StyledButton = styled(Button)`
-  &&& {
-    &.Mui-disabled {
-      background: #a8a8a8;
-    }
-  }
-`;
+import textContentData from "./textContentData.json";
+import { Typography } from "@mui/material";
 
 export default function LanguageChanger() {
   const { language, changeLanguageHandler } = useContext(LanguageContext);
 
   return (
-    <ButtonGroup sx={{ mr: '5px'}}>
-      <StyledButton
-        disabled={language === "ua"}
+    <ButtonGroup orientation="vertical" fullWidth color="info">
+      <Button
         onClick={() => {
           changeLanguageHandler("ua");
         }}
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "flex-start",
+        }}
+        variant={language === "ua" ? "contained" : "outlined"}
       >
         <Image src={flagUA} alt="ua" />
-      </StyledButton>
-      <StyledButton
-        disabled={language === "en"}
+
+        <Typography sx={{ ml: "10px" }}>
+          {language === "ua"
+            ? textContentData.ua.buttonUA
+            : textContentData.en.buttonUA}
+        </Typography>
+      </Button>
+      <Button
         onClick={() => {
           changeLanguageHandler("en");
         }}
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "flex-start",
+        }}
+        variant={language === "en" ? "contained" : "outlined"}
       >
         <Image src={flagEN} alt="EN" />
-      </StyledButton>
+        <Typography sx={{ ml: "10px" }}>
+          {language === "ua"
+            ? textContentData.ua.buttonEN
+            : textContentData.en.buttonEN}
+        </Typography>
+      </Button>
     </ButtonGroup>
   );
 }
