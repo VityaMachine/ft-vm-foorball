@@ -1,118 +1,124 @@
-"use client";
+'use client'
 
-import { useContext } from "react";
+import { useContext } from 'react'
 
-import { MobileSideMenuContext } from "@/context/MobileSideMenuContext";
+import { MobileSideMenuContext } from '@/context/MobileSideMenuContext'
+import { LanguageContext } from '@/context/LanguageContext'
+import { CustomThemeContext } from '@/context/CustomThemeContext'
 
-import { Box, Divider, Drawer, Typography } from "@mui/material";
+
+import { Box, Container, Divider, Drawer, IconButton, Typography } from '@mui/material'
+import HighlightOffIcon from '@mui/icons-material/HighlightOff'
+
+import textContentData from './textContentData.json'
+import Search from '@/components/HeaderFooterComponents/HeaderComponents/Search/Search'
+import LeaguesList from '../LeaguesList/LeaguesList'
 
 export default function MobileSideMenu() {
-  const { open, toggleOpen } = useContext(MobileSideMenuContext);
+	const { open, toggleOpen } = useContext(MobileSideMenuContext)
+	const { language } = useContext(LanguageContext)
+	const { isDarkMode } = useContext(CustomThemeContext)
 
-  return (
-    <Drawer
-      open={open}
-      onClose={toggleOpen}
-      sx={{
-        display: {
-          xs: "block",
-          md: "none",
-        },
-        scrollbarWidth: 0,
-      }}
-    >
-      <Box
-        sx={{
-          width: {
-            xs: "255px",
-            sm: "270px",
-          },
-        }}
-      >
-        {/* Title */}
+	return (
+		<Drawer
+			open={open}
+			onClose={toggleOpen}
+			sx={{
+				display: {
+					xs: 'block',
+					md: 'none'
+				},
+				scrollbarWidth: 0
+			}}
+		>
+			<Box
+				sx={{
+					width: {
+						xs: '255px',
+						sm: '270px'
+					}
+				}}
+			>
+				{/* Title */}
 
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            height: {
-              xs: "56px",
-              sm: "90px",
-            },
-            bgcolor: "#0F1924",
-            position: "sticky",
-            top: 0,
-          }}
-        >
-          <Box
-            sx={{
-              display: "flex",
-              alignItems: "center",
-            }}
-          >
-            <Typography variant="h4" color="#1A7AD1">
-              V
-            </Typography>
-            <Typography variant="h4" color="yellow">
-              M
-            </Typography>
-            <Typography variant="h5" color="#fff">
-              Fooball
-            </Typography>
-          </Box>
-        </Box>
+				<Box
+					sx={{
+						position: 'sticky',
+						top: 0,
+						zIndex: 999,
+				
+					}}
+				>
+					{/* header */}
+					<Box
+						sx={{
+							display: 'flex',
+							justifyContent: 'center',
+							alignItems: 'center',
+							height: {
+								xs: '56px',
+								sm: '90px'
+							},
+							bgcolor: '#0F1924'
+						}}
+					>
+						<Container
+							sx={{
+								display: 'flex',
+								alignItems: 'center',
+								justifyContent: 'space-between'
+							}}
+						>
+							<Typography variant="h5" color="#fff">
+								{language === 'ua' ? textContentData.ua.title : textContentData.en.title}
+							</Typography>
 
-        <Divider />
+							<IconButton onClick={toggleOpen}>
+								<HighlightOffIcon
+									fontSize="large"
+									sx={{
+										fill: '#fff'
+									}}
+								/>
+							</IconButton>
+						</Container>
+					</Box>
 
-        {/* menu */}
-        <Box>
-          <ul>
-            <li>List item first</li>
-            <li>List item</li>
-            <li>List item</li>
-            <li>List item</li>
-            <li>List item</li>
-            <li>List item</li>
-            <li>List item</li>
-            <li>List item</li>
-            <li>List item</li>
-            <li>List item</li>
-            <li>List item</li>
-            <li>List item</li>
-            <li>List item</li>
-            <li>List item</li>
-            <li>List item</li>
-            <li>List item</li>
-            <li>List item</li>
-            <li>List item</li>
-            <li>List item</li>
-            <li>List item</li>
-            <li>List item</li>
-            <li>List item</li>
-            <li>List item</li>
-            <li>List item</li>
-            <li>List item</li>
-            <li>List item</li>
-            <li>List item</li>
-            <li>List item</li>
-            <li>List item</li>
-            <li>List item</li>
-            <li>List item</li>
-            <li>List item</li>
-            <li>List item</li>
-            <li>List item</li>
-            <li>List item</li>
-            <li>List item</li>
-            <li>List item</li>
-            <li>List item</li>
-            <li>List item last</li>
-          </ul>
-        </Box>
+					{/* search */}
+					<Box sx={{
+						py: '10px',
+						background: isDarkMode ? "#353535" : "#fff"
+					}}>
+						<Container
+							disableGutters
+							sx={{
+								px: '10px',
+								position: 'sticky',
+								top: {
+									xs: '56px',
+									sm: '90px'
+								}
+							}}
+						>
+							<Search />
+						</Container>
+					</Box>
 
-        {/* settings container */}
-        <Divider />
-      </Box>
-    </Drawer>
-  );
+
+				<Divider />		
+				</Box>
+	
+
+				{/* menu */}
+				<Box
+					sx={{
+						mt: '15px',
+						position: 'relative'
+					}}
+				>
+					<LeaguesList />
+				</Box>
+			</Box>
+		</Drawer>
+	)
 }

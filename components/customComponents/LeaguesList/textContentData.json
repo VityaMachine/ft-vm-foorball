@@ -1,0 +1,54 @@
+{
+	"en": {
+		"epl": {
+			"title": "Premier League",
+			"subtitle": "England"
+		},
+		"laliga": {
+			"title": "La Liga",
+			"subtitle": "Spain"
+		},
+		"seriea": {
+			"title": "Serie A",
+			"subtitle": "Italy"
+		},
+		"bundes": {
+			"title": "Bundesliga",
+			"subtitle": "Germany"
+		},
+		"ligue1": {
+			"title": "Ligue 1",
+			"subtitle": "France"
+		},
+		"upl": {
+			"title": "Premier League",
+			"subtitle": "Ukraine"
+		}
+	},
+	"ua": {
+		"epl": {
+			"title": "Прем'єр ліга",
+			"subtitle": "Англія"
+		},
+		"laliga": {
+			"title": "Ла Ліга",
+			"subtitle": "Іспанія"
+		},
+		"seriea": {
+			"title": "Серія А",
+			"subtitle": "Італія"
+		},
+		"bundes": {
+			"title": "Бундесліга",
+			"subtitle": "Німеччина"
+		},
+		"ligue1": {
+			"title": "Ліга 1",
+			"subtitle": "Франція"
+		},
+		"upl": {
+			"title": "Прем'єр ліга",
+			"subtitle": "Україна"
+		}
+	}
+}

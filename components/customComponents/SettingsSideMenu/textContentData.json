@@ -1,0 +1,12 @@
+{
+    "ua": {
+        "title": "Налаштування",
+        "langTitle": "Мова",
+        "themeTitle": "Тема"
+    },
+    "en": {
+        "title": "Settings",
+        "langTitle": "Language",
+        "themeTitle": "Theme"
+    }
+}

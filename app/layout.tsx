@@ -10,6 +10,7 @@ import Header from "@/components/Header/Header";
 import { Box, Container, Drawer, Paper } from "@mui/material";
 import MobileSideMenu from "@/components/customComponents/MobileSideMenu/MobileSideMenu";
 import SettingsSideMenu from "@/components/customComponents/SettingsSideMenu/SettingsSideMenu";
+import DesktopMainMenu from "@/components/customComponents/DesktopMainMenu/DesktopMainMenu";
 
 const roboto = Roboto({
   weight: ["400", "500", "700"],
@@ -54,7 +55,7 @@ export default function RootLayout({
                     xs: "none",
                     md: "block",
                   },
-                  bgcolor: "yellow",
+           
                   height: {
                     xs: "calc(100vh - 56px)",
                     sm: "calc(100vh - 90px)",
@@ -63,7 +64,7 @@ export default function RootLayout({
                   position: "fixed",
                 }}
               >
-                side menu
+                <DesktopMainMenu />
               </Box>
 
               {/* mobile left side menu */}

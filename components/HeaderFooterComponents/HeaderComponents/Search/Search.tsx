@@ -46,14 +46,18 @@ export default function Search() {
       onSubmit={submitHandler}
     >
       <InputBase
-        sx={{ ml: 1, flex: 1, color: "#fff" }}
+        sx={{ ml: 1, flex: 1, color: {
+          md: "#fff"
+        } }}
         placeholder={textContent.searchInput.placeholder}
         value={search}
         onChange={changeHandler}
         onFocus={clearSearchHandler}
       />
       <IconButton type="submit" sx={{ p: "10px" }}>
-        <SearchIcon sx={{ color: "#fff" }} />
+        <SearchIcon sx={{ color: {
+          md: "#fff"
+        } }} />
       </IconButton>
     </Paper>
   );
