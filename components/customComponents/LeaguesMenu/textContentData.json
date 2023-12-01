@@ -1,0 +1,14 @@
+{
+    "ua": {
+        "table": "Турнірна таблиця",
+        "matches": "Зіграні матчі",
+        "calendar": "Календар",
+        "stats": "Статистика гравців"
+    },
+    "en": {
+        "table": "League Table",
+        "matches": "Played matches",
+        "calendar": "Calendar",
+        "stats": "Players stats"
+    }
+}

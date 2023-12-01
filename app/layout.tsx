@@ -92,13 +92,13 @@ export default function RootLayout({
                     xs: 0,
                     md: "270px",
                   },
-                  // maxWidth: "calc(100vw - 290px)",
+
                 }}
               >
                 <Container
                   maxWidth={false}
                   sx={{
-                    maxWidth: {
+                    width: {
                       xs: "100vw",
                       md: "calc(100vw - 290px)",
                     },
