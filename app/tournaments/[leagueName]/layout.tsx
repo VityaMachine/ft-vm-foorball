@@ -9,6 +9,8 @@ import { FixturesApiContext } from '@/context/Fixtures.api.context'
 
 import { apiFootball } from '@/services/api-football.rapidapi'
 
+import leaagueCorrections from '@/constants/leagues.corrections'
+
 export default function LeagueLayout({ children }: { children: React.ReactNode }) {
 	const { state, dispatch } = useContext(FixturesApiContext)
 
@@ -31,6 +33,7 @@ export default function LeagueLayout({ children }: { children: React.ReactNode }
 					timezone: true
 				}
 				const respFixtures = await apiFootball(fixturesParams)
+				
 
 				if (
 					Array.isArray(respFixtures.errors) &&

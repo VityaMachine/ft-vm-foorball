@@ -117,6 +117,8 @@ interface IFixtureConvertedData {
 	stadiumName: string
 	stadiumId: number
 	round: string
+	leagueId: number
+	leagueName: string
 
 	homeTeamName: string
 	homeTeamId: number
@@ -131,4 +133,19 @@ interface IFixtureConvertedData {
 	awayTeamGoalsHT: number | null
 	awayTeamGoalsFT: number | null
 	awayTeamResult: 'W' | 'D' | 'L' | null | undefined
+}
+
+interface ICorrectedLeaguesTeamData {
+	teamId: number,
+	leagueId: number,
+	data: {
+		games?: number,
+		win?: number,
+		draw?: number,
+		lose?: number,
+		goalsFor?: number,
+		goalsAgainst?: number,
+		goalsDiff?: number,
+		points?: number
+	}
 }
