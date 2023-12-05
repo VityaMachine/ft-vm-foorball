@@ -19,11 +19,7 @@ const SmallAvatar = styled(Avatar)(() => ({
 
 export default function LeaguesList() {
 	const { language } = useContext(LanguageContext)
-	const { leagueName } = useParams();
-
-	console.log(leagueName);
-	console.log(tournamentsConfigs);
-	
+	const { leagueName } = useParams()
 
 	return (
 		<List

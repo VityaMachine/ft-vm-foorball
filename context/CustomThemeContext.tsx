@@ -1,80 +1,87 @@
-"use client";
-import { createTheme } from "@mui/material/styles";
+'use client'
+import { createTheme } from '@mui/material/styles'
 
-import React, { createContext, useEffect, useState } from "react";
+import React, { createContext, useEffect, useState } from 'react'
 
-import ThemeRegistry from "@/themes/ThemeRegistry";
+import ThemeRegistry from '@/themes/ThemeRegistry'
+
+declare module '@mui/material/styles' {
+	interface BreakpointOverrides {
+		xs: true
+		sm: true
+		md: true
+		lg: true
+		xl: true
+		mobile: false
+		tablet: false
+		laptop: false
+		desktop: false
+	}
+}
 
 export const CustomThemeContext = createContext<ThemeContext>({
-  isDarkMode: false,
-  toggleMode: () => {},
-  modeHandler: (mode: "dark" | "light") => {},
-});
+	isDarkMode: false,
+	toggleMode: () => {},
+	modeHandler: (mode: 'dark' | 'light') => {},
+	theme: {}
+})
 
-export default function CustomThemeProvider({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
-  const [isDarkMode, setIsDarkMode] = useState<boolean>(false);
-  // const [isDarkMode, setIsDarkMode] = useState<boolean>(() => {
-  //   if (typeof window !== "undefined") {
-  //     const savedMode = localStorage.getItem("vm-football-darkmode");
-  //     if (!savedMode) {
+export default function CustomThemeProvider({ children }: { children: React.ReactNode }) {
+	const [isDarkMode, setIsDarkMode] = useState<boolean>(false)
 
-  //       return false;
-  //     }
+	const themeValue = isDarkMode ? 'dark' : 'light'
 
-  //     return JSON.parse(savedMode);
-  //   }
+	const theme = createTheme({
+		palette: {
+			mode: themeValue
+		},
+		breakpoints: {
+			values: {
+				xs: 0,
+				sm: 600,
+				md: 900,
+				lg: 1200,
+				xl: 1536
+			}
+		}
+	})
 
-  //   return false;
-  // });
+	useEffect(() => {
+		const savedMode = localStorage.getItem('vm-football-darkmode')
 
-  const themeValue = isDarkMode ? "dark" : "light";
+		if (!savedMode) {
+			return
+		}
 
-  const theme = createTheme({
-    palette: {
-      mode: themeValue,
-    },
-  });
+		setIsDarkMode(JSON.parse(savedMode))
+	}, [])
 
-  useEffect(() => {
-    const savedMode = localStorage.getItem("vm-football-darkmode");
+	const toggleMode = () => {
+		setIsDarkMode(isDarkMode => {
+			localStorage.setItem('vm-football-darkmode', JSON.stringify(!isDarkMode))
+			return !isDarkMode
+		})
+	}
 
-    if (!savedMode) {
-      return;
-    }
+	const modeHandler = (mode: 'dark' | 'light') => {
+		if (mode === 'dark') {
+			setIsDarkMode(true)
+			localStorage.setItem('vm-football-darkmode', JSON.stringify(true))
+		}
 
-    setIsDarkMode(JSON.parse(savedMode));
-  }, []);
+		if (mode === 'light') {
+			setIsDarkMode(false)
+			localStorage.setItem('vm-football-darkmode', JSON.stringify(false))
+		}
+	}
 
-  const toggleMode = () => {
-    setIsDarkMode((isDarkMode) => {
-      localStorage.setItem("vm-football-darkmode", JSON.stringify(!isDarkMode));
-      return !isDarkMode;
-    });
-  };
+	const providerValue = { isDarkMode, toggleMode, modeHandler, theme }
 
-  const modeHandler = (mode: "dark" | "light") => {
-    if (mode === "dark") {
-      setIsDarkMode(true);
-      localStorage.setItem("vm-football-darkmode", JSON.stringify(true));
-    }
-
-    if (mode === "light") {
-      setIsDarkMode(false);
-      localStorage.setItem("vm-football-darkmode", JSON.stringify(false));
-    }
-  };
-
-  const providerValue = { isDarkMode, toggleMode, modeHandler };
-
-  return (
-    <CustomThemeContext.Provider value={providerValue}>
-      <ThemeRegistry theme={theme} options={{ key: "mui" }}>
-        {children}
-      </ThemeRegistry>
-    </CustomThemeContext.Provider>
-  );
+	return (
+		<CustomThemeContext.Provider value={providerValue}>
+			<ThemeRegistry theme={theme} options={{ key: 'mui' }}>
+				{children}
+			</ThemeRegistry>
+		</CustomThemeContext.Provider>
+	)
 }
