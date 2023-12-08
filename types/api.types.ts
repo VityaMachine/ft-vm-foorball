@@ -18,9 +18,6 @@ interface IApiResponse {
 	results: number
 }
 
-// ***response types***
-// ? teams league standings
-
 interface IMatchesStandingsData {
 	played: number
 	win: number
@@ -135,17 +132,62 @@ interface IFixtureConvertedData {
 	awayTeamResult: 'W' | 'D' | 'L' | null | undefined
 }
 
+type CorretionItemType = {
+	// field: 'games' | 'win' | 'draw' | 'lose' | 'goalsFor' | 'goalsAgainst' | 'goalsDiff' | 'points',
+	field: string
+	value: number
+	comment: string
+}
+
+type CorretionItemTypeUnd = {
+	// field: 'games' | 'win' | 'draw' | 'lose' | 'goalsFor' | 'goalsAgainst' | 'goalsDiff' | 'points',
+	field?: string | undefined
+	value?: number | undefined
+	comment?: string | undefined
+}
+
 interface ICorrectedLeaguesTeamData {
-	teamId: number,
-	leagueId: number,
-	data: {
-		games?: number,
-		win?: number,
-		draw?: number,
-		lose?: number,
-		goalsFor?: number,
-		goalsAgainst?: number,
-		goalsDiff?: number,
-		points?: number
+	teamId: number
+	leagueId: number
+	data: CorretionItemType[]
+}
+
+interface ITeamFixturesConverted {
+	date: Date
+	finalScore: string | null
+	fixtureId: number
+	goalsAgainst: number | null
+	goalsDiff: number | null
+	goalsFor: number | null
+	isHomeGame: boolean
+	opponentId: number
+	opponentTeamName: string
+	points: number | null
+	referee: string
+	result: 'W' | 'D' | 'L' | null | undefined
+	round: string
+	stadiumCity: string
+	stadiumId: number
+	stadiumName: string
+	status: 'FT' | 'NS' | 'CANC'
+}
+
+interface ITeamResultsFromFixtures {
+	teamId: number | undefined
+	teamName: string | undefined
+	teamLogo: string | undefined
+	leaguePosition: number
+	leagueId: number | undefined
+	fixtures: ITeamFixturesConverted[]
+	results: {
+		draw: number
+		games: number
+		goalsAgainst: number
+		goalsDiff: number
+		goalsFor: number
+		lose: number
+		points: number
+		win: number
 	}
+	corrections: null | CorretionItemTypeUnd[]
 }

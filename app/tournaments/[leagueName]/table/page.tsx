@@ -1,21 +1,42 @@
 'use client'
-import { useEffect, useContext } from 'react'
+import { useState, useEffect, useContext } from 'react'
 
 import { FixturesApiContext } from '@/context/Fixtures.api.context'
 
-import { teamsResultsFromFixtures } from '@/helpers/leagueStandingsHelpers'
+import { standingsTableRowsHelper } from '@/helpers/leagueStandingsHelpers'
 
 import leaagueCorrections from '@/constants/leagues.corrections'
+import LoadingSpinner from '@/components/LoadingSpinner/LoadingSpinner'
+import LoadingError from '@/components/LoadingError/LoadingError'
+import LeagueStandingsTable from '@/components/customComponents/LeagueStandingsTable/LeagueStandingsTable'
 
 export default function TournamentTable() {
 	const { state } = useContext(FixturesApiContext)
-	const { data, status, error } = state
+	const { data, status } = state
+
+	const [leagueData, setLeagueData] = useState<null | ITeamResultsFromFixtures[]>(null)
 
 	useEffect(() => {
-		const teamsResultsData = teamsResultsFromFixtures(data, leaagueCorrections)
+		const tableData = standingsTableRowsHelper(data, leaagueCorrections, 'all')
 
-		console.log(teamsResultsData)
-	}, [data])
+		setLeagueData(tableData)
 
-	return <div>TournamentTable</div>
+		// console.log(tableData);
+		
+	}, [data, status])
+
+	if (status === 'idle' || status === 'pending') {
+		return <LoadingSpinner />
+	}
+
+	if (status === 'rejected') {
+		return <LoadingError messageEn="Standings data missed" messageUa="Відсутня інформація про результати" />
+	}
+
+	if (status === 'resolved') {
+		return <LeagueStandingsTable leagueData={leagueData}/>
+	}
+
+	// return <LoadingSpinner />
+	// return <LoadingError messageEn="Standings data missed" messageUa="Відсутня інформація про результати" />
 }

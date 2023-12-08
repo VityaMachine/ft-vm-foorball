@@ -53,7 +53,8 @@ export default function LeaguesMenu() {
 			sx={{
 				display: 'flex',
 				justifyContent: 'center',
-				alignItems: 'center'
+				alignItems: 'center',
+				mb: '30px'
 			}}
 		>
 			{/* mobile version */}

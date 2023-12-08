@@ -10,6 +10,9 @@ const nextConfig = {
     
     //     return config;
     //   },
+    images: {
+        domains: ['media-4.api-sports.io']
+    }
 }
 
 module.exports = nextConfig
