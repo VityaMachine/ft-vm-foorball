@@ -3,11 +3,11 @@ import { useState, useEffect, useContext } from 'react'
 
 import { FixturesApiContext } from '@/context/Fixtures.api.context'
 
-import { standingsTableRowsHelper } from '@/helpers/leagueStandingsHelpers'
+import { teamsResultsFromFixtures } from '@/helpers/leagueStandingsHelpers'
 
 import leaagueCorrections from '@/constants/leagues.corrections'
-import LoadingSpinner from '@/components/LoadingSpinner/LoadingSpinner'
-import LoadingError from '@/components/LoadingError/LoadingError'
+import LoadingSpinner from '@/components/ui/LoadingSpinner/LoadingSpinner'
+import LoadingError from '@/components/ui/LoadingError/LoadingError'
 import LeagueStandingsTable from '@/components/customComponents/LeagueStandingsTable/LeagueStandingsTable'
 
 export default function TournamentTable() {
@@ -17,11 +17,11 @@ export default function TournamentTable() {
 	const [leagueData, setLeagueData] = useState<null | ITeamResultsFromFixtures[]>(null)
 
 	useEffect(() => {
-		const tableData = standingsTableRowsHelper(data, leaagueCorrections, 'all')
+		const tableData = teamsResultsFromFixtures(data, leaagueCorrections, 'all')
 
 		setLeagueData(tableData)
 
-		// console.log(tableData);
+		console.log(tableData);
 		
 	}, [data, status])
 

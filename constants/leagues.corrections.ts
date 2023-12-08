@@ -7,7 +7,7 @@ const leaagueCorrections = [
 				field: 'points',
 				value: -10,
 				comment: 'Committee decision'
-			}
+			},
 		]
 	}
 ]

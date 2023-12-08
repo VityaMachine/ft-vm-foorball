@@ -20,6 +20,7 @@ import { LanguageContext } from '@/context/LanguageContext'
 import { standingsTableRows } from '@/configs/standingTableConfigs'
 import Link from 'next/link'
 import Image from 'next/image'
+import EnchancedTableCell from '@/components/ui/EnchancedTableCell/EnchancedTableCell'
 
 const StyledTableHead = styled(TableHead)(({ theme }) => ({
 	backgroundColor: theme.palette.mode === 'dark' ? '#374551' : '#1565C0'
@@ -28,81 +29,79 @@ const StyledTableHead = styled(TableHead)(({ theme }) => ({
 export default function LeagueStandingsTable({ leagueData }: { leagueData: ITeamResultsFromFixtures[] | null }) {
 	const { language } = useContext(LanguageContext)
 
-	console.log(leagueData)
-
-	if (leagueData) {
-		return (
-			<Box
+	return (
+		<Box
+			sx={{
+				mt: '35px'
+			}}
+		>
+			<TableContainer
 				sx={{
-					mt: '35px'
+					width: 900
 				}}
 			>
-				<TableContainer
-					sx={{
-						width: 900
-					}}
-				>
-					<Table size="small">
-						<StyledTableHead>
-							<TableRow
-							// sx={{
-							// 	display: 'flex'
-							// }}
-							>
-								{standingsTableRows.map(row => (
-									<Tooltip
-										key={row.id}
-										placement={row.tooltipPos}
-										title={
-											<Typography
-												sx={{
-													cursor: 'default'
-												}}
-											>
-												{language === 'ua' ? row.content.ua.textLong : row.content.en.textLong}
-											</Typography>
-										}
-										PopperProps={{
-											modifiers: [
-												{
-													name: 'offset',
-													options: {
-														offset: [0, -10]
-													}
-												}
-											]
-										}}
-									>
-										<TableCell
+				<Table size="small">
+					<StyledTableHead>
+						<TableRow
+						// sx={{
+						// 	display: 'flex'
+						// }}
+						>
+							{standingsTableRows.map(row => (
+								<Tooltip
+									key={row.id}
+									placement={row.tooltipPos}
+									title={
+										<Typography
 											sx={{
-												'&:first-child': {
-													pl: '5px'
-												},
-												'&:last-child': {},
-												py: '3px'
+												cursor: 'default'
 											}}
-											padding="none"
-											align={row.textAlign}
 										>
-											<Typography
-												variant="h6"
-												sx={{
-													fontWeight: '700',
-													fontSize: '14px',
-													color: '#fff',
-													width: '50px',
-													cursor: 'default'
-												}}
-											>
-												{language === 'ua' ? row.content.ua.textShort : row.content.en.textShort}
-											</Typography>
-										</TableCell>
-									</Tooltip>
-								))}
-							</TableRow>
-						</StyledTableHead>
-						<TableBody>
-							{leagueData.map(team => (
+											{language === 'ua' ? row.content.ua.textLong : row.content.en.textLong}
+										</Typography>
+									}
+									PopperProps={{
+										modifiers: [
+											{
+												name: 'offset',
+												options: {
+													offset: [0, -10]
+												}
+											}
+										]
+									}}
+								>
+									<TableCell
+										sx={{
+											'&:first-child': {
+												pl: '5px'
+											},
+											'&:last-child': {},
+											py: '3px'
+										}}
+										padding="none"
+										align={row.textAlign}
+									>
+										<Typography
+											variant="h6"
+											sx={{
+												fontWeight: '700',
+												fontSize: '14px',
+												color: '#fff',
+												width: '50px',
+												cursor: 'default'
+											}}
+										>
+											{language === 'ua' ? row.content.ua.textShort : row.content.en.textShort}
+										</Typography>
+									</TableCell>
+								</Tooltip>
+							))}
+						</TableRow>
+					</StyledTableHead>
+					<TableBody>
+						{leagueData &&
+							leagueData.map(team => (
 								<TableRow key={team.teamId}>
 									{/* position */}
 									<TableCell>{team.leaguePosition}</TableCell>
@@ -128,7 +127,19 @@ export default function LeagueStandingsTable({ leagueData }: { leagueData: ITeam
 										</Link>
 									</TableCell>
 									{/* games */}
-									<Tooltip
+
+									<EnchancedTableCell team={team} field="games" toolTipvalue="finalScore" />
+
+									{/* win */}
+									<EnchancedTableCell team={team} field="win" toolTipvalue="finalScore" />
+
+									{/* draw */}
+									<EnchancedTableCell team={team} field="draw" toolTipvalue="finalScore" />
+
+									{/* draw */}
+									<EnchancedTableCell team={team} field="lose" toolTipvalue="finalScore" />
+
+									{/* <Tooltip
 										placement="right-start"
 										PopperProps={{
 											modifiers: [
@@ -165,13 +176,12 @@ export default function LeagueStandingsTable({ leagueData }: { leagueData: ITeam
 										}
 									>
 										<TableCell>{team.results.games}</TableCell>
-									</Tooltip>
+									</Tooltip> */}
 								</TableRow>
 							))}
-						</TableBody>
-					</Table>
-				</TableContainer>
-			</Box>
-		)
-	}
+					</TableBody>
+				</Table>
+			</TableContainer>
+		</Box>
+	)
 }

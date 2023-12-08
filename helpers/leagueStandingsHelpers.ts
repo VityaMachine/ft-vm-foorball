@@ -49,8 +49,11 @@ export const teamsResultsFromFixtures = (
 			item => item.teamId === teamInfo.teamId && item.leagueId === teamInfo.leagueId
 		)
 
+		// console.log(isForCorrection);
+
+		const statsValues = Object.keys(teamInfo.results)
+
 		if (isForCorrection) {
-			const statsValues = Object.keys(teamInfo.results)
 			const correctionsData: CorretionItemType | undefined = isForCorrection.data.find(item =>
 				statsValues.includes(item.field)
 			)
@@ -58,14 +61,36 @@ export const teamsResultsFromFixtures = (
 			const teamResults = teamInfo.results
 
 			statsValues.forEach(field => {
+
 				if (field === correctionsData?.field) {
+
 					teamResults[field as keyof typeof teamResults] =
 						teamInfo.results[field as keyof typeof teamResults] + correctionsData.value
+
+					if(field !== 'goalsDiff') {
+						teamResults.goalsDiff = teamResults.goalsFor - teamResults.goalsAgainst
+					}
+
+					if(field !== 'points') {
+						teamResults.points = teamResults.win * 3 + teamResults.draw
+					}
 				}
 			})
 
+	
+
 			return {
 				...teamInfo,
+				results: {
+					...teamInfo.results,
+					goalsDiff: statsValues.includes('goalsDiff')
+						? teamInfo.results.goalsDiff
+						: teamInfo.results.goalsFor - teamInfo.results.goalsAgainst,
+					points: statsValues.includes('points')
+						? teamInfo.results.points
+						: teamInfo.results.win * 3 + teamInfo.results.draw
+				},
+
 				corrections: !teamInfo.corrections
 					? [{ ...correctionsData }]
 					: [...teamInfo.corrections, { ...correctionsData }]
@@ -88,64 +113,72 @@ export const teamsResultsFromFixtures = (
 	return finilizedResultsData
 }
 
-export const standingsTableRowsHelper = (
-	fixturesData: IFixtureData[],
-	corrections: ICorrectedLeaguesTeamData[],
-	sortType?: 'all' | 'home' | 'away'
-) => {
-	const statsByTeams = teamsResultsFromFixtures(fixturesData, corrections, sortType)
+// export const standingsTableRowsHelper = (
+// 	fixturesData: IFixtureData[],
+// 	corrections: ICorrectedLeaguesTeamData[],
+// 	sortType?: 'all' | 'home' | 'away'
+// ) => {
+// 	const statsByTeams = teamsResultsFromFixtures(fixturesData, corrections, sortType)
 
-	const tableData = statsByTeams.map(team => {
-		const allMatchesData = team.fixtures.map(fixture => ({
-			fixtureId: fixture.fixtureId,
-			fixtureDate: fixture.date.toISOString().split('T')[0].split('-').join('.'),
-			fixtureStatus: fixture.status,
-			fixtureRound: fixture.round,
-			fixtureScore: fixture.finalScore,
-			fixtureResult: fixture.result,
+// 	const tableData = statsByTeams.map(team => {
+// 		// const allMatchesData = team.fixtures.map(fixture => ({
+// 		// 	fixtureId: fixture.fixtureId,
+// 		// 	fixtureDate: fixture.date.toISOString().split('T')[0].split('-').join('.'),
+// 		// 	fixtureStatus: fixture.status,
+// 		// 	fixtureRound: fixture.round,
+// 		// 	fixtureScore: fixture.finalScore,
+// 		// 	fixtureResult: fixture.result,
 
-			isHomeGame: fixture.isHomeGame,
-			points: fixture.points,
-			goalsFor: fixture.goalsFor,
-			goalsAgainst: fixture.goalsAgainst,
-			goalsDiff: fixture.goalsDiff,
+// 		// 	isHomeGame: fixture.isHomeGame,
+// 		// 	points: fixture.points,
+// 		// 	goalsFor: fixture.goalsFor,
+// 		// 	goalsAgainst: fixture.goalsAgainst,
+// 		// 	goalsDiff: fixture.goalsDiff,
 
-			homeTeamId: fixture.isHomeGame ? team.teamId : fixture.opponentId,
-			homeTeamName: fixture.isHomeGame ? team.teamName : fixture.opponentTeamName,
+// 		// 	homeTeamId: fixture.isHomeGame ? team.teamId : fixture.opponentId,
+// 		// 	homeTeamName: fixture.isHomeGame ? team.teamName : fixture.opponentTeamName,
 
-			awayTeamId: !fixture.isHomeGame ? team.teamId : fixture.opponentId,
-			awayTeamName: !fixture.isHomeGame ? team.teamName : fixture.opponentTeamName
-		}))
+// 		// 	awayTeamId: !fixture.isHomeGame ? team.teamId : fixture.opponentId,
+// 		// 	awayTeamName: !fixture.isHomeGame ? team.teamName : fixture.opponentTeamName
+// 		// }))
 
-		const finishedMatches = allMatchesData.filter(item => item.fixtureStatus === 'FT')
+// 		// const finishedMatches = allMatchesData.filter(item => item.fixtureStatus === 'FT')
 
-		const winMatches = finishedMatches.filter(item => item.fixtureResult === 'W')
-		const drawMatches = finishedMatches.filter(item => item.fixtureResult === 'D')
-		const loseMatches = finishedMatches.filter(item => item.fixtureResult === 'L')
+// 		// const winMatches = finishedMatches.filter(item => item.fixtureResult === 'W')
+// 		// const drawMatches = finishedMatches.filter(item => item.fixtureResult === 'D')
+// 		// const loseMatches = finishedMatches.filter(item => item.fixtureResult === 'L')
 
-		return {
-			position: team.leaguePosition,
-			teamId: team.teamId,
-			teamName: team.teamName,
-			teamLogo: team.teamLogo,
-			matches: {
-				value: team.results.games,
-				data: finishedMatches
-			},
-			win: {
-				value: team.results.win,
-				data: winMatches
-			},
-			draw: {
-				value: team.results.draw,
-				data: drawMatches
-			},
-			lose: {
-				value: team.results.lose,
-				data: loseMatches
-			}
-		}
-	})
+// 		const finishedFixturesData = team.fixtures.filter(item => item.status === 'FT')
 
-	return statsByTeams
-}
+// 		const gamesData = finishedFixturesData.map(item => ({
+// 			isHomeGame: item.isHomeGame,
+// 			opponentName: item.opponentTeamName,
+// 			opponentId: item.opponentId,
+// 			finalScore: item.finalScore,
+// 			fixtureId: item.fixtureId,
+// 			result: item.result,
+// 			goalsFor: item.goalsFor,
+// 			goalsAgainst: item.goalsAgainst,
+// 			goalsDiff: item.goalsDiff
+// 		}))
+
+// 		return {
+// 			teamId: team.teamId,
+// 			teamName: team.teamName,
+// 			teamLogo: team.teamLogo,
+// 			resultsValues: {
+// 				position: team.leaguePosition,
+// 				...team.results
+// 			},
+// 			resultsData: {
+// 				games: gamesData,
+// 				win: gamesData.filter(item => item.result === 'W'),
+// 				draw: gamesData.filter(item => item.result === 'D'),
+// 				lose: gamesData.filter(item => item.result === 'L')
+// 			}
+// 		}
+// 	})
+
+// 	return statsByTeams
+// 	// return tableData
+// }

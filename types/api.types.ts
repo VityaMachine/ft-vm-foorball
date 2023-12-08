@@ -152,17 +152,26 @@ interface ICorrectedLeaguesTeamData {
 	data: CorretionItemType[]
 }
 
-interface ITeamFixturesConverted {
-	date: Date
+
+interface ITeamBasicFixtureData {
 	finalScore: string | null
-	fixtureId: number
 	goalsAgainst: number | null
 	goalsDiff: number | null
 	goalsFor: number | null
+	points: number | null
+}
+
+interface ITeamFixturesConverted extends ITeamBasicFixtureData {
+	date: Date
+	// finalScore: string | null
+	fixtureId: number
+	// goalsAgainst: number | null
+	// goalsDiff: number | null
+	// goalsFor: number | null
 	isHomeGame: boolean
 	opponentId: number
 	opponentTeamName: string
-	points: number | null
+	// points: number | null
 	referee: string
 	result: 'W' | 'D' | 'L' | null | undefined
 	round: string
@@ -172,6 +181,17 @@ interface ITeamFixturesConverted {
 	status: 'FT' | 'NS' | 'CANC'
 }
 
+interface ITeamCalculatedResults {
+	draw: number
+	games: number
+	goalsAgainst: number
+	goalsDiff: number
+	goalsFor: number
+	lose: number
+	points: number
+	win: number
+}
+
 interface ITeamResultsFromFixtures {
 	teamId: number | undefined
 	teamName: string | undefined
@@ -179,15 +199,6 @@ interface ITeamResultsFromFixtures {
 	leaguePosition: number
 	leagueId: number | undefined
 	fixtures: ITeamFixturesConverted[]
-	results: {
-		draw: number
-		games: number
-		goalsAgainst: number
-		goalsDiff: number
-		goalsFor: number
-		lose: number
-		points: number
-		win: number
-	}
+	results: ITeamCalculatedResults
 	corrections: null | CorretionItemTypeUnd[]
 }
