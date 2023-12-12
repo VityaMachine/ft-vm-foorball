@@ -24,7 +24,8 @@ export default function LeaguesList() {
 	return (
 		<List
 			sx={{
-				pt: 0
+				pt: 0,
+				zIndex: 99
 			}}
 		>
 			{tournamentsConfigs.leagues.map(league => (

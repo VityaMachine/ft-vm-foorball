@@ -66,6 +66,9 @@ const ptsRsolver = (result: 'W' | 'D' | 'L' | null | undefined) => {
 export const byTeamsFixturesParser = (data: IFixtureData[]) => {
 	const fixtures = fixturesDataParser(data)
 
+
+	
+
 	fixtures.sort((a, b) => a.dateTime - b.dateTime)
 
 	const teamsIds: number[] = []

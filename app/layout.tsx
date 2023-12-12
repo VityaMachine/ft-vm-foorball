@@ -46,6 +46,7 @@ export default function RootLayout({
                   xs: "56px",
                   sm: "90px",
                 },
+                overflow: 'hidden'
               }}
             >
               {/* left side menu desctop */}
@@ -62,6 +63,7 @@ export default function RootLayout({
                   },
                   width: "270px",
                   position: "fixed",
+                  zIndex: 9999
                 }}
               >
                 <DesktopMainMenu />
@@ -74,6 +76,7 @@ export default function RootLayout({
                     xs: "block",
                     md: "none",
                   },
+                  
                 }}
               >
                 <MobileSideMenu />
@@ -92,7 +95,7 @@ export default function RootLayout({
                     xs: 0,
                     md: "270px",
                   },
-
+                 
                 }}
               >
                 <Container
@@ -102,9 +105,14 @@ export default function RootLayout({
                       xs: "100vw",
                       md: "calc(100vw - 290px)",
                     },
+               
+
+                    
                   }}
                 >
+                  <Box>
                   {children}
+                  </Box>
                 </Container>
               </Box>
             </Paper>
