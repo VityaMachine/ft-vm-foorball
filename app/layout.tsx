@@ -38,14 +38,14 @@ export default function RootLayout({
                 position: "relative",
                 minHeight: {
                   xs: "calc(100vh - 56px)",
-                  sm: "calc(100vh - 90px)",
+                  md: "calc(100vh - 90px)",
                 },
                 borderRadius: 0,
                 display: "flex",
-                top: {
-                  xs: "56px",
-                  sm: "90px",
-                },
+                // top: {
+                //   xs: "56px",
+                //   md: "90px",
+                // },
                 overflow: 'hidden'
               }}
             >
@@ -89,28 +89,22 @@ export default function RootLayout({
 
               {/* main content */}
               <Box
+                
                 sx={{
                   position: "relative",
                   left: {
                     xs: 0,
                     md: "270px",
                   },
+                  width: {
+                    xs: "100vw",
+                    md: "calc(100vw - 290px)",
+                  },
                  
                 }}
               >
-                <Container
-                  maxWidth={false}
-                  sx={{
-                    width: {
-                      xs: "100vw",
-                      md: "calc(100vw - 290px)",
-                    },
-               
-
-                    
-                  }}
-                >
-                  <Box>
+                <Container>
+                  <Box className="main-layout-children">
                   {children}
                   </Box>
                 </Container>

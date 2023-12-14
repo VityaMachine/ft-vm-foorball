@@ -21,7 +21,7 @@ export default function TournamentTable() {
 
 		setLeagueData(tableData)
 
-		console.log(tableData);
+		// console.log(tableData);
 		
 	}, [data, status])
 

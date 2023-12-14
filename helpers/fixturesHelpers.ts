@@ -108,6 +108,7 @@ export const byTeamsFixturesParser = (data: IFixtureData[]) => {
 
 					opponentId: fixture.homeTeamId === teamId ? fixture.awayTeamId : fixture.homeTeamId,
 					opponentTeamName: fixture.homeTeamId === teamId ? fixture.awayTeamName : fixture.homeTeamName,
+					opponentTeamLogo: fixture.homeTeamId === teamId ? fixture.awayTeamLogo : fixture.homeTeamLogo,
 					goalsFor: fixture.homeTeamId === teamId ? fixture.homeTeamGoalsFT : fixture.awayTeamGoalsFT,
 					goalsAgainst: fixture.homeTeamId === teamId ? fixture.awayTeamGoalsFT : fixture.homeTeamGoalsFT
 				}))

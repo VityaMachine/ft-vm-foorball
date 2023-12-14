@@ -54,7 +54,10 @@ export default function LeaguesMenu() {
 				display: 'flex',
 				justifyContent: 'center',
 				alignItems: 'center',
-				mb: '30px'
+				mb: '30px',
+				// position: 'sticky',
+				// top: '30px',
+				// zIndex: 9999999
 			}}
 		>
 			{/* mobile version */}

@@ -11,9 +11,11 @@ export const standingsTableRows = [
         textLong: "Позиція",
       },
     },
+    type: 'info' as const, 
     tooltipPos: "top-start" as const,
     textAlign: "start" as const,
-    fieldName: 'position' as const
+    fieldName: 'position' as const,
+    isSortable: true
   },
   {
     id: 2,
@@ -27,9 +29,11 @@ export const standingsTableRows = [
         textLong: "Логотип та назва клубу",
       },
     },
+    type: 'info' as const,
     tooltipPos: "top-start" as const,
     textAlign: "start" as const,
-    fieldName: 'teamName' as const
+    fieldName: 'teamName' as const,
+    isSortable: true
 
   },
   {
@@ -44,10 +48,11 @@ export const standingsTableRows = [
         textLong: "Матчі",
       },
     },
-
+    type: 'data' as const,
     tooltipPos: "top" as const,
     textAlign: "center" as const,
-    fieldName: 'games' as const
+    fieldName: 'games' as const,
+    isSortable: true
   },
   {
     id: 4,
@@ -61,10 +66,12 @@ export const standingsTableRows = [
         textLong: "Виграші",
       },
     },
+    type: 'data' as const,
 
     tooltipPos: "top" as const,
     textAlign: "center" as const,
-    fieldName: 'win' as const
+    fieldName: 'win' as const,
+    isSortable: true
 
   },
   {
@@ -79,10 +86,12 @@ export const standingsTableRows = [
         textLong: "Нічиї",
       },
     },
+    type: 'data' as const,
 
     tooltipPos: "top" as const,
     textAlign: "center" as const,
-    fieldName: 'draw' as const
+    fieldName: 'draw' as const,
+    isSortable: true
 
   },
   {
@@ -97,10 +106,12 @@ export const standingsTableRows = [
         textLong: "Поразки",
       },
     },
+    type: 'data' as const,
 
     tooltipPos: "top" as const,
     textAlign: "center" as const,
-    fieldName: 'lose' as const
+    fieldName: 'lose' as const,
+    isSortable: true
 
   },
   {
@@ -115,10 +126,12 @@ export const standingsTableRows = [
         textLong: "Голів забито",
       },
     },
+    type: 'data' as const,
 
     tooltipPos: "top" as const,
     textAlign: "center" as const,
-    fieldName: 'goalsFor' as const
+    fieldName: 'goalsFor' as const,
+    isSortable: true
 
   },
   {
@@ -133,10 +146,12 @@ export const standingsTableRows = [
         textLong: "Голів пропущено",
       },
     },
+    type: 'data' as const,
 
     tooltipPos: "top" as const,
     textAlign: "center" as const,
-    fieldName: 'goalsAgainst' as const
+    fieldName: 'goalsAgainst' as const,
+    isSortable: true
 
   },
   {
@@ -151,10 +166,12 @@ export const standingsTableRows = [
         textLong: "Різниця голів",
       },
     },
+    type: 'data' as const,
 
     tooltipPos: "top" as const,
     textAlign: "center" as const,
-    fieldName: 'goalsDiff' as const
+    fieldName: 'goalsDiff' as const,
+    isSortable: true
 
   },
   {
@@ -169,10 +186,52 @@ export const standingsTableRows = [
         textLong: "Очки",
       },
     },
+    type: 'data' as const,
 
     tooltipPos: "top" as const,
     textAlign: "center" as const,
-    fieldName: 'points' as const
+    fieldName: 'points' as const,
+    isSortable: true
+
+  },
+  {
+    id: 11,
+    content: {
+      en: {
+        textShort: "Next 5",
+        textLong: "Next 5 fixtures" as const,
+      },
+      ua: {
+        textShort: "Наступні 5",
+        textLong: "Наступні 5 матчів",
+      },
+    },
+    type: 'data' as const,
+
+    tooltipPos: "top" as const,
+    textAlign: "center" as const,
+    fieldName: 'next5' as const,
+    isSortable: false
+
+  },
+  {
+    id: 12,
+    content: {
+      en: {
+        textShort: "Prev 5",
+        textLong: "Prev 5 fixtures" as const,
+      },
+      ua: {
+        textShort: "Попередні 5",
+        textLong: "Попередні 5 матчів",
+      },
+    },
+    type: 'data' as const,
+
+    tooltipPos: "top" as const,
+    textAlign: "center" as const,
+    fieldName: 'prev5' as const,
+    isSortable: false
 
   },
   // {

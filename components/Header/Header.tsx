@@ -15,13 +15,14 @@ import SettingsButton from "../HeaderFooterComponents/HeaderComponents/SettingsM
 export default function Header() {
   return (
     <AppBar
-      position="fixed"
+      position="sticky"
       sx={{
         bgcolor: "#0F1924",
         height: {
           xs: "56px",
-          sm: "90px",
+          md: "90px",
         },
+
       }}
     >
       <Toolbar
@@ -67,7 +68,7 @@ export default function Header() {
               sx={{
                 height: {
                   xs: "56px",
-                  sm: "90px",
+                  md: "90px",
                 },
                 minWidth: "56px",
                 display: { xs: "flex", sm: "block" },

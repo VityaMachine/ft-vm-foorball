@@ -33,6 +33,8 @@ export const teamsResultsFromFixtures = (
   const fixturesAndResultsData = selectedData.map((teamData) => ({
     ...teamData,
     corrections: null,
+    prev5: teamData.fixtures.filter(item => item.status === 'FT').slice(-5).reverse(),
+    next5: teamData.fixtures.filter(item => item.status !== 'FT' && item.status !== 'CANC').slice(0, 5),
     results: {
       games: teamData.fixtures.filter((fixture) => fixture.status === "FT")
         .length,
@@ -115,12 +117,12 @@ export const teamsResultsFromFixtures = (
   return finilizedResultsData;
 };
 
-
+// type ITeamResultsFromFixtures[]
 export const sortTableDataHandler = (
     teamsData: ITeamResultsFromFixtures[],
     sortingField: keyof ISortingResultsData,
     sortingBy: "asc" | "desc"
-  ): ITeamResultsFromFixtures[]  => {
+  )  => {
     const dataToSorting = teamsData.map((team) => ({
       teamId: team.teamId,
       position: team.leaguePosition,
@@ -139,19 +141,21 @@ export const sortTableDataHandler = (
     }));
 
     dataToSorting.sort(function (a, b) {
-      if (
-        a[sortingField] &&
-        b[sortingField] &&
-        a[sortingField] < b[sortingField]
-      ) {
-        return sortingBy === "asc" ? -1 : 1;
-      }
-      if (
-        a[sortingField] &&
-        b[sortingField] &&
-        a[sortingField] > b[sortingField]
-      ) {
-        return sortingBy === "asc" ? 1 : -1;
+      if(sortingField !== 'next5' && sortingField !== 'prev5') {
+        if (
+          a[sortingField] !== undefined &&
+          b[sortingField] !== undefined &&
+          a[sortingField] < b[sortingField]
+        ) {
+          return sortingBy === "asc" ? -1 : 1;
+        }
+        if (
+          a[sortingField] &&
+          b[sortingField] &&
+          a[sortingField] > b[sortingField]
+        ) {
+          return sortingBy === "asc" ? 1 : -1;
+        }
       }
       return 0;
     });

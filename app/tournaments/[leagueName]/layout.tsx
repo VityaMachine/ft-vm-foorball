@@ -9,10 +9,8 @@ import { FixturesApiContext } from '@/context/Fixtures.api.context'
 
 import { apiFootball } from '@/services/api-football.rapidapi'
 
-import leaagueCorrections from '@/constants/leagues.corrections'
-
 export default function LeagueLayout({ children }: { children: React.ReactNode }) {
-	const { state, dispatch } = useContext(FixturesApiContext)
+	const { dispatch } = useContext(FixturesApiContext)
 
 	const params = useParams()
 	const leagueData = tournamentsConfigs.leagues.find(league => league.shortName === params.leagueName)

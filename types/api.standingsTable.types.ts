@@ -136,7 +136,10 @@ type CorretionItemType = {
   // field: 'games' | 'win' | 'draw' | 'lose' | 'goalsFor' | 'goalsAgainst' | 'goalsDiff' | 'points',
   field: string;
   value: number;
-  comment: string;
+  comment: {
+    ua: string,
+    en: string
+  };
 };
 
 type CorretionItemTypeUnd = {
@@ -179,8 +182,8 @@ interface ITeamFixturesConverted extends ITeamBasicFixtureData {
 }
 
 interface ITeamCalculatedResults {
-  draw: number;
   games: number;
+  draw: number;
   goalsAgainst: number;
   goalsDiff: number;
   goalsFor: number;
@@ -211,5 +214,7 @@ interface ISortingResultsData {
   goalsFor: number 
   goalsAgainst: number 
   goalsDiff: number 
-  points: number 
+  points: number
+  next5: any[],
+  prev5: any[] 
 }
