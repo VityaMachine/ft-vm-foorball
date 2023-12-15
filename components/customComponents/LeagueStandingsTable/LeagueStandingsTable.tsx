@@ -25,6 +25,7 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
 import { styled } from '@mui/material/styles'
 
 import { LanguageContext } from '@/context/LanguageContext'
+import { CustomThemeContext } from '@/context/CustomThemeContext'
 
 import EnchancedTableDataCell from '@/components/ui/EnchancedTableDataCell/EnchancedTableDataCell'
 
@@ -32,15 +33,24 @@ import { sortTableDataHandler } from '@/helpers/leagueStandingsHelpers'
 
 import { standingsTableRows } from '@/configs/standingTableConfigs'
 import { tournamentsConfigs } from '@/configs/tournaments'
-import { leaguesPlacesColors } from '@/constants/colors'
+import { leaguesPlacesColors, tableDataColors } from '@/constants/colors'
+
+import { red, amber, lightBlue } from '@mui/material/colors'
 
 const StyledTableHead = styled(TableHead)(({ theme }) => ({
 	backgroundColor: theme.palette.mode === 'dark' ? '#374551' : '#1565C0'
 }))
 
+import { styles } from './styles'
+import { modifiersHandler } from './LeagueStandingsTable.popperModifiers'
+
 export default function LeagueStandingsTable({ leagueData }: { leagueData: ITeamResultsFromFixtures[] | null }) {
 	const [sortField, setSortField] = useState<keyof ISortingResultsData>('position')
 	const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('asc')
+
+	const [hoveredTeamRow, setHoveredTeamRow] = useState<null | number>(null)
+	const [hoveredOpponentTeam, setHoveredOpponentTeam] = useState<null | number>(null)
+
 	// const [stikyTableHeader, setStikyTableHeader] = useState<boolean>(false)
 	// const [stickyHeadScrollData, setStickyHeadScrollData] = useState<number>(0)
 	const params = useParams()
@@ -49,6 +59,7 @@ export default function LeagueStandingsTable({ leagueData }: { leagueData: ITeam
 	)
 
 	const { language } = useContext(LanguageContext)
+	// const { isDarkMode } = useContext(CustomThemeContext)
 
 	// table sticky header
 	// useEffect(() => {
@@ -97,60 +108,6 @@ export default function LeagueStandingsTable({ leagueData }: { leagueData: ITeam
 
 	const infoRows = standingsTableRows.filter(item => item.type === 'info')
 	const dataRows = standingsTableRows.filter(item => item.type === 'data')
-
-	const placeBgColorHandler = (team: ITeamResultsFromFixtures, leagueParams: ILeagueConfig | undefined) => {
-		if (!leagueParams) {
-			return {}
-		}
-
-		const basicSx = {
-			display: 'flex',
-			justifyContent: 'center',
-			alignItems: 'center',
-			width: '25px',
-			height: '20px',
-			borderRadius: '7px',
-			backgroundColor: leaguesPlacesColors.default,
-			color: '#fff',
-			cursor: 'default',
-			border: team.leaguePosition === 1 ? '2px solid' : 'none',
-			borderColor: team.leaguePosition === 1 ? leaguesPlacesColors.champion : 'none'
-		}
-
-		if (leagueParams.placesData.uefaChampLeagueGS.includes(team.leaguePosition)) {
-			return { ...basicSx, backgroundColor: leaguesPlacesColors.colorUefaChampLeagueGS }
-		}
-
-		if (leagueParams.placesData.uefaChampLeagueQ.includes(team.leaguePosition)) {
-			return { ...basicSx, backgroundColor: leaguesPlacesColors.colorUefaChampLeagueQ }
-		}
-
-		if (leagueParams.placesData.uefaEuropaLeagueGS.includes(team.leaguePosition)) {
-			return { ...basicSx, backgroundColor: leaguesPlacesColors.colorUefaEuropaLeagueGS }
-		}
-
-		if (leagueParams.placesData.uefaEuropaLeagueQ.includes(team.leaguePosition)) {
-			return { ...basicSx, backgroundColor: leaguesPlacesColors.colorUefaEuropaLeagueQ }
-		}
-
-		if (leagueParams.placesData.uefaConfLeagueGS.includes(team.leaguePosition)) {
-			return { ...basicSx, backgroundColor: leaguesPlacesColors.colorUefaConfLeagueGS }
-		}
-
-		if (leagueParams.placesData.uefaConfLeagueQ.includes(team.leaguePosition)) {
-			return { ...basicSx, backgroundColor: leaguesPlacesColors.colorUefaConfLeagueQ }
-		}
-
-		if (leagueParams.placesData.relegationPlayOff.includes(team.leaguePosition)) {
-			return { ...basicSx, backgroundColor: leaguesPlacesColors.colorUelegationPlayOff }
-		}
-
-		if (leagueParams.placesData.relegationLeague.includes(team.leaguePosition)) {
-			return { ...basicSx, backgroundColor: leaguesPlacesColors.colorUelegationLeague }
-		}
-
-		return basicSx
-	}
 
 	const isTooltippedPlace = (team: ITeamResultsFromFixtures, leagueParams: ILeagueConfig | undefined) => {
 		if (!leagueParams) {
@@ -230,8 +187,7 @@ export default function LeagueStandingsTable({ leagueData }: { leagueData: ITeam
 		}
 	}
 
-	console.log(leagueData);
-	
+	// console.log(isDarkMode)
 
 	// const stikyTableHeaderSX = () =>
 	// 	stikyTableHeader
@@ -262,139 +218,47 @@ export default function LeagueStandingsTable({ leagueData }: { leagueData: ITeam
 	// 		: {}
 
 	return (
-		<Box
-			sx={{
-				display: 'flex',
-				mt: '35px'
-			}}
-		>
+		<Box sx={styles.mainContainer}>
 			{/* desktop and tablet */}
-			<Box
-				sx={{
-					display: {
-						xs: 'none',
-						sm: 'flex'
-					},
-					width: '100%',
-					justifyContent: 'center'
-				}}
-			>
+			<Box sx={styles.desktopTabletContainer}>
 				{/* info */}
-				<TableContainer
-					sx={{
-						width: 250,
-						minWidth: 250,
-						overflow: 'hidden'
-					}}
-				>
-					<Table
-						size="small"
-						sx={{
-							position: 'relative'
-						}}
-					>
+				<TableContainer sx={styles.infoTableContainer}>
+					<Table size="small">
 						<StyledTableHead
-							// sx={() => stikyTableHeaderSX()}
-							sx={{
-								position: 'sticky',
-								top: 0
-							}}
+						// sx={() => stikyTableHeaderSX()}
 						>
 							<TableRow
-								className="table-head-info"
-								sx={{
-									position: 'relative',
-									zIndex: 99,
-									overflow: 'hidden'
-								}}
+							// className="table-head-info"
 							>
 								{infoRows.map(row => (
 									<TableCell key={row.id} padding="none" sx={{ py: '3px' }}>
 										<Tooltip
 											placement={row.tooltipPos}
 											title={
-												<Typography
-													sx={{
-														cursor: 'default'
-													}}
-												>
+												<Typography sx={{ cursor: 'default' }}>
 													{language === 'ua' ? row.content.ua.textLong : row.content.en.textLong}
 												</Typography>
 											}
-											PopperProps={{
-												modifiers: [
-													{
-														name: 'offset',
-														options: {
-															offset: [0, -6]
-														}
-													}
-												]
-											}}
+											PopperProps={{ ...modifiersHandler(0, -10) }}
 										>
-											<Box
-												sx={{
-													display: 'flex',
-													justifyContent: row.textAlign,
-													'&:first-child': {
-														pl: '5px'
-													},
-													width: row.fieldName === 'position' ? 69 : row.fieldName === 'teamName' ? 185 : 0
-												}}
-											>
-												<Box
-													sx={{
-														display: 'flex',
-														alignItems: 'center'
-													}}
-												>
-													<Typography
-														variant="h6"
-														sx={{
-															fontWeight: '700',
-															fontSize: '16px',
-															color: '#fff',
-															pr: '8px',
-															cursor: 'default'
-														}}
-													>
+											<Box sx={styles.infoTableHeadRowContainer(row.textAlign)}>
+												<Box sx={styles.infoTableHeadRowTextBox}>
+													<Typography variant="h6" sx={styles.tableHeadRowText}>
 														{language === 'ua' ? row.content.ua.textShort : row.content.en.textShort}
 													</Typography>
 													{row.isSortable && (
 														<IconButton
 															size="small"
-															sx={{
-																bgcolor: sortField === row.fieldName ? 'rgba(0,0,0,0.4)' : 'rgba(0,0,0,0.15)'
-															}}
+															sx={styles.tableHeadRowSortIconBtn(sortField, row.fieldName)}
 															onClick={() => sortTableHandler(row.fieldName)}
 														>
 															{sortField === row.fieldName ? (
 																(sortDirection === 'asc' && (
-																	<KeyboardArrowDownIcon
-																		sx={{
-																			width: '12px',
-																			height: '12px',
-																			fill: '#fff'
-																		}}
-																	/>
+																	<KeyboardArrowDownIcon sx={styles.tableHeadRowSortIcon} />
 																)) ||
-																(sortDirection === 'desc' && (
-																	<KeyboardArrowUpIcon
-																		sx={{
-																			width: '12px',
-																			height: '12px',
-																			fill: '#fff'
-																		}}
-																	/>
-																))
+																(sortDirection === 'desc' && <KeyboardArrowUpIcon sx={styles.tableHeadRowSortIcon} />)
 															) : (
-																<KeyboardArrowDownIcon
-																	sx={{
-																		width: '12px',
-																		height: '12px',
-																		fill: '#fff'
-																	}}
-																/>
+																<KeyboardArrowDownIcon sx={styles.tableHeadRowSortIcon} />
 															)}
 														</IconButton>
 													)}
@@ -414,37 +278,29 @@ export default function LeagueStandingsTable({ leagueData }: { leagueData: ITeam
 									team && (
 										<TableRow
 											sx={{
-												position: 'relative',
-												height: '35px',
-												zIndex: 0
+												...styles.tableBodyRow,
+												bgcolor:
+													hoveredTeamRow &&
+													hoveredOpponentTeam &&
+													(hoveredOpponentTeam === team.teamId || hoveredTeamRow === team.teamId
+														? 'rgba(150, 190, 240, 0.4)'
+														: 'transparent')
 											}}
 											key={team.teamId}
-											className={idx === 0 ? 'data-table-row-info' : ''}
+											// selected={hoveredTeamRow && hoveredOpponentTeam && hoveredTeamRow === team.teamId || hoveredOpponentTeam === team.teamId ? true : false}
+
+											// hover={true}
+											// selected
+											// className={idx === 0 ? 'data-table-row-info' : ''}
 										>
 											<TableCell width={69}>
 												{isTooltippedPlace(team, leagueParams) ? (
 													<Tooltip
 														placement="right-start"
 														followCursor
-														PopperProps={{
-															modifiers: [
-																{
-																	name: 'offset',
-																	options: {
-																		offset: [-25, 0]
-																	}
-																}
-															]
-														}}
+														PopperProps={{ ...modifiersHandler(-25, 0) }}
 														title={
-															<Box
-																sx={{
-																	display: 'flex',
-																	flexDirection: 'column',
-																	maxWidth: '250px',
-																	fontSize: '12px'
-																}}
-															>
+															<Box sx={styles.infoTableBodyTooltipBox}>
 																{team.leaguePosition === 1 && (
 																	<Typography variant="caption">
 																		{language === 'ua' ? 'Чемпіонська позиція' : 'Champion position'}
@@ -454,25 +310,16 @@ export default function LeagueStandingsTable({ leagueData }: { leagueData: ITeam
 															</Box>
 														}
 													>
-														<Box sx={() => placeBgColorHandler(team, leagueParams)}>{team.leaguePosition}</Box>
+														<Box sx={styles.infoTableBodyPlace(team, leagueParams)}>{team.leaguePosition}</Box>
 													</Tooltip>
 												) : (
-													<Box sx={() => placeBgColorHandler(team, leagueParams)}>{team.leaguePosition}</Box>
+													<Box sx={styles.infoTableBodyPlace(team, leagueParams)}>{team.leaguePosition}</Box>
 												)}
 											</TableCell>
 
 											<TableCell padding="none" width={185}>
 												<Link href={`/teams/${team.teamId}`}>
-													<Box
-														sx={{
-															display: 'flex',
-															// flexWrap: 'nowrap',
-															flexDirection: 'row',
-															'&:hover': {
-																textDecoration: 'underline'
-															}
-														}}
-													>
+													<Box sx={styles.infoTableBodyTeamNameCellBox}>
 														<Box>
 															<Image
 																src={team.teamLogo ? team.teamLogo : ''}
@@ -481,16 +328,7 @@ export default function LeagueStandingsTable({ leagueData }: { leagueData: ITeam
 																alt={team.teamName ? team.teamName : ''}
 															/>
 														</Box>
-														<Typography
-															sx={{
-																ml: '10px',
-																width: '140px',
-																whiteSpace: 'nowrap',
-																overflow: 'hidden'
-															}}
-														>
-															{team.teamName}
-														</Typography>
+														<Typography sx={styles.infoTableBodyTeamNameCellBoxText}>{team.teamName}</Typography>
 													</Box>
 												</Link>
 											</TableCell>
@@ -503,120 +341,44 @@ export default function LeagueStandingsTable({ leagueData }: { leagueData: ITeam
 
 				{/* data */}
 				<TableContainer
-					sx={{
-						width: {
-							xs: 465,
-							md: 705
-						},
-						overflowX: 'auto'
-					}}
+					sx={styles.dataTableContainer}
 					// onScroll={e => {
 					// 	setStickyHeadScrollData(e.target.scrollLeft)
 					// }}
 				>
-					<Table
-						size="small"
-						sx={{
-							overflow: 'hidden'
-						}}
-					>
+					<Table size="small">
 						<StyledTableHead
 						// sx={() => stikyTableHeaderSX()}
 						>
 							<TableRow
-								className="table-head-data"
-								// sx={() => scrolledTableDataHead(stickyHeadScrollData)}
+							// className="table-head-data"
+							// sx={() => scrolledTableDataHead(stickyHeadScrollData)}
 							>
 								{dataRows.map(row => (
-									<TableCell
-										key={row.id}
-										width={60}
-										padding="none"
-										sx={{
-											py: '3px',
-											display: {
-												xs: !row.isSortable ? 'none' : 'table-cell',
-												md: 'table-cell'
-											}
-										}}
-									>
+									<TableCell key={row.id} padding="none" sx={styles.dataTableHeaderCell(row.isSortable)}>
 										<Tooltip
 											placement={row.tooltipPos}
 											title={
-												<Typography
-													sx={{
-														cursor: 'default'
-													}}
-												>
-													{language === 'ua' ? row.content.ua.textLong : row.content.en.textLong}
-												</Typography>
+												<Typography>{language === 'ua' ? row.content.ua.textLong : row.content.en.textLong}</Typography>
 											}
-											PopperProps={{
-												modifiers: [
-													{
-														name: 'offset',
-														options: {
-															offset: [0, -6]
-														}
-													}
-												]
-											}}
+											PopperProps={{ ...modifiersHandler(0, -10) }}
 										>
-											<Box
-												sx={{
-													display: 'flex',
-													justifyContent: row.textAlign,
-													// '&:first-child': {
-													// 	pl: '5px'
-													// },
-													width: row.isSortable ? '58px' : '120px'
-												}}
-											>
-												<Box
-													sx={{
-														display: 'flex',
-														alignItems: 'center'
-													}}
-												>
-													<Typography
-														variant="h6"
-														sx={{
-															fontWeight: '700',
-															fontSize: '16px',
-															color: '#fff',
-															pr: '8px',
-															cursor: 'default'
-														}}
-													>
+											<Box sx={styles.dataTableHeaderCellContainer(row.textAlign, row.isSortable)}>
+												<Box sx={styles.dataTableHeaderCellBox}>
+													<Typography variant="h6" sx={styles.tableHeadRowText}>
 														{language === 'ua' ? row.content.ua.textShort : row.content.en.textShort}
 													</Typography>
 													{row.isSortable && (
 														<IconButton
 															size="small"
-															sx={{
-																bgcolor: sortField === row.fieldName ? 'rgba(0,0,0,0.4)' : 'rgba(0,0,0,0.15)'
-															}}
+															sx={styles.tableHeadRowSortIconBtn(sortField, row.fieldName)}
 															onClick={() => sortTableHandler(row.fieldName)}
 														>
 															{sortField === row.fieldName ? (
 																(sortDirection === 'asc' && (
-																	<KeyboardArrowDownIcon
-																		sx={{
-																			width: '12px',
-																			height: '12px',
-																			fill: '#fff'
-																		}}
-																	/>
+																	<KeyboardArrowDownIcon sx={styles.tableHeadRowSortIcon} />
 																)) ||
-																(sortDirection === 'desc' && (
-																	<KeyboardArrowUpIcon
-																		sx={{
-																			width: '12px',
-																			height: '12px',
-																			fill: '#fff'
-																		}}
-																	/>
-																))
+																(sortDirection === 'desc' && <KeyboardArrowUpIcon sx={styles.tableHeadRowSortIcon} />)
 															) : (
 																<KeyboardArrowDownIcon
 																	sx={{
@@ -643,10 +405,19 @@ export default function LeagueStandingsTable({ leagueData }: { leagueData: ITeam
 									team && (
 										<TableRow
 											sx={{
-												height: '35px'
+												...styles.tableBodyRow,
+												bgcolor:
+													hoveredTeamRow &&
+													hoveredOpponentTeam &&
+													(hoveredTeamRow === team.teamId || hoveredOpponentTeam === team.teamId
+														? 'rgba(150, 190, 240, 0.4)'
+														: 'transparent')
 												// ...stickyTableFirstRowSX()
 											}}
+											// selected={hoveredTeamRow && hoveredOpponentTeam && hoveredTeamRow === team.teamId || hoveredOpponentTeam === team.teamId ? true : false}
 											key={team.teamId}
+											onMouseOver={() => setHoveredTeamRow(team.teamId ? team.teamId : null)}
+											onMouseLeave={() => setHoveredTeamRow(null)}
 										>
 											<EnchancedTableDataCell team={team} field="games" toolTipvalue="finalScore" />
 
@@ -663,6 +434,129 @@ export default function LeagueStandingsTable({ leagueData }: { leagueData: ITeam
 											<EnchancedTableDataCell team={team} field="goalsDiff" toolTipvalue="goalsDiff" />
 
 											<EnchancedTableDataCell team={team} field="points" toolTipvalue="points" />
+
+											<TableCell
+												sx={styles.dataTableDataDesktopCell}
+											>
+												<Box
+													sx={styles.dataTableDataDesktopCellBox}
+												>
+													{team.prev5.map(item => (
+														<Tooltip
+															key={item.fixtureId}
+															title={
+																<Box sx={styles.dataTableDataDesktopCellTooltipBox}>
+																	<Typography variant="caption">
+																		{item.date.toISOString().split('T')[0].split('-').reverse().join('.')}
+																	</Typography>
+
+																	<Typography variant="body2">
+																		{item.isHomeGame ? team.teamName : item.opponentTeamName} -{' '}
+																		{!item.isHomeGame ? team.teamName : item.opponentTeamName}
+																	</Typography>
+																	<Typography variant="body2" sx={{ fontWeight: '700' }}>
+																		{item.finalScore}
+																	</Typography>
+																</Box>
+															}
+															placement="top"
+															followCursor
+															// leaveDelay={1000000}
+														>
+															<Link href={`/fixtures/${item.fixtureId}`}>
+																<Box
+																	onMouseOver={() => setHoveredOpponentTeam(item.opponentId)}
+																	onMouseLeave={() => {
+																		setHoveredOpponentTeam(null)
+																	}}
+																	sx={styles.dataTableLastMatchesDataBox(item.result)}
+																>
+																	{language === 'ua'
+																		? item.result === 'W'
+																			? 'В'
+																			: item.result === 'D'
+																			? 'Н'
+																			: 'П'
+																		: item.result}
+																</Box>
+															</Link>
+														</Tooltip>
+													))}
+												</Box>
+											</TableCell>
+
+											<TableCell
+												sx={{
+													display: {
+														xs: 'none',
+														md: 'table-cell'
+													}
+												}}
+											>
+												<Box
+													sx={{
+														display: 'flex',
+														justifyContent: 'space-between'
+													}}
+												>
+													{team.next5.map(item => (
+														<Tooltip
+															key={item.fixtureId}
+															title={
+																<Box
+																	sx={{
+																		display: 'flex',
+																		flexDirection: 'column',
+																		alignItems: 'center'
+																	}}
+																>
+																	<Typography variant="caption">
+																		{item.date.toISOString().split('T')[0].split('-').reverse().join('.')}
+																	</Typography>
+
+																	<Typography variant="body2">
+																		{item.isHomeGame ? team.teamName : item.opponentTeamName} -{' '}
+																		{!item.isHomeGame ? team.teamName : item.opponentTeamName}
+																	</Typography>
+																	<Typography variant="body2" sx={{ fontWeight: '700' }}>
+																		{item.finalScore}
+																	</Typography>
+																</Box>
+															}
+															placement="top"
+															followCursor
+															// leaveDelay={1000000}
+														>
+															<Link href={`/fixtures/${item.fixtureId}`}>
+																<Box
+																	onMouseOver={() => setHoveredOpponentTeam(item.opponentId)}
+																	onMouseLeave={() => {
+																		setHoveredOpponentTeam(null)
+																	}}
+																	sx={{
+																		color: '#fff',
+																		display: 'flex',
+																		justifyContent: 'center',
+																		alignItems: 'center',
+																		// borderRadius: '50%',
+																		cursor: 'pointer',
+																		borderBottom: `3px solid ${
+																			item.isHomeGame ? tableDataColors.colorHome : tableDataColors.colorAway
+																		}`
+																	}}
+																>
+																	<Image
+																		src={item.opponentTeamLogo}
+																		alt={item.opponentTeamName}
+																		width={23}
+																		height={23}
+																	/>
+																</Box>
+															</Link>
+														</Tooltip>
+													))}
+												</Box>
+											</TableCell>
 										</TableRow>
 									)
 							)}

@@ -195,10 +195,30 @@ export const standingsTableRows = [
 
   },
   {
+    id: 12,
+    content: {
+      en: {
+        textShort: "Form",
+        textLong: "Previous 5 fixtures form" as const,
+      },
+      ua: {
+        textShort: "Форма",
+        textLong: "Форма в останніх 5 матчах",
+      },
+    },
+    type: 'data' as const,
+
+    tooltipPos: "top" as const,
+    textAlign: "center" as const,
+    fieldName: 'prev5' as const,
+    isSortable: false
+
+  },
+  {
     id: 11,
     content: {
       en: {
-        textShort: "Next 5",
+        textShort: "Next 5 fixtures",
         textLong: "Next 5 fixtures" as const,
       },
       ua: {
@@ -214,26 +234,7 @@ export const standingsTableRows = [
     isSortable: false
 
   },
-  {
-    id: 12,
-    content: {
-      en: {
-        textShort: "Prev 5",
-        textLong: "Prev 5 fixtures" as const,
-      },
-      ua: {
-        textShort: "Попередні 5",
-        textLong: "Попередні 5 матчів",
-      },
-    },
-    type: 'data' as const,
 
-    tooltipPos: "top" as const,
-    textAlign: "center" as const,
-    fieldName: 'prev5' as const,
-    isSortable: false
-
-  },
   // {
   // 	id: 11,
   // 	content: {

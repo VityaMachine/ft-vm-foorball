@@ -5,13 +5,15 @@ import { Box, Divider, List, ListItem, Table, TableBody, TableCell, TableRow, To
 
 import Image from 'next/image'
 
-import { red, green, amber, orange, lightBlue } from '@mui/material/colors'
+import { red,  amber, lightBlue } from '@mui/material/colors'
 
 import WarningIcon from '@mui/icons-material/Warning'
 
 import { LanguageContext } from '@/context/LanguageContext'
 
 import placeholderImg from '@/images/placeholder.jpg'
+
+import { tableDataColors } from '@/constants/colors'
 
 const TooltipTitleComponent = ({
 	team,
@@ -207,47 +209,47 @@ const TooltipTitleComponent = ({
 												bgcolor:
 													toolTipvalue === 'finalScore' || toolTipvalue === 'points'
 														? item.result === 'W'
-															? green[900]
+															? tableDataColors.colorWin
 															: item.result === 'D'
-															? orange[800]
+															? tableDataColors.colorDraw
 															: item.result === 'L'
-															? red[700]
+															? tableDataColors.colorLose
 															: 'transparent'
 														: toolTipvalue === 'goalsFor' && item.goalsFor !== null
 														? item.goalsFor === 0
-															? amber[900]
+															? tableDataColors.colorGS0
 															: item.goalsFor === 1
-															? green[500]
+															? tableDataColors.colorGS1
 															: item.goalsFor === 2
-															? green[800]
+															? tableDataColors.colorGS2
 															: item.goalsFor >= 3
-															? green[900]
+															? tableDataColors.colorGS3
 															: 'transparent'
 														: toolTipvalue === 'goalsAgainst' && item.goalsAgainst !== null
 														? item.goalsAgainst === 0
-															? green[500]
+															? tableDataColors.colorGC0
 															: item.goalsAgainst === 1
-															? red[400]
+															? tableDataColors.colorGC1
 															: item.goalsAgainst === 2
-															? red[600]
+															? tableDataColors.colorGC2
 															: item.goalsAgainst >= 3
-															? red[900]
+															? tableDataColors.colorGC3
 															: 'transparent'
 														: toolTipvalue === 'goalsDiff' && item.goalsDiff !== null
 														? item.goalsDiff <= -3
-															? red[900]
+															? tableDataColors.colorGC3
 															: item.goalsDiff === -2
-															? red[600]
+															? tableDataColors.colorGC2
 															: item.goalsDiff === -1
-															? red[400]
+															? tableDataColors.colorGC1
 															: item.goalsDiff === 0
-															? amber[900]
+															? tableDataColors.colorGS0
 															: item.goalsDiff === 1
-															? green[500]
+															? tableDataColors.colorGS1
 															: item.goalsDiff === 2
-															? green[800]
+															? tableDataColors.colorGS2
 															: item.goalsDiff >= 3
-															? green[900]
+															? tableDataColors.colorGS3
 															: 'transparent'
 														: 'transparent'
 											}}

@@ -172,6 +172,7 @@ interface ITeamFixturesConverted extends ITeamBasicFixtureData {
   isHomeGame: boolean;
   opponentId: number;
   opponentTeamName: string;
+  opponentTeamLogo: string;
   referee: string;
   result: "W" | "D" | "L" | null | undefined;
   round: string;
@@ -198,6 +199,8 @@ interface ITeamResultsFromFixtures {
   teamLogo: string | undefined
   leaguePosition: number;
   leagueId: number | undefined
+  prev5: ITeamFixturesConverted[]
+  next5: ITeamFixturesConverted[]
   fixtures: ITeamFixturesConverted[];
   results: ITeamCalculatedResults;
   corrections: null | CorretionItemTypeUnd[];

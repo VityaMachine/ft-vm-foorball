@@ -141,7 +141,18 @@ export const sortTableDataHandler = (
     }));
 
     dataToSorting.sort(function (a, b) {
-      if(sortingField !== 'next5' && sortingField !== 'prev5') {
+      if(sortingField !== 'next5' && sortingField !== 'prev5' &&  
+          (sortingField === 'position' ||  
+          sortingField === 'games' ||  
+          sortingField === 'win' ||  
+          sortingField === 'draw' ||  
+          sortingField === 'lose' ||  
+          sortingField === 'goalsFor' ||  
+          sortingField === 'goalsAgainst' ||  
+          sortingField === 'goalsDiff' ||  
+          sortingField === 'points'
+          
+      )) {
         if (
           a[sortingField] !== undefined &&
           b[sortingField] !== undefined &&
