@@ -124,7 +124,7 @@ export const sortTableDataHandler = (
 	const dataToSorting = teamsData.map(team => ({
 		teamId: team.teamId,
 		position: team.leaguePosition,
-		teamName: team.teamName,
+		teamName: team.teamNameOriginal,
 		games: team.results.games,
 
 		win: team.results.win,
