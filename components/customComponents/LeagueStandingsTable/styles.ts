@@ -3,7 +3,8 @@ import { leaguesPlacesColors, tableDataColors } from '@/constants/colors'
 export const styles = {
 	mainContainer: {
 		display: 'flex',
-		mt: '35px'
+		// mt: '35px',
+		flexDirection: 'column'
 	},
 
 	desktopTabletContainer: {
@@ -169,7 +170,6 @@ export const styles = {
 
 	dataTableDataDesktopCellBox: {
 		display: 'flex',
-		flexDirection: 'row',
 		justifyContent: 'space-between'
 	},
 
@@ -179,7 +179,7 @@ export const styles = {
 		alignItems: 'center'
 	},
 
-	dataTableLastMatchesDataBox: (result: "W" | "D" | "L" | null | undefined) => ({
+	dataTableLastMatchesDataBox: (result: 'W' | 'D' | 'L' | null | undefined) => ({
 		color: '#fff',
 		display: 'flex',
 		justifyContent: 'center',
@@ -193,12 +193,18 @@ export const styles = {
 				? tableDataColors.colorLose
 				: 'tranparent',
 		borderRadius: '50%',
+		// borderRadius: '5px',
 		width: '20px',
 		height: '20px',
-		cursor: 'default',
-		fontWeight: '700',
-		':hover': {
-			cursor: 'pointer'
-		}
+		cursor: 'pointer',
+	}),
+
+	dataTableNextMatchesImgBox: (isHomeGame: boolean) => ({
+		color: '#fff',
+		display: 'flex',
+		justifyContent: 'center',
+		alignItems: 'center',
+		cursor: 'pointer',
+		borderBottom: `3px solid ${isHomeGame ? tableDataColors.colorHome : tableDataColors.colorAway}`
 	})
 }

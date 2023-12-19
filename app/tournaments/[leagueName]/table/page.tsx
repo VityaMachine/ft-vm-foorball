@@ -1,11 +1,8 @@
 'use client'
-import { useState, useEffect, useContext } from 'react'
+import { useContext } from 'react'
 
 import { FixturesApiContext } from '@/context/Fixtures.api.context'
 
-import { teamsResultsFromFixtures } from '@/helpers/leagueStandingsHelpers'
-
-import leaagueCorrections from '@/constants/leagues.corrections'
 import LoadingSpinner from '@/components/ui/LoadingSpinner/LoadingSpinner'
 import LoadingError from '@/components/ui/LoadingError/LoadingError'
 import LeagueStandingsTable from '@/components/customComponents/LeagueStandingsTable/LeagueStandingsTable'
@@ -13,17 +10,6 @@ import LeagueStandingsTable from '@/components/customComponents/LeagueStandingsT
 export default function TournamentTable() {
 	const { state } = useContext(FixturesApiContext)
 	const { data, status } = state
-
-	const [leagueData, setLeagueData] = useState<null | ITeamResultsFromFixtures[]>(null)
-
-	useEffect(() => {
-		const tableData = teamsResultsFromFixtures(data, leaagueCorrections, 'all')
-
-		setLeagueData(tableData)
-
-		// console.log(tableData);
-		
-	}, [data, status])
 
 	if (status === 'idle' || status === 'pending') {
 		return <LoadingSpinner />
@@ -34,7 +20,7 @@ export default function TournamentTable() {
 	}
 
 	if (status === 'resolved') {
-		return <LeagueStandingsTable leagueData={leagueData}/>
+		return <LeagueStandingsTable fixturesData={data}/>
 	}
 
 	// return <LoadingSpinner />

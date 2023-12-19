@@ -1,3 +1,5 @@
+import { teamNames } from '@/constants/teamNames'
+
 const fixtureResultHandler = (
 	teamForGoals: number | null,
 	teamAgainstGoals: number | null
@@ -17,35 +19,53 @@ const fixtureResultHandler = (
 	}
 }
 
-export const fixturesDataParser = (data: IFixtureData[]): IFixtureConvertedData[] =>
-	data.map(item => ({
-		fixtureId: item.fixture.id,
-		date_text: item.fixture.date,
-		dateTime: new Date(item.fixture.date),
-		referee: item.fixture.referee,
-		statusLong: item.fixture.status.long,
-		statusShort: item.fixture.status.short,
-		city: item.fixture.venue.city,
-		stadiumName: item.fixture.venue.name,
-		stadiumId: item.fixture.venue.id,
-		round: item.league.round,
-		leagueId: item.league.id,
-		leagueName: item.league.name,
+export const fixturesDataParser = (data: IFixtureData[]): IFixtureConvertedData[] => {
+	return data.map(item => {
+		const homeTeamNames = teamNames.find(nameItem => nameItem.id === item.teams.home.id)
+		const awayTeamNames = teamNames.find(nameItem => nameItem.id === item.teams.away.id)
 
-		homeTeamName: item.teams.home.name,
-		homeTeamId: item.teams.home.id,
-		homeTeamLogo: item.teams.home.logo,
-		homeTeamGoalsHT: item.score.halftime.home,
-		homeTeamGoalsFT: item.score.fulltime.home,
-		homeTeamResult: fixtureResultHandler(item.score.fulltime.home, item.score.fulltime.away),
+		return {
+			fixtureId: item.fixture.id,
+			date_text: item.fixture.date,
+			dateTime: new Date(item.fixture.date),
+			referee: item.fixture.referee,
+			statusLong: item.fixture.status.long,
+			statusShort: item.fixture.status.short,
+			city: item.fixture.venue.city,
+			stadiumName: item.fixture.venue.name,
+			stadiumId: item.fixture.venue.id,
+			round: item.league.round,
+			leagueId: item.league.id,
+			leagueName: item.league.name,
 
-		awayTeamName: item.teams.away.name,
-		awayTeamId: item.teams.away.id,
-		awayTeamLogo: item.teams.away.logo,
-		awayTeamGoalsHT: item.score.halftime.away,
-		awayTeamGoalsFT: item.score.fulltime.away,
-		awayTeamResult: fixtureResultHandler(item.score.fulltime.away, item.score.fulltime.home)
-	}))
+			homeTeamNameOriginal: item.teams.home.name,
+			homeTeamNameData: homeTeamNames
+				? {
+						longName: homeTeamNames.nameLong,
+						shortName: homeTeamNames.nameShort
+				  }
+				: null,
+			homeTeamId: item.teams.home.id,
+			homeTeamLogo: item.teams.home.logo,
+			homeTeamGoalsHT: item.score.halftime.home,
+			homeTeamGoalsFT: item.score.fulltime.home,
+			homeTeamResult: fixtureResultHandler(item.score.fulltime.home, item.score.fulltime.away),
+
+			awayTeamNameOriginal: item.teams.away.name,
+			awayTeamNameData: awayTeamNames
+			? {
+					longName: awayTeamNames.nameLong,
+					shortName: awayTeamNames.nameShort
+			  }
+			: null,
+			awayTeamId: item.teams.away.id,
+			awayTeamLogo: item.teams.away.logo,
+			awayTeamGoalsHT: item.score.halftime.away,
+			awayTeamGoalsFT: item.score.fulltime.away,
+			awayTeamResult: fixtureResultHandler(item.score.fulltime.away, item.score.fulltime.home)
+		}
+	})
+}
 
 const ptsRsolver = (result: 'W' | 'D' | 'L' | null | undefined) => {
 	switch (result) {
@@ -66,9 +86,6 @@ const ptsRsolver = (result: 'W' | 'D' | 'L' | null | undefined) => {
 export const byTeamsFixturesParser = (data: IFixtureData[]) => {
 	const fixtures = fixturesDataParser(data)
 
-
-	
-
 	fixtures.sort((a, b) => a.dateTime - b.dateTime)
 
 	const teamsIds: number[] = []
@@ -84,7 +101,8 @@ export const byTeamsFixturesParser = (data: IFixtureData[]) => {
 
 		const baseData = {
 			teamId: homeTeamFixture?.homeTeamId,
-			teamName: homeTeamFixture?.homeTeamName,
+			teamNameOriginal: homeTeamFixture?.homeTeamNameOriginal,
+			teamNameData: homeTeamFixture?.homeTeamNameData,
 			teamLogo: homeTeamFixture?.homeTeamLogo,
 			leagueId: homeTeamFixture?.leagueId,
 			fixturesTotal: fixtures
@@ -107,7 +125,8 @@ export const byTeamsFixturesParser = (data: IFixtureData[]) => {
 					isHomeGame: fixture.homeTeamId === teamId,
 
 					opponentId: fixture.homeTeamId === teamId ? fixture.awayTeamId : fixture.homeTeamId,
-					opponentTeamName: fixture.homeTeamId === teamId ? fixture.awayTeamName : fixture.homeTeamName,
+					opponentTeamNameOriginal: fixture.homeTeamId === teamId ? fixture.awayTeamNameOriginal : fixture.homeTeamNameOriginal,
+					opponentTeamNameData: fixture.homeTeamId === teamId ? fixture.awayTeamNameData : fixture.homeTeamNameData,
 					opponentTeamLogo: fixture.homeTeamId === teamId ? fixture.awayTeamLogo : fixture.homeTeamLogo,
 					goalsFor: fixture.homeTeamId === teamId ? fixture.homeTeamGoalsFT : fixture.awayTeamGoalsFT,
 					goalsAgainst: fixture.homeTeamId === teamId ? fixture.awayTeamGoalsFT : fixture.homeTeamGoalsFT
@@ -116,7 +135,8 @@ export const byTeamsFixturesParser = (data: IFixtureData[]) => {
 
 		const expandedData = {
 			teamId: baseData.teamId,
-			teamName: baseData.teamName,
+			teamNameOriginal: baseData.teamNameOriginal,
+			teamNameData: baseData.teamNameData,
 			teamLogo: baseData.teamLogo,
 			leagueId: baseData.leagueId,
 			fixtures: baseData.fixturesTotal.map(fixture => ({

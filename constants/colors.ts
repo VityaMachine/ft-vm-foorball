@@ -1,9 +1,13 @@
 import { grey, blue, orange, green, red, amber, lightBlue } from '@mui/material/colors'
 
 export const tableDataColors = {
-	colorWin: green[900],
-	colorDraw: orange[800],
+	colorWin: green[700],
+	colorDraw: amber[500],
 	colorLose: red[700],
+
+	colorWinHover: green[500],
+	colorDrawHover: amber[300],
+	colorLoseHover: red[500],
 
 	colorGS0: amber[900],
 	colorGS1: green[500],

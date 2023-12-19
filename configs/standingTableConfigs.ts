@@ -25,7 +25,7 @@ export const standingsTableRows = [
         textLong: "Team logo and name",
       },
       ua: {
-        textShort: "Ком",
+        textShort: "Команда",
         textLong: "Логотип та назва клубу",
       },
     },
@@ -33,15 +33,15 @@ export const standingsTableRows = [
     tooltipPos: "top-start" as const,
     textAlign: "start" as const,
     fieldName: 'teamName' as const,
-    isSortable: true
+    isSortable: false
 
   },
   {
     id: 3,
     content: {
       en: {
-        textShort: "G",
-        textLong: "Games",
+        textShort: "M",
+        textLong: "Matches",
       },
       ua: {
         textShort: "М",

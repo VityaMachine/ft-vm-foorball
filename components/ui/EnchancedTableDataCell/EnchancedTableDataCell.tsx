@@ -5,7 +5,7 @@ import { Box, Divider, List, ListItem, Table, TableBody, TableCell, TableRow, To
 
 import Image from 'next/image'
 
-import { red,  amber, lightBlue } from '@mui/material/colors'
+import { red, amber, lightBlue } from '@mui/material/colors'
 
 import WarningIcon from '@mui/icons-material/Warning'
 
@@ -93,7 +93,7 @@ const TooltipTitleComponent = ({
 								src={team.teamLogo ? team.teamLogo : placeholderImg.src}
 								width={45}
 								height={45}
-								alt={team.teamName ? team.teamName : placeholderImg.src}
+								alt={team.teamNameOriginal ? team.teamNameOriginal : placeholderImg.src}
 							/>
 						</Box>
 						<Box
@@ -106,7 +106,7 @@ const TooltipTitleComponent = ({
 									fontSize: '16px'
 								}}
 							>
-								{team.teamName}
+								{team.teamNameOriginal}
 							</Typography>
 							<Typography
 								sx={{
@@ -171,13 +171,11 @@ const TooltipTitleComponent = ({
 												justifyContent: 'center',
 												width: '18px',
 												height: '18px',
-												// color: "#fff",
+												color: '#fff',
 												borderRadius: '50%',
 												fontSize: '12px',
 												bgcolor: item.isHomeGame ? lightBlue[700] : amber[800],
-												cursor: 'default',
-											
-
+												cursor: 'default'
 											}}
 										>
 											{item.isHomeGame ? (language === 'ua' ? 'Д' : 'H') : language === 'ua' ? 'Г' : 'A'}
@@ -192,7 +190,7 @@ const TooltipTitleComponent = ({
 											fontSize: '14px'
 										}}
 									>
-										{item.opponentTeamName}
+										{item.opponentTeamNameOriginal}
 									</TableCell>
 									<TableCell padding="none" sx={{ color: '#fff', pl: '10px' }}>
 										<Typography
@@ -206,6 +204,10 @@ const TooltipTitleComponent = ({
 												borderRadius: '5px',
 												height: '20px',
 												minWidth: '20px',
+												color:
+													(toolTipvalue === 'finalScore' || toolTipvalue === 'points') && item.result === 'D'
+														? '#2b2b2b'
+														: '#FFF',
 												bgcolor:
 													toolTipvalue === 'finalScore' || toolTipvalue === 'points'
 														? item.result === 'W'
@@ -272,13 +274,11 @@ const TooltipTitleComponent = ({
 export default function EnchancedTableDataCell({
 	team,
 	field,
-	toolTipvalue,
-
+	toolTipvalue
 }: {
 	team: ITeamResultsFromFixtures
 	field: keyof ITeamCalculatedResults
-	toolTipvalue: keyof ITeamBasicFixtureData,
-
+	toolTipvalue: keyof ITeamBasicFixtureData
 }) {
 	return (
 		<TableCell
@@ -289,7 +289,6 @@ export default function EnchancedTableDataCell({
 				textAlign: 'center'
 				// maxWidth: '60px'
 			}}
-			
 		>
 			<Tooltip
 				// arrow
@@ -332,7 +331,7 @@ export default function EnchancedTableDataCell({
 					</Typography>
 
 					{team.corrections?.find(correction => correction.field === field) && (
-						<Typography variant="body1" sx={{ color: 'red', fontSize: '14px' }}>
+						<Typography variant="body2" sx={{ color: 'red', fontSize: '14px' }}>
 							(!)
 						</Typography>
 					)}
