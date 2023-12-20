@@ -12,7 +12,7 @@ export const teamsResultsFromFixtures = (
 	data: IFixtureData[],
 	corrections: ICorrectedLeaguesTeamData[],
 	sortType?: 'all' | 'home' | 'away'
-) => {
+): ITeamResultsFromFixtures[] => {
 	const parsedData = byTeamsFixturesParser(data)
 
 	const selectedData = parsedData.map(teamData => ({
@@ -170,3 +170,29 @@ export const sortTableDataHandler = (
 
 	return sortedTeamsData
 }
+
+export const isTooltippedPlace = (
+  team: ITeamResultsFromFixtures,
+  leagueParams: ILeagueConfig | undefined
+) => {
+  if (!leagueParams) {
+    return false;
+  }
+  if (
+    team.leaguePosition === 1 ||
+    leagueParams.placesData.uefaChampLeagueGS.includes(team.leaguePosition) ||
+    leagueParams.placesData.uefaChampLeagueQ.includes(team.leaguePosition) ||
+    leagueParams.placesData.uefaEuropaLeagueGS.includes(
+      team.leaguePosition
+    ) ||
+    leagueParams.placesData.uefaEuropaLeagueQ.includes(team.leaguePosition) ||
+    leagueParams.placesData.uefaConfLeagueGS.includes(team.leaguePosition) ||
+    leagueParams.placesData.uefaConfLeagueQ.includes(team.leaguePosition) ||
+    leagueParams.placesData.relegationPlayOff.includes(team.leaguePosition) ||
+    leagueParams.placesData.relegationLeague.includes(team.leaguePosition)
+  ) {
+    return true;
+  }
+
+  return false;
+};

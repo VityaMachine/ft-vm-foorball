@@ -6,7 +6,7 @@ export default function LoadingSpinner() {
 				display: 'flex',
 				justifyContent: 'center',
 				alignItems: 'center',
-			
+				my: '30px'
 			}}
 		>
 			<CircularProgress color="primary" size={50} thickness={5} />

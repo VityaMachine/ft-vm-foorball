@@ -17,8 +17,8 @@ export const styles = {
 	},
 
 	infoTableContainer: {
-		width: 250,
-		minWidth: 250,
+		width: 300,
+		minWidth: 300,
 		overflow: 'hidden'
 	},
 
@@ -129,7 +129,7 @@ export const styles = {
 
 	infoTableBodyTeamNameCellBoxText: {
 		ml: '10px',
-		width: '140px',
+		width: '160px',
 		whiteSpace: 'nowrap',
 		overflow: 'hidden'
 	},

@@ -1,6 +1,5 @@
 export const teamNames = [
 
-    // epl teams
 
 	{
 		id: 42,
@@ -225,3 +224,6 @@ export const teamNames = [
 
 
 ]
+
+
+// export const teamNames = []
