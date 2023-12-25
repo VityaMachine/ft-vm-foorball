@@ -23,50 +23,37 @@ export default function MobileTable({
 				<StyledTableHead>
 					<TableRow>
 						<TableCell
-							sx={{
-								fontWeight: 700,
-								color: '#fff'
-							}}
+							sx={styles.mobileHeadCell}
 						>
 							#
 						</TableCell>
 						<TableCell
-							sx={{
-								fontWeight: 700,
-								color: '#fff'
-							}}
+							sx={styles.mobileHeadCell}
+
 						>
 							{language === 'ua' ? "Ком" : "Team"}
 						</TableCell>
 						<TableCell
-							sx={{
-								fontWeight: 700,
-								color: '#fff'
-							}}
+							sx={styles.mobileHeadCell}
+
 						>
 							M
 						</TableCell>
 						<TableCell
-							sx={{
-								fontWeight: 700,
-								color: '#fff'
-							}}
+							sx={styles.mobileHeadCell}
+
 						>
 							{language === 'ua' ? "В/Н/П" : 'W/D/L'}
 						</TableCell>
 						<TableCell
-							sx={{
-								fontWeight: 700,
-								color: '#fff'
-							}}
+							sx={styles.mobileHeadCell}
+
 						>
 							{language === 'ua' ? "ГЗ/ГП" : "GS/GA"}
 						</TableCell>
 						<TableCell
-							sx={{
-								fontWeight: 700,
-								color: '#fff'
-							}}
+							sx={styles.mobileHeadCell}
+
 						>
 							{language === 'ua' ? "О" : "P"}
 						</TableCell>

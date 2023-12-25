@@ -209,13 +209,20 @@ export const styles = {
 		borderBottom: `3px solid ${isHomeGame ? tableDataColors.colorHome : tableDataColors.colorAway}`
 	}),
 
-	// Mobile Container
+	// Mobile
 
 	mobileContainer: {
 		display: {
 			xs: 'flex',
 			sm: 'none'
 		}
+	},
+
+
+	mobileHeadCell: {
+		fontWeight: 700,
+		color: '#fff',
+		whiteSpace: 'nowrap'
 	},
 
 	// Descr component
