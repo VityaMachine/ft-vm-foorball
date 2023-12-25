@@ -36,7 +36,7 @@ export default function MobileTable({
 								color: '#fff'
 							}}
 						>
-							Team
+							{language === 'ua' ? "Ком" : "Team"}
 						</TableCell>
 						<TableCell
 							sx={{
@@ -52,7 +52,7 @@ export default function MobileTable({
 								color: '#fff'
 							}}
 						>
-							W/D/L
+							{language === 'ua' ? "В/Н/П" : 'W/D/L'}
 						</TableCell>
 						<TableCell
 							sx={{
@@ -60,7 +60,7 @@ export default function MobileTable({
 								color: '#fff'
 							}}
 						>
-							GS/GA
+							{language === 'ua' ? "ГЗ/ГП" : "GS/GA"}
 						</TableCell>
 						<TableCell
 							sx={{
@@ -68,7 +68,7 @@ export default function MobileTable({
 								color: '#fff'
 							}}
 						>
-							P
+							{language === 'ua' ? "О" : "P"}
 						</TableCell>
 					</TableRow>
 				</StyledTableHead>
