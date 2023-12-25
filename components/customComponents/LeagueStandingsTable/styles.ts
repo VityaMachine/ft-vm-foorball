@@ -109,11 +109,11 @@ export const styles = {
 		}
 
 		if (leagueParams.placesData.relegationPlayOff.includes(team.leaguePosition)) {
-			return { ...basicSx, backgroundColor: leaguesPlacesColors.colorUelegationPlayOff }
+			return { ...basicSx, backgroundColor: leaguesPlacesColors.colorRelegationPlayOff }
 		}
 
 		if (leagueParams.placesData.relegationLeague.includes(team.leaguePosition)) {
-			return { ...basicSx, backgroundColor: leaguesPlacesColors.colorUelegationLeague }
+			return { ...basicSx, backgroundColor: leaguesPlacesColors.colorRelegationLeague }
 		}
 
 		return basicSx
@@ -122,6 +122,7 @@ export const styles = {
 	infoTableBodyTeamNameCellBox: {
 		display: 'flex',
 		flexDirection: 'row',
+		alignItems: 'center',
 		'&:hover': {
 			textDecoration: 'underline'
 		}
@@ -196,7 +197,7 @@ export const styles = {
 		// borderRadius: '5px',
 		width: '20px',
 		height: '20px',
-		cursor: 'pointer',
+		cursor: 'pointer'
 	}),
 
 	dataTableNextMatchesImgBox: (isHomeGame: boolean) => ({
@@ -206,5 +207,41 @@ export const styles = {
 		alignItems: 'center',
 		cursor: 'pointer',
 		borderBottom: `3px solid ${isHomeGame ? tableDataColors.colorHome : tableDataColors.colorAway}`
+	}),
+
+	// Mobile Container
+
+	mobileContainer: {
+		display: {
+			xs: 'flex',
+			sm: 'none'
+		}
+	},
+
+	// Descr component
+	descrBox: (color: 'CLGS' | 'CLQ' | 'UELGS' | 'UELQ' | 'CELGS' | 'CELQ' | 'RP' | 'R') => ({
+		minWidth: '20px',
+		minHeight: '20px',
+		maxWidth: '20px',
+		maxHeight: '20px',
+		borderRadius: '5px',
+		bgcolor:
+			color === 'CLGS'
+				? leaguesPlacesColors.colorUefaChampLeagueGS
+				: color === 'CLQ'
+				? leaguesPlacesColors.colorUefaChampLeagueQ
+				: color === 'UELGS'
+				? leaguesPlacesColors.colorUefaEuropaLeagueGS
+				: color === 'UELQ'
+				? leaguesPlacesColors.colorUefaEuropaLeagueQ
+				: color === 'CELGS'
+				? leaguesPlacesColors.colorUefaConfLeagueGS
+				: color === 'CELQ'
+				? leaguesPlacesColors.colorUefaConfLeagueQ
+				: color === 'RP'
+				? leaguesPlacesColors.colorRelegationPlayOff
+				: color === 'R'
+				? leaguesPlacesColors.colorRelegationLeague
+				: 'transparent'
 	})
 }

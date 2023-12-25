@@ -19,7 +19,7 @@ export const teamNames = [
 	{ id: 65, nameLong: { ua: 'Ноттінгем Форест', en: 'Nottingham Forest' }, nameShort: { ua: 'НОТ', en: 'NOT' } },
 	{ id: 1359, nameLong: { ua: 'Лутон', en: 'Luton' }, nameShort: { ua: 'ЛУТ', en: 'LUT' } },
 	{ id: 44, nameLong: { ua: 'Бернлі', en: 'Burnley' }, nameShort: { ua: 'БЕР', en: 'BUR' } },
-	{ id: 62, nameLong: { ua: 'Шеффілд Юнайтед', en: 'Sheffield United' }, nameShort: { ua: 'ШЕФ', en: 'SHE' } },
+	{ id: 62, nameLong: { ua: 'Шеффілд Юнайтед', en: 'Sheffield United' }, nameShort: { ua: 'ШЕФ', en: 'sHE' } },
 
 	// LALIGA
 	{ id: 541, nameLong: { ua: 'Реал Мадрид', en: 'Real Madrid' }, nameShort: { ua: 'РЕА', en: 'RMA' } },
@@ -103,25 +103,7 @@ export const teamNames = [
 	{ id: 80, nameLong: { ua: 'Ліон', en: 'Lyon' }, nameShort: { ua: 'ЛІО', en: 'LYO' } },
 	{ id: 96, nameLong: { ua: 'Тулуза', en: 'Toulouse' }, nameShort: { ua: 'ТУЛ', en: 'TOU' } },
 	{ id: 97, nameLong: { ua: 'Лорьян', en: 'Lorient' }, nameShort: { ua: 'ЛОР', en: 'LOR' } },
-	{ id: 99, nameLong: { ua: 'Клермон', en: 'Clermont Foot' }, nameShort: { ua: 'КЛЕ', en: 'CLE' } },
-
-	// UPL
-	{ id: 6489, nameLong: { ua: 'Кривбас', en: 'Kryvbas' }, nameShort: { ua: 'КРИ', en: 'KRY' } },
-	{ id: 3623, nameLong: { ua: 'Дніпро-1', en: 'Dnipro-1' }, nameShort: { ua: 'ДНІ', en: 'DNI' } },
-	{ id: 6496, nameLong: { ua: 'Полісся', en: 'Polissya' }, nameShort: { ua: 'ПОЛ', en: 'POL' } },
-	{ id: 550, nameLong: { ua: 'Шахтар', en: 'Shakhtar' }, nameShort: { ua: 'ШАХ', en: 'SHA' } },
-	{ id: 572, nameLong: { ua: 'Динамо', en: 'Dynamo' }, nameShort: { ua: 'ДИН', en: 'DYN' } },
-	{ id: 3632, nameLong: { ua: 'Рух', en: 'Ruh' }, nameShort: { ua: 'РУХ', en: 'RUH' } },
-	{ id: 1121, nameLong: { ua: 'Ворскла', en: 'Vorskla' }, nameShort: { ua: 'ВОР', en: 'VOR' } },
-	{ id: 3615, nameLong: { ua: 'Чорноморець', en: 'Chornomorets' }, nameShort: { ua: 'ЧОР', en: 'CHO' } },
-	{ id: 3627, nameLong: { ua: 'Колос', en: 'Kolos' }, nameShort: { ua: 'КОЛ', en: 'KOL' } },
-	{ id: 17161, nameLong: { ua: 'ЛНЗ', en: 'LNZ' }, nameShort: { ua: 'ЛНЗ', en: 'LNZ' } },
-	{ id: 3619, nameLong: { ua: 'Олександрія', en: 'Oleksandria' }, nameShort: { ua: 'ОЛЕ', en: 'OLE' } },
-	{ id: 3628, nameLong: { ua: 'Металіст 1925', en: 'Metalist 1925' }, nameShort: { ua: 'М25', en: 'M25' } },
-	{ id: 3630, nameLong: { ua: 'Оболонь-Бровар', en: "Obolon'-Brovar" }, nameShort: { ua: 'ОБО', en: 'OBO' } },
-	{ id: 599, nameLong: { ua: 'Зоря', en: 'Zorya' }, nameShort: { ua: 'ЗОР', en: 'ZOR' } },
-	{ id: 6501, nameLong: { ua: 'Верес', en: 'Veres' }, nameShort: { ua: 'ВЕР', en: 'VER' } },
-	{ id: 4658, nameLong: { ua: 'Минай', en: 'Minai' }, nameShort: { ua: 'МИН', en: 'MIN' } }
+	{ id: 99, nameLong: { ua: 'Клермон', en: 'Clermont Foot' }, nameShort: { ua: 'КЛЕ', en: 'CLE' } }
 ]
 
 // export const teamNames = []

@@ -1,4 +1,5 @@
 import { byTeamsFixturesParser } from './fixturesHelpers'
+import { prefixes } from '@/constants/teamNamesPrefixes'
 
 const resultSumCalculator = (array: any[], fieldName: string) => {
 	return array
@@ -14,6 +15,9 @@ export const teamsResultsFromFixtures = (
 	sortType?: 'all' | 'home' | 'away'
 ): ITeamResultsFromFixtures[] => {
 	const parsedData = byTeamsFixturesParser(data)
+
+	// console.log(data.find(item => item.fixture.id === 1035353));
+	
 
 	const selectedData = parsedData.map(teamData => ({
 		...teamData,
@@ -37,7 +41,7 @@ export const teamsResultsFromFixtures = (
 			.filter(item => item.status === 'FT')
 			.slice(-5)
 			.reverse(),
-		next5: teamData.fixtures.filter(item => item.status !== 'FT' && item.status !== 'CANC').slice(0, 5),
+		next5: teamData.fixtures.filter(item => item.status === 'NS' || item.status === 'TBD').slice(0, 5),
 		results: {
 			games: teamData.fixtures.filter(fixture => fixture.status === 'FT').length,
 			win: teamData.fixtures.filter(fixture => fixture.result === 'W').length,
@@ -171,28 +175,46 @@ export const sortTableDataHandler = (
 	return sortedTeamsData
 }
 
-export const isTooltippedPlace = (
-  team: ITeamResultsFromFixtures,
-  leagueParams: ILeagueConfig | undefined
-) => {
-  if (!leagueParams) {
-    return false;
-  }
-  if (
-    team.leaguePosition === 1 ||
-    leagueParams.placesData.uefaChampLeagueGS.includes(team.leaguePosition) ||
-    leagueParams.placesData.uefaChampLeagueQ.includes(team.leaguePosition) ||
-    leagueParams.placesData.uefaEuropaLeagueGS.includes(
-      team.leaguePosition
-    ) ||
-    leagueParams.placesData.uefaEuropaLeagueQ.includes(team.leaguePosition) ||
-    leagueParams.placesData.uefaConfLeagueGS.includes(team.leaguePosition) ||
-    leagueParams.placesData.uefaConfLeagueQ.includes(team.leaguePosition) ||
-    leagueParams.placesData.relegationPlayOff.includes(team.leaguePosition) ||
-    leagueParams.placesData.relegationLeague.includes(team.leaguePosition)
-  ) {
-    return true;
-  }
+export const isTooltippedPlace = (team: ITeamResultsFromFixtures, leagueParams: ILeagueConfig | undefined) => {
+	if (!leagueParams) {
+		return false
+	}
+	if (
+		team.leaguePosition === 1 ||
+		leagueParams.placesData.uefaChampLeagueGS.includes(team.leaguePosition) ||
+		leagueParams.placesData.uefaChampLeagueQ.includes(team.leaguePosition) ||
+		leagueParams.placesData.uefaEuropaLeagueGS.includes(team.leaguePosition) ||
+		leagueParams.placesData.uefaEuropaLeagueQ.includes(team.leaguePosition) ||
+		leagueParams.placesData.uefaConfLeagueGS.includes(team.leaguePosition) ||
+		leagueParams.placesData.uefaConfLeagueQ.includes(team.leaguePosition) ||
+		leagueParams.placesData.relegationPlayOff.includes(team.leaguePosition) ||
+		leagueParams.placesData.relegationLeague.includes(team.leaguePosition)
+	) {
+		return true
+	}
 
-  return false;
-};
+	return false
+}
+
+export const shortTeamNameFromOriginalHandler = (teamName: string | undefined) => {
+
+	if(!teamName) {
+		return
+	} 
+
+	const splittedName = teamName.split(' ')
+
+	const clearedName = splittedName.filter(item => !prefixes.includes(item))
+
+	if (clearedName.length === 1) {
+		return clearedName.join().slice(0, 3).toUpperCase()
+	}
+
+	if (clearedName.length === 2) {
+		return clearedName[0].slice(0, 1).toUpperCase() + clearedName[1].slice(0, 2).toUpperCase()
+	}
+
+	if (clearedName.length > 2) {
+		return clearedName[0][0].toUpperCase() + clearedName[1][0].toUpperCase() + clearedName[2][0].toUpperCase()
+	}
+}

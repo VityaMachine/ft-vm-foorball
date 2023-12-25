@@ -106,7 +106,11 @@ const TooltipTitleComponent = ({
 									fontSize: '16px'
 								}}
 							>
-								{team.teamNameOriginal}
+								{team.teamNameData
+									? language === 'ua'
+										? team.teamNameData.longName.ua
+										: team.teamNameData.longName.en
+									: team.teamNameOriginal}
 							</Typography>
 							<Typography
 								sx={{
@@ -181,6 +185,7 @@ const TooltipTitleComponent = ({
 											{item.isHomeGame ? (language === 'ua' ? 'Д' : 'H') : language === 'ua' ? 'Г' : 'A'}
 										</Typography>
 									</TableCell>
+
 									<TableCell
 										padding="none"
 										sx={{
@@ -190,7 +195,11 @@ const TooltipTitleComponent = ({
 											fontSize: '14px'
 										}}
 									>
-										{item.opponentTeamNameOriginal}
+										{item.opponentTeamNameData
+											? language === 'ua'
+												? item.opponentTeamNameData.longName.ua
+												: item.opponentTeamNameData.longName.en
+											: item.opponentTeamNameOriginal}
 									</TableCell>
 									<TableCell padding="none" sx={{ color: '#fff', pl: '10px' }}>
 										<Typography

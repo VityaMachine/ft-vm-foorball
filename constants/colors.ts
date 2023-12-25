@@ -33,8 +33,8 @@ export const leaguesPlacesColors = {
 	colorUefaEuropaLeagueQ: orange[700],
 	colorUefaConfLeagueGS: green[900],
 	colorUefaConfLeagueQ: green[600],
-	colorUelegationPlayOff: red[500],
-	colorUelegationLeague: red[900],
+	colorRelegationPlayOff: red[500],
+	colorRelegationLeague: red[900],
     default: grey[800],
     champion: amber[500]
 }

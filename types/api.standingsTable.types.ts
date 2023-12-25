@@ -71,7 +71,7 @@ interface IFixtureData {
 		status: {
 			elapsed: number
 			long: string
-			short: 'NS' | 'FT' | 'CANC'
+			short: 'NS' | 'FT' | 'CANC' | 'TBD' | '1H' | '2H'
 		}
 		timestamp: number
 		timezone: string
@@ -120,7 +120,7 @@ interface IFixtureConvertedData {
 	dateTime: Date | any
 	referee: string
 	statusLong: string
-	statusShort: 'NS' | 'FT' | 'CANC'
+	statusShort: 'NS' | 'FT' | 'CANC' | 'TBD' | '1H' | '2H'
 	city: string
 	stadiumName: string
 	stadiumId: number
@@ -185,7 +185,7 @@ interface ITeamFixturesConverted extends ITeamBasicFixtureData {
 	isHomeGame: boolean
 	opponentId: number
 	opponentTeamNameOriginal: string
-  opponentTeamNameData: ITeamNamesData | undefined | null
+	opponentTeamNameData: ITeamNamesData | undefined | null
 	opponentTeamLogo: string
 	referee: string
 	result: 'W' | 'D' | 'L' | null | undefined
@@ -193,7 +193,7 @@ interface ITeamFixturesConverted extends ITeamBasicFixtureData {
 	stadiumCity: string
 	stadiumId: number
 	stadiumName: string
-	status: 'FT' | 'NS' | 'CANC'
+	status: 'NS' | 'FT' | 'CANC' | 'TBD' | '1H' | '2H'
 }
 
 interface ITeamCalculatedResults {
@@ -210,7 +210,7 @@ interface ITeamCalculatedResults {
 interface ITeamResultsFromFixtures {
 	teamId: number | undefined
 	teamNameOriginal: string | undefined
-  teamNameData: ITeamNamesData | undefined | null
+	teamNameData: ITeamNamesData | undefined | null
 	teamLogo: string | undefined
 	leaguePosition: number
 	leagueId: number | undefined
@@ -233,6 +233,6 @@ interface ISortingResultsData {
 	goalsAgainst: number
 	goalsDiff: number
 	points: number
-	next5: any[]
-	prev5: any[]
+	next5: ITeamFixturesConverted[]
+	prev5: ITeamFixturesConverted[]
 }
