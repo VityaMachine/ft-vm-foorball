@@ -70,7 +70,7 @@ export const fixturesDataParser = (data: IFixtureData[]): IFixtureConvertedData[
 			awayTeamGoalsHT: item.score.halftime.away,
 			awayTeamGoalsFT: item.score.fulltime.away,
 			awayTeamResult: fixtureResultHandler(item.score.fulltime.away, item.score.fulltime.home)
-		}
+		} as IFixtureConvertedData
 	})
 }
 
@@ -126,8 +126,8 @@ export const byTeamsFixturesParser = (data: IFixtureData[]) => {
 								? fixture.homeTeamResult
 								: fixtureResultHandler(fixture.online.goalsHome, fixture.online.goalsAway)
 							: !fixture.online
-								? fixture.awayTeamResult
-								: fixtureResultHandler(fixture.online.goalsAway, fixture.online.goalsHome),
+							? fixture.awayTeamResult
+							: fixtureResultHandler(fixture.online.goalsAway, fixture.online.goalsHome),
 
 					finalScore:
 						fixture.homeTeamGoalsFT === null || fixture.awayTeamGoalsFT === null
@@ -165,16 +165,16 @@ export const byTeamsFixturesParser = (data: IFixtureData[]) => {
 								? fixture.homeTeamGoalsFT
 								: fixture.online.goalsHome
 							: !fixture.online
-								? fixture.awayTeamGoalsFT
-								: fixture.online.goalsAway,
+							? fixture.awayTeamGoalsFT
+							: fixture.online.goalsAway,
 					goalsAgainst:
 						fixture.homeTeamId === teamId
 							? !fixture.online
 								? fixture.awayTeamGoalsFT
 								: fixture.online.goalsAway
 							: !fixture.online
-								? fixture.homeTeamGoalsFT
-								: fixture.online.goalsHome
+							? fixture.homeTeamGoalsFT
+							: fixture.online.goalsHome
 				}))
 		}
 
