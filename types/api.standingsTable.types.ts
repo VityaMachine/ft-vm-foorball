@@ -71,7 +71,7 @@ interface IFixtureData {
 		status: {
 			elapsed: number
 			long: string
-			short: 'NS' | 'FT' | 'CANC' | 'TBD' | '1H' | '2H'
+			short: 'NS' | 'FT' | 'CANC' | 'TBD' | '1H' | '2H' | 'HT'
 		}
 		timestamp: number
 		timezone: string
@@ -120,7 +120,7 @@ interface IFixtureConvertedData {
 	dateTime: Date | any
 	referee: string
 	statusLong: string
-	statusShort: 'NS' | 'FT' | 'CANC' | 'TBD' | '1H' | '2H'
+	statusShort: 'NS' | 'FT' | 'CANC' | 'TBD' | '1H' | '2H' | 'HT'
 	city: string
 	stadiumName: string
 	stadiumId: number
@@ -128,13 +128,19 @@ interface IFixtureConvertedData {
 	leagueId: number
 	leagueName: string
 
+	online: {
+		elapsedTime: number
+		goalsHome: number
+		goalsAway: number
+	} | null
+
 	homeTeamNameOriginal: string
 	homeTeamNameData: ITeamNamesData | null
 	homeTeamId: number
 	homeTeamLogo: string
 	homeTeamGoalsHT: number | null
 	homeTeamGoalsFT: number | null
-	homeTeamResult: 'W' | 'D' | 'L' | null | undefined
+	homeTeamResult: 'W' | 'D' | 'L' | null
 
 	awayTeamNameOriginal: string
 	awayTeamNameData: ITeamNamesData | null
@@ -142,24 +148,13 @@ interface IFixtureConvertedData {
 	awayTeamLogo: string
 	awayTeamGoalsHT: number | null
 	awayTeamGoalsFT: number | null
-	awayTeamResult: 'W' | 'D' | 'L' | null | undefined
+	awayTeamResult: 'W' | 'D' | 'L' | null
 }
 
 type CorretionItemType = {
-	// field: 'games' | 'win' | 'draw' | 'lose' | 'goalsFor' | 'goalsAgainst' | 'goalsDiff' | 'points',
-	field: string
+	field: 'games' | 'win' | 'draw' | 'lose' | 'goalsFor' | 'goalsAgainst' | 'goalsDiff' | 'points'
 	value: number
 	comment: {
-		ua: string
-		en: string
-	}
-}
-
-type CorretionItemTypeUnd = {
-	// field: 'games' | 'win' | 'draw' | 'lose' | 'goalsFor' | 'goalsAgainst' | 'goalsDiff' | 'points',
-	field?: string | undefined
-	value?: number | undefined
-	comment?: {
 		ua: string
 		en: string
 	}
@@ -185,15 +180,22 @@ interface ITeamFixturesConverted extends ITeamBasicFixtureData {
 	isHomeGame: boolean
 	opponentId: number
 	opponentTeamNameOriginal: string
-	opponentTeamNameData: ITeamNamesData | undefined | null
+	opponentTeamNameData: ITeamNamesData | null
 	opponentTeamLogo: string
 	referee: string
-	result: 'W' | 'D' | 'L' | null | undefined
+	result: 'W' | 'D' | 'L' | null
 	round: string
 	stadiumCity: string
 	stadiumId: number
 	stadiumName: string
-	status: 'NS' | 'FT' | 'CANC' | 'TBD' | '1H' | '2H'
+	status: 'NS' | 'FT' | 'CANC' | 'TBD' | '1H' | '2H' | 'HT'
+
+	online: {
+		elapsedTime: number
+		goalsHome: number
+		goalsAway: number
+		onlineResult: 'W' | 'D' | 'L' | null
+	} | null
 }
 
 interface ITeamCalculatedResults {
@@ -208,17 +210,17 @@ interface ITeamCalculatedResults {
 }
 
 interface ITeamResultsFromFixtures {
-	teamId: number | undefined
-	teamNameOriginal: string | undefined
-	teamNameData: ITeamNamesData | undefined | null
-	teamLogo: string | undefined
+	teamId: number
+	teamNameOriginal: string
+	teamNameData: ITeamNamesData | null
+	teamLogo: string
 	leaguePosition: number
-	leagueId: number | undefined
+	leagueId: number
 	prev5: ITeamFixturesConverted[]
 	next5: ITeamFixturesConverted[]
 	fixtures: ITeamFixturesConverted[]
 	results: ITeamCalculatedResults
-	corrections: null | CorretionItemTypeUnd[]
+	corrections: null | CorretionItemType[]
 }
 
 interface ISortingResultsData {

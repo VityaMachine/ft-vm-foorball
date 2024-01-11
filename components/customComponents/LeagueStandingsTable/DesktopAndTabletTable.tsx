@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import { useParams } from 'next/navigation'
 
 import Link from 'next/link'
 import Image from 'next/image'
@@ -26,13 +25,14 @@ import { styles } from './styles'
 import { modifiersHandler } from './LeagueStandingsTable.popperModifiers'
 
 import { standingsTableRows } from '@/configs/standingTableConfigs'
-import { tournamentsConfigs } from '@/configs/tournaments'
 
 import { sortTableDataHandler, isTooltippedPlace } from '@/helpers/leagueStandingsHelpers'
 
 import { StyledTableHead } from './StyledTableHead'
 
-export default function DesktopAndMobileTable({
+import { tableDataColors } from '@/constants/colors'
+
+export default function DesktopAndTabletTable({
 	leagueData,
 	language,
 	leagueParams
@@ -216,6 +216,7 @@ export default function DesktopAndMobileTable({
 															width={25}
 															height={25}
 															alt={team.teamNameOriginal ? team.teamNameOriginal : ''}
+															className="w-[25px] h-[25px] object-contain"
 														/>
 													</Box>
 													<Typography sx={styles.infoTableBodyTeamNameCellBoxText}>
@@ -240,6 +241,14 @@ export default function DesktopAndMobileTable({
 				<Table size="small">
 					<StyledTableHead>
 						<TableRow>
+							<TableCell
+								sx={{
+									display: {
+										xs: 'none',
+										md: 'table-cell'
+									}
+								}}
+							></TableCell>
 							{dataRows.map(row => (
 								<TableCell key={row.id} padding="none" sx={styles.dataTableHeaderCell(row.isSortable)}>
 									<Tooltip
@@ -301,6 +310,56 @@ export default function DesktopAndMobileTable({
 										onMouseOver={() => setHoveredTeamRow(team.teamId ? team.teamId : null)}
 										onMouseLeave={() => setHoveredTeamRow(null)}
 									>
+										<TableCell
+											sx={{
+												display: {
+													xs: 'none',
+													md: 'table-cell'
+												}
+											}}
+										>
+											{team.fixtures.some(item => item.online) ? (
+												<Tooltip 
+												title={<Box>
+
+													Online Tooltip
+
+												</Box>}>
+													<Box
+														sx={{
+															display: 'flex',
+															alignItems: 'center',
+															justifyContent: 'center',
+															whiteSpace: 'nowrap',
+															bgcolor:
+																team.fixtures.find(item => item.online)?.online?.onlineResult === 'W'
+																	? tableDataColors.colorWin
+																	: team.fixtures.find(item => item.online)?.online?.onlineResult === 'D'
+																	? tableDataColors.colorDraw
+																	: tableDataColors.colorLose,
+															color:
+																team.fixtures.find(item => item.online)?.online?.onlineResult === 'D'
+																	? '#2b2b2b'
+																	: '#FFF',
+															// px: '4px',
+															py: '1px',
+															borderRadius: '5px',
+															fontSize: '14px',
+															width: '30px',
+															fontWeight: 700,
+															cursor: 'default'
+
+														}}
+													>
+														{team.fixtures.find(item => item.online)?.online?.goalsHome}-
+														{team.fixtures.find(item => item.online)?.online?.goalsAway}
+													</Box>
+												</Tooltip>
+											) : (
+												<Box></Box>
+											)}
+										</TableCell>
+
 										<EnchancedTableDataCell team={team} field="games" toolTipvalue="finalScore" />
 
 										<EnchancedTableDataCell team={team} field="win" toolTipvalue="finalScore" />
@@ -440,8 +499,10 @@ export default function DesktopAndMobileTable({
 																<Image
 																	src={item.opponentTeamLogo}
 																	alt={item.opponentTeamNameOriginal}
+																	objectFit="contain"
 																	width={23}
 																	height={23}
+																	className="w-[23px] h-[23px] object-contain"
 																/>
 															</Box>
 														</Link>

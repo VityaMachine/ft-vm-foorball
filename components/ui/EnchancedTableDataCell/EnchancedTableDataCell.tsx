@@ -30,8 +30,12 @@ const TooltipTitleComponent = ({
 
 	const resultArray =
 		sortType === 'all'
-			? team.fixtures.filter(item => item.status === 'FT')
-			: team.fixtures.filter(item => item.status === 'FT').filter(item => item.result === sortType)
+			? team.fixtures.filter(
+					item => item.status === 'FT' || item.status === 'HT' || item.status === '1H' || item.status === '2H'
+			  )
+			: team.fixtures
+					.filter(item => item.status === 'FT' || item.status === 'HT' || item.status === '1H' || item.status === '2H')
+					.filter(item => item.result === sortType)
 
 	const textDataCreator = (field: keyof ITeamCalculatedResults, team: ITeamResultsFromFixtures) => {
 		const totalLeagueGames = team.fixtures.length
@@ -190,16 +194,47 @@ const TooltipTitleComponent = ({
 										padding="none"
 										sx={{
 											px: '5px',
-											color: '#fff',
-											cursor: 'pointer',
-											fontSize: '14px'
+											color: '#fff'
 										}}
 									>
-										{item.opponentTeamNameData
-											? language === 'ua'
-												? item.opponentTeamNameData.longName.ua
-												: item.opponentTeamNameData.longName.en
-											: item.opponentTeamNameOriginal}
+										<Box
+											sx={{
+												display: 'flex',
+												alignItems: 'center'
+											}}
+										>
+											<Typography
+												sx={{
+													fontSize: '14px'
+												}}
+											>
+												{item.opponentTeamNameData
+													? language === 'ua'
+														? item.opponentTeamNameData.longName.ua
+														: item.opponentTeamNameData.longName.en
+													: item.opponentTeamNameOriginal}
+											</Typography>
+											{item.online && (
+												<Box
+													sx={{
+														display: 'flex',
+														alignItems: 'center',
+														ml: '5px'
+													}}
+												>
+													<Typography
+														sx={{
+															borderRadius: '5px',
+															fontSize: '14px',
+															px: '3px',
+															bgcolor: red[800]
+														}}
+													>
+														Live! ({item.online.elapsedTime}&apos;)
+													</Typography>
+												</Box>
+											)}
+										</Box>
 									</TableCell>
 									<TableCell padding="none" sx={{ color: '#fff', pl: '10px' }}>
 										<Typography
@@ -265,7 +300,13 @@ const TooltipTitleComponent = ({
 														: 'transparent'
 											}}
 										>
-											{item[toolTipvalue]}
+											{!item.online && item[toolTipvalue]}
+											{item.online && toolTipvalue !== 'finalScore' && item[toolTipvalue]}
+											{item.online && toolTipvalue === 'finalScore' && (
+												<>
+													{item.online.goalsHome}-{item.online.goalsAway}
+												</>
+											)}
 										</Typography>
 									</TableCell>
 								</TableRow>

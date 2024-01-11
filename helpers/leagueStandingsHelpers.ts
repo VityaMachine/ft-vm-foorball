@@ -17,7 +17,6 @@ export const teamsResultsFromFixtures = (
 	const parsedData = byTeamsFixturesParser(data)
 
 	// console.log(data.find(item => item.fixture.id === 1035353));
-	
 
 	const selectedData = parsedData.map(teamData => ({
 		...teamData,
@@ -43,7 +42,10 @@ export const teamsResultsFromFixtures = (
 			.reverse(),
 		next5: teamData.fixtures.filter(item => item.status === 'NS' || item.status === 'TBD').slice(0, 5),
 		results: {
-			games: teamData.fixtures.filter(fixture => fixture.status === 'FT').length,
+			games: teamData.fixtures.filter(
+				fixture =>
+					fixture.status === 'FT' || fixture.status === '1H' || fixture.status === '2H' || fixture.status === 'HT'
+			).length,
 			win: teamData.fixtures.filter(fixture => fixture.result === 'W').length,
 			draw: teamData.fixtures.filter(fixture => fixture.result === 'D').length,
 			lose: teamData.fixtures.filter(fixture => fixture.result === 'L').length,
@@ -116,7 +118,7 @@ export const teamsResultsFromFixtures = (
 		leaguePosition: index + 1
 	}))
 
-	return finilizedResultsData
+	return finilizedResultsData as ITeamResultsFromFixtures[]
 }
 
 // type ITeamResultsFromFixtures[]
@@ -124,7 +126,7 @@ export const sortTableDataHandler = (
 	teamsData: ITeamResultsFromFixtures[],
 	sortingField: keyof ISortingResultsData,
 	sortingBy: 'asc' | 'desc'
-) => {
+): ITeamResultsFromFixtures[] => {
 	const dataToSorting = teamsData.map(team => ({
 		teamId: team.teamId,
 		position: team.leaguePosition,
@@ -172,7 +174,7 @@ export const sortTableDataHandler = (
 		return teamsData.find(item => item.teamId === teamId)
 	})
 
-	return sortedTeamsData
+	return sortedTeamsData as ITeamResultsFromFixtures[]
 }
 
 export const isTooltippedPlace = (team: ITeamResultsFromFixtures, leagueParams: ILeagueConfig | undefined) => {
@@ -197,10 +199,9 @@ export const isTooltippedPlace = (team: ITeamResultsFromFixtures, leagueParams: 
 }
 
 export const shortTeamNameFromOriginalHandler = (teamName: string | undefined) => {
-
-	if(!teamName) {
+	if (!teamName) {
 		return
-	} 
+	}
 
 	const splittedName = teamName.split(' ')
 

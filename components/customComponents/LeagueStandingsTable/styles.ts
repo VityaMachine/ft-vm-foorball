@@ -17,8 +17,8 @@ export const styles = {
 	},
 
 	infoTableContainer: {
-		width: 300,
-		minWidth: 300,
+		width: 265,
+		minWidth: 265,
 		overflow: 'hidden'
 	},
 
@@ -137,8 +137,9 @@ export const styles = {
 
 	dataTableContainer: {
 		width: {
-			xs: 465,
-			md: 805
+			xs: 523,
+			md: 870
+			
 		},
 		overflowX: 'auto'
 	},
@@ -206,7 +207,10 @@ export const styles = {
 		justifyContent: 'center',
 		alignItems: 'center',
 		cursor: 'pointer',
-		borderBottom: `3px solid ${isHomeGame ? tableDataColors.colorHome : tableDataColors.colorAway}`
+		borderBottom: `3px solid ${isHomeGame ? tableDataColors.colorHome : tableDataColors.colorAway}`,
+		// width: '23px',
+		// height: "23px"
+
 	}),
 
 	// Mobile

@@ -3,21 +3,16 @@
 import { useState, useContext } from 'react'
 import { useParams } from 'next/navigation'
 
-import { Box, Typography, Chip, Table, TableBody, TableCell, TableContainer, TableRow, Container } from '@mui/material'
-import Link from 'next/link'
-import Image from 'next/image'
+import { Box, Chip, Container } from '@mui/material'
 
 import { LanguageContext } from '@/context/LanguageContext'
 
 import { styles } from './styles'
-import DesktopAndMobileTable from './DesktopAndMobileTable'
+import DesktopAndTabletTable from './DesktopAndTabletTable'
 
 import { teamsResultsFromFixtures } from '@/helpers/leagueStandingsHelpers'
 
 import leaagueCorrections from '@/constants/leagues.corrections'
-import { StyledTableHead } from './StyledTableHead'
-
-import { isTooltippedPlace, shortTeamNameFromOriginalHandler } from '@/helpers/leagueStandingsHelpers'
 
 import { tournamentsConfigs } from '@/configs/tournaments'
 import LeaguesDescr from './LeaguesDescr'
@@ -36,13 +31,15 @@ export default function LeagueStandingsTable({ fixturesData }: { fixturesData: I
 	const [matchesToShow, setMatchesToShow] = useState<'all' | 'home' | 'away'>('all')
 
 	const params = useParams()
-	const leagueParams: ILeagueConfig | undefined = tournamentsConfigs.leagues.find(
+	const leagueParams: ILeagueConfig = tournamentsConfigs.leagues.find(
 		league => league.shortName === params.leagueName
-	)
+	) as ILeagueConfig
 
 	const { language } = useContext(LanguageContext)
 
 	const leagueData = teamsResultsFromFixtures(fixturesData, leaagueCorrections, matchesToShow)
+
+	console.log(leagueData)
 
 	return (
 		<Box sx={styles.mainContainer}>
@@ -90,7 +87,7 @@ export default function LeagueStandingsTable({ fixturesData }: { fixturesData: I
 
 			{/* desktop and tablet */}
 			<Box sx={styles.desktopTabletContainer}>
-				<DesktopAndMobileTable leagueData={leagueData} language={language} leagueParams={leagueParams} />
+				<DesktopAndTabletTable leagueData={leagueData} language={language} leagueParams={leagueParams} />
 			</Box>
 
 			{/* mobile */}

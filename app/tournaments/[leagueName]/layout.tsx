@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useContext } from 'react'
+import { useEffect, useContext, useRef } from 'react'
 import { useParams } from 'next/navigation'
 
 import { tournamentsConfigs } from '@/configs/tournaments'
@@ -12,17 +12,22 @@ import { apiFootball } from '@/services/api-football.rapidapi'
 export default function LeagueLayout({ children }: { children: React.ReactNode }) {
 	const { dispatch } = useContext(FixturesApiContext)
 
+	const intervalId = useRef<ReturnType<typeof setTimeout> | string | number | undefined>(undefined)
+
 	const params = useParams()
 	const leagueData = tournamentsConfigs.leagues.find(league => league.shortName === params.leagueName)
 
 	useEffect(() => {
+
+		dispatch({
+			type: 'status',
+			payload: {
+				status: 'pending'
+			}
+		})
+
 		const getFixturesData = async () => {
-			dispatch({
-				type: 'status',
-				payload: {
-					status: 'pending'
-				}
-			})
+
 
 			if (leagueData) {
 				const fixturesParams = {
@@ -55,10 +60,23 @@ export default function LeagueLayout({ children }: { children: React.ReactNode }
 			}
 		}
 
-		getFixturesData()
+		// initial load data
+		getFixturesData();
+
+		// refresh data every minute
+		intervalId.current = setInterval(getFixturesData, 60000)
+
+
+		return () => {
+			stopInterval();
+		}
+
 	}, [dispatch, leagueData])
 
 
+	const stopInterval = (): void => {
+		clearInterval(intervalId.current)
+	}
 
 	return <>{children}</>
 }

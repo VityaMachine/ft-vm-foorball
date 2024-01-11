@@ -8,10 +8,10 @@ export const apiFootball = async ({
 	currentSeason = true,
 	timezone = false
 }: {
-	urlPath: string,
-	reqParams?: IApiOptionsCreatorParams,
-	currentSeason?: boolean,
-	timezone?: boolean,
+	urlPath: string
+	reqParams?: IApiOptionsCreatorParams
+	currentSeason?: boolean
+	timezone?: boolean
 }): Promise<IApiResponse> => {
 	const options = {
 		method: 'GET',
