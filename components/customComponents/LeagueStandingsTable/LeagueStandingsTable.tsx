@@ -39,7 +39,7 @@ export default function LeagueStandingsTable({ fixturesData }: { fixturesData: I
 
 	const leagueData = teamsResultsFromFixtures(fixturesData, leaagueCorrections, matchesToShow)
 
-	console.log(leagueData)
+	// console.log(leagueData)
 
 	return (
 		<Box sx={styles.mainContainer}>

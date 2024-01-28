@@ -30,7 +30,7 @@ import { sortTableDataHandler, isTooltippedPlace } from '@/helpers/leagueStandin
 
 import { StyledTableHead } from './StyledTableHead'
 
-import { tableDataColors } from '@/constants/colors'
+import OnlineScoreCell from './OnlineScoreCell'
 
 export default function DesktopAndTabletTable({
 	leagueData,
@@ -318,46 +318,7 @@ export default function DesktopAndTabletTable({
 												}
 											}}
 										>
-											{team.fixtures.some(item => item.online) ? (
-												<Tooltip 
-												title={<Box>
-
-													Online Tooltip
-
-												</Box>}>
-													<Box
-														sx={{
-															display: 'flex',
-															alignItems: 'center',
-															justifyContent: 'center',
-															whiteSpace: 'nowrap',
-															bgcolor:
-																team.fixtures.find(item => item.online)?.online?.onlineResult === 'W'
-																	? tableDataColors.colorWin
-																	: team.fixtures.find(item => item.online)?.online?.onlineResult === 'D'
-																	? tableDataColors.colorDraw
-																	: tableDataColors.colorLose,
-															color:
-																team.fixtures.find(item => item.online)?.online?.onlineResult === 'D'
-																	? '#2b2b2b'
-																	: '#FFF',
-															// px: '4px',
-															py: '1px',
-															borderRadius: '5px',
-															fontSize: '14px',
-															width: '30px',
-															fontWeight: 700,
-															cursor: 'default'
-
-														}}
-													>
-														{team.fixtures.find(item => item.online)?.online?.goalsHome}-
-														{team.fixtures.find(item => item.online)?.online?.goalsAway}
-													</Box>
-												</Tooltip>
-											) : (
-												<Box></Box>
-											)}
+											<OnlineScoreCell team={team} language={language} setOpponentHover={setHoveredOpponentTeam} />
 										</TableCell>
 
 										<EnchancedTableDataCell team={team} field="games" toolTipvalue="finalScore" />
@@ -429,10 +390,6 @@ export default function DesktopAndTabletTable({
 															className="flex justify-center items-center"
 														>
 															<Box
-																onMouseOver={() => setHoveredOpponentTeam(item.opponentId)}
-																onMouseLeave={() => {
-																	setHoveredOpponentTeam(null)
-																}}
 																sx={{
 																	...styles.dataTableLastMatchesDataBox(item.result)
 																}}
@@ -488,18 +445,18 @@ export default function DesktopAndTabletTable({
 														placement="top"
 														followCursor
 													>
-														<Link href={`/fixtures/${item.fixtureId}`}>
-															<Box
-																onMouseOver={() => setHoveredOpponentTeam(item.opponentId)}
-																onMouseLeave={() => {
-																	setHoveredOpponentTeam(null)
-																}}
-																sx={styles.dataTableNextMatchesImgBox(item.isHomeGame)}
-															>
+														<Link
+															href={`/fixtures/${item.fixtureId}`}
+															onMouseOver={() => setHoveredOpponentTeam(item.opponentId)}
+															onMouseLeave={() => {
+																setHoveredOpponentTeam(null)
+															}}
+														>
+															<Box sx={styles.dataTableNextMatchesImgBox(item.isHomeGame)}>
 																<Image
 																	src={item.opponentTeamLogo}
 																	alt={item.opponentTeamNameOriginal}
-																	objectFit="contain"
+																	// objectFit="contain"
 																	width={23}
 																	height={23}
 																	className="w-[23px] h-[23px] object-contain"

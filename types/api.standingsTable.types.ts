@@ -59,6 +59,8 @@ interface IFixtureTeam {
 	winner: boolean | null
 }
 
+type shortMatchStatusType = 'NS' | 'FT' | 'CANC' | 'TBD' | '1H' | '2H' | 'HT'
+
 interface IFixtureData {
 	fixture: {
 		date: string
@@ -71,7 +73,7 @@ interface IFixtureData {
 		status: {
 			elapsed: number
 			long: string
-			short: 'NS' | 'FT' | 'CANC' | 'TBD' | '1H' | '2H' | 'HT'
+			short: shortMatchStatusType
 		}
 		timestamp: number
 		timezone: string
@@ -114,13 +116,15 @@ interface ITeamNamesData {
 	}
 }
 
+type resultMatchType = 'W' | 'D' | 'L' | null
+
 interface IFixtureConvertedData {
 	fixtureId: number
 	date_text: string
 	dateTime: Date | any
 	referee: string
 	statusLong: string
-	statusShort: 'NS' | 'FT' | 'CANC' | 'TBD' | '1H' | '2H' | 'HT'
+	statusShort: shortMatchStatusType
 	city: string
 	stadiumName: string
 	stadiumId: number
@@ -140,7 +144,7 @@ interface IFixtureConvertedData {
 	homeTeamLogo: string
 	homeTeamGoalsHT: number | null
 	homeTeamGoalsFT: number | null
-	homeTeamResult: 'W' | 'D' | 'L' | null
+	homeTeamResult: resultMatchType
 
 	awayTeamNameOriginal: string
 	awayTeamNameData: ITeamNamesData | null
@@ -148,7 +152,7 @@ interface IFixtureConvertedData {
 	awayTeamLogo: string
 	awayTeamGoalsHT: number | null
 	awayTeamGoalsFT: number | null
-	awayTeamResult: 'W' | 'D' | 'L' | null
+	awayTeamResult: resultMatchType
 }
 
 type CorretionItemType = {
@@ -183,18 +187,18 @@ interface ITeamFixturesConverted extends ITeamBasicFixtureData {
 	opponentTeamNameData: ITeamNamesData | null
 	opponentTeamLogo: string
 	referee: string
-	result: 'W' | 'D' | 'L' | null
+	result: resultMatchType
 	round: string
 	stadiumCity: string
 	stadiumId: number
 	stadiumName: string
-	status: 'NS' | 'FT' | 'CANC' | 'TBD' | '1H' | '2H' | 'HT'
+	status: shortMatchStatusType
 
 	online: {
 		elapsedTime: number
 		goalsHome: number
 		goalsAway: number
-		onlineResult: 'W' | 'D' | 'L' | null
+		onlineResult: resultMatchType
 	} | null
 }
 

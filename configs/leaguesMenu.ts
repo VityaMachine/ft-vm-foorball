@@ -8,17 +8,10 @@ export const menuItemsConfigs = [
 	},
 	{
 		itemText: {
-			ua: 'Зіграні матчі',
-			en: 'Played matches'
+			ua: 'Матчі чемпіонату',
+			en: 'League matches'
 		},
 		path: 'mathes'
-	},
-	{
-		itemText: {
-			ua: 'Календар',
-			en: 'Calendar'
-		},
-		path: 'calendar'
 	},
 	{
 		itemText: {

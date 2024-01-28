@@ -1,22 +1,23 @@
 import { teamNames } from '@/constants/teamNames'
 
-const fixtureResultHandler = (
-	teamForGoals: number | null,
-	teamAgainstGoals: number | null
-): 'W' | 'D' | 'L' | null | undefined => {
+const fixtureResultHandler = (teamForGoals: number | null, teamAgainstGoals: number | null): 'W' | 'D' | 'L' | null => {
 	if (teamForGoals === null || teamAgainstGoals === null) {
 		return null
 	}
 
-	if (teamForGoals > teamAgainstGoals) {
-		return 'W'
+	if (typeof teamForGoals === 'number' && typeof teamAgainstGoals === 'number') {
+		if (teamForGoals > teamAgainstGoals) {
+			return 'W'
+		}
+		if (teamForGoals === teamAgainstGoals) {
+			return 'D'
+		}
+		if (teamForGoals < teamAgainstGoals) {
+			return 'L'
+		}
 	}
-	if (teamForGoals === teamAgainstGoals) {
-		return 'D'
-	}
-	if (teamForGoals < teamAgainstGoals) {
-		return 'L'
-	}
+
+	return null
 }
 
 export const fixturesDataParser = (data: IFixtureData[]): IFixtureConvertedData[] => {
@@ -74,7 +75,7 @@ export const fixturesDataParser = (data: IFixtureData[]): IFixtureConvertedData[
 	})
 }
 
-const ptsRsolver = (result: 'W' | 'D' | 'L' | null | undefined) => {
+const ptsRsolver = (result: 'W' | 'D' | 'L' | null) => {
 	switch (result) {
 		case 'W':
 			return 3
