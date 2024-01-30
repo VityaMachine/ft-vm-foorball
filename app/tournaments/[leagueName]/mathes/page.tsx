@@ -11,7 +11,7 @@ export default function PlayedMatches() {
 	const { state } = useContext(FixturesApiContext)
 	const { data, status } = state
 
-  console.log(data);
+//   console.log(data);
   
 
 

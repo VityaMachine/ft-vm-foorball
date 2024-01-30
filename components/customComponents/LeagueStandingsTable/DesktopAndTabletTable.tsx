@@ -208,14 +208,14 @@ export default function DesktopAndTabletTable({
 										</TableCell>
 
 										<TableCell padding="none" width={185}>
-											<Link href={`/teams/${team.teamId}`}>
+											<Link href={`/team/${team.teamId}`}>
 												<Box sx={styles.infoTableBodyTeamNameCellBox}>
 													<Box>
 														<Image
-															src={team.teamLogo ? team.teamLogo : ''}
+															src={team.teamLogo}
 															width={25}
 															height={25}
-															alt={team.teamNameOriginal ? team.teamNameOriginal : ''}
+															alt={team.teamNameOriginal}
 															className="w-[25px] h-[25px] object-contain"
 														/>
 													</Box>
@@ -386,7 +386,7 @@ export default function DesktopAndTabletTable({
 															onMouseLeave={() => {
 																setHoveredOpponentTeam(null)
 															}}
-															href={`/fixtures/${item.fixtureId}`}
+															href={`/fixture/${item.fixtureId}`}
 															className="flex justify-center items-center"
 														>
 															<Box
@@ -446,7 +446,7 @@ export default function DesktopAndTabletTable({
 														followCursor
 													>
 														<Link
-															href={`/fixtures/${item.fixtureId}`}
+															href={`/fixture/${item.fixtureId}`}
 															onMouseOver={() => setHoveredOpponentTeam(item.opponentId)}
 															onMouseLeave={() => {
 																setHoveredOpponentTeam(null)

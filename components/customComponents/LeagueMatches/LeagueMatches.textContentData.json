@@ -1,0 +1,35 @@
+{
+	"ua": {
+		"matchTypeSelectLabel": "Матчі",
+		"selectValueAll": "Всі",
+		"matchTypes": ["Не розпочаті", "Онлайн", "Завершені", "Сьогодні", "Завтра", "Тиждень"],
+		"matchTypeNS": "Не розпочаті",
+		"matchTypeOnline": "Онлайн",
+		"matchTypeToday": "Сьогодні",
+		"matchTypeTomorrow": "Завтра",
+		"matchTypeWeek": "Цього тижня",
+		"matchTypeFT": "Завершені",
+		"teamLSelectabel": "Клуб",
+		"side": "Сторона",
+		"sideHome": "Дома",
+		"sideAway": "На виїзді",
+		"noMatches": "Відсутні матчі за заданими параметрами"
+	},
+	"en": {
+		"matchTypeSelectLabel": "Matches",
+		"selectValueAll": "All",
+		"matchTypes": ["Not started", "Online", "Finished", "Today", "Tomorrow", "Week"],
+		"matchTypeNS": "Not started",
+		"matchTypeOnline": "Online",
+		"matchTypeToday": "Today",
+		"matchTypeTomorrow": "Tomorrow",
+		"matchTypeWeek": "This week",
+		"matchTypeFT": "Finished",
+		"teamLSelectabel": "Team",
+		"side": "Side",
+		"sideHome": "Home",
+		"sideAway": "Away",
+		"noMatches": "No matches with selected params"
+
+	}
+}

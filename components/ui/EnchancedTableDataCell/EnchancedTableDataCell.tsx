@@ -171,7 +171,7 @@ const TooltipTitleComponent = ({
 						<TableBody>
 							{resultArray.map(item => (
 								<TableRow key={item.fixtureId}>
-									<TableCell padding="none" sx={{ py: '3px' }}>
+									<TableCell padding="none" sx={{ py: '2px' }}>
 										<Typography
 											sx={{
 												display: 'flex',
@@ -181,7 +181,7 @@ const TooltipTitleComponent = ({
 												height: '18px',
 												color: '#fff',
 												borderRadius: '50%',
-												fontSize: '12px',
+												fontSize: '10px',
 												bgcolor: item.isHomeGame ? lightBlue[700] : amber[800],
 												cursor: 'default'
 											}}
@@ -236,6 +236,7 @@ const TooltipTitleComponent = ({
 											)}
 										</Box>
 									</TableCell>
+
 									<TableCell padding="none" sx={{ color: '#fff', pl: '10px' }}>
 										<Typography
 											sx={{
@@ -246,8 +247,8 @@ const TooltipTitleComponent = ({
 												p: '2px',
 												px: '5px',
 												borderRadius: '5px',
-												height: '20px',
-												minWidth: '20px',
+												height: '18px',
+												minWidth: '18px',
 												color:
 													(toolTipvalue === 'finalScore' || toolTipvalue === 'points') && item.result === 'D'
 														? '#2b2b2b'

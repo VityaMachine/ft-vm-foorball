@@ -59,7 +59,7 @@ interface IFixtureTeam {
 	winner: boolean | null
 }
 
-type shortMatchStatusType = 'NS' | 'FT' | 'CANC' | 'TBD' | '1H' | '2H' | 'HT'
+type shortMatchStatusType = 'NS' | 'FT' | 'CANC' | 'TBD' | '1H' | '2H' | 'HT' | 'PST'
 
 interface IFixtureData {
 	fixture: {

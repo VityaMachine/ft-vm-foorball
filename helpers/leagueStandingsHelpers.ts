@@ -40,11 +40,16 @@ export const teamsResultsFromFixtures = (
 			.filter(item => item.status === 'FT')
 			.slice(-5)
 			.reverse(),
-		next5: teamData.fixtures.filter(item => item.status === 'NS' || item.status === 'TBD').slice(0, 5),
+		next5: teamData.fixtures
+			.filter(item => item.status === 'NS' || item.status === 'TBD')
+			.slice(0, 5),
 		results: {
 			games: teamData.fixtures.filter(
 				fixture =>
-					fixture.status === 'FT' || fixture.status === '1H' || fixture.status === '2H' || fixture.status === 'HT'
+					fixture.status === 'FT' ||
+					fixture.status === '1H' ||
+					fixture.status === '2H' ||
+					fixture.status === 'HT'
 			).length,
 			win: teamData.fixtures.filter(fixture => fixture.result === 'W').length,
 			draw: teamData.fixtures.filter(fixture => fixture.result === 'D').length,
@@ -66,16 +71,16 @@ export const teamsResultsFromFixtures = (
 		const statsValues = Object.keys(teamInfo.results)
 
 		if (isForCorrection) {
-			const correctionsData: CorretionItemType | undefined = isForCorrection.data.find(item =>
-				statsValues.includes(item.field)
-			)
+			const correctionsData: CorretionItemType | undefined =
+				isForCorrection.data.find(item => statsValues.includes(item.field))
 
 			const teamResults = teamInfo.results
 
 			statsValues.forEach(field => {
 				if (field === correctionsData?.field) {
 					teamResults[field as keyof typeof teamResults] =
-						teamInfo.results[field as keyof typeof teamResults] + correctionsData.value
+						teamInfo.results[field as keyof typeof teamResults] +
+						correctionsData.value
 
 					if (field !== 'goalsDiff') {
 						teamResults.goalsDiff = teamResults.goalsFor - teamResults.goalsAgainst
@@ -158,7 +163,11 @@ export const sortTableDataHandler = (
 				sortingField === 'goalsDiff' ||
 				sortingField === 'points')
 		) {
-			if (a[sortingField] !== undefined && b[sortingField] !== undefined && a[sortingField] < b[sortingField]) {
+			if (
+				a[sortingField] !== undefined &&
+				b[sortingField] !== undefined &&
+				a[sortingField] < b[sortingField]
+			) {
 				return sortingBy === 'asc' ? -1 : 1
 			}
 			if (a[sortingField] && b[sortingField] && a[sortingField] > b[sortingField]) {
@@ -177,7 +186,10 @@ export const sortTableDataHandler = (
 	return sortedTeamsData as ITeamResultsFromFixtures[]
 }
 
-export const isTooltippedPlace = (team: ITeamResultsFromFixtures, leagueParams: ILeagueConfig | undefined) => {
+export const isTooltippedPlace = (
+	team: ITeamResultsFromFixtures,
+	leagueParams: ILeagueConfig | undefined
+) => {
 	if (!leagueParams) {
 		return false
 	}
@@ -205,17 +217,27 @@ export const shortTeamNameFromOriginalHandler = (teamName: string | undefined) =
 
 	const splittedName = teamName.split(' ')
 
-	const clearedName = splittedName.filter(item => !prefixes.includes(item))
+	const clearedName =
+		splittedName.length > 1
+			? splittedName.filter(item => !prefixes.includes(item))
+			: splittedName
 
 	if (clearedName.length === 1) {
 		return clearedName.join().slice(0, 3).toUpperCase()
 	}
 
 	if (clearedName.length === 2) {
-		return clearedName[0].slice(0, 1).toUpperCase() + clearedName[1].slice(0, 2).toUpperCase()
+		return (
+			clearedName[0].slice(0, 1).toUpperCase() +
+			clearedName[1].slice(0, 2).toUpperCase()
+		)
 	}
 
 	if (clearedName.length > 2) {
-		return clearedName[0][0].toUpperCase() + clearedName[1][0].toUpperCase() + clearedName[2][0].toUpperCase()
+		return (
+			clearedName[0][0].toUpperCase() +
+			clearedName[1][0].toUpperCase() +
+			clearedName[2][0].toUpperCase()
+		)
 	}
 }
