@@ -1,7 +1,7 @@
-import React from 'react'
+'use client'
+
+import LeagueLeaders from '@/components/customComponents/LeagueLeaders/LeagueLeaders'
 
 export default function PlayersStats() {
-  return (
-    <div>PlayersStats</div>
-  )
+	return <LeagueLeaders />
 }

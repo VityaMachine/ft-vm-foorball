@@ -20,7 +20,7 @@ export default function PlayedMatches() {
 	}
 
 	if (status === 'rejected') {
-		return <LoadingError messageEn="Standings data missed" messageUa="Відсутня інформація про матчі" />
+		return <LoadingError messageEn="Matches data missed" messageUa="Відсутня інформація про матчі" />
 	}
 
 	if (status === 'resolved') {

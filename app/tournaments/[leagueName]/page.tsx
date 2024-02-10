@@ -3,7 +3,7 @@
 import { useEffect } from 'react'
 import { redirect, usePathname } from 'next/navigation'
 
-export default function LeaguePage({ params: { leagueName } }: { params: { leagueName: string } }) {
+export default function LeaguePage() {
 	const pathname = usePathname()
 
 	useEffect(() => {
