@@ -107,6 +107,7 @@ interface PlayerLeadersTableData {
 	rank: number
 	teamName: string
 	teamLogo: string
+	teamId: number
 	playerName: string
 	gamesPlayed: number
 	minutesPlayed: number

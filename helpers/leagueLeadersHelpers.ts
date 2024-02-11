@@ -6,6 +6,7 @@ export const leagueLeadersDataParser = (
 		rank: idx + 1,
 		teamName: item.statistics[0].team.name,
 		teamLogo: item.statistics[0].team.logo,
+		teamId: item.statistics[0].team.id,
 		playerName: item.player.name,
 		gamesPlayed: item.statistics[0].games.appearences,
 		minutesPlayed: item.statistics[0].games.minutes,
@@ -26,7 +27,8 @@ export const leagueLeadersDataParser = (
 			item.statistics[0].goals.assists / item.statistics[0].games.appearences,
 		yellowPerGame:
 			item.statistics[0].cards.yellow / item.statistics[0].games.appearences,
-		redPerGame: item.statistics[0].cards.red / item.statistics[0].games.appearences,
+		redPerGame:
+			item.statistics[0].cards.red / item.statistics[0].games.appearences,
 
 		minForGoal:
 			item.statistics[0].goals.total > 0

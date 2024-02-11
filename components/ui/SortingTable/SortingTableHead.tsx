@@ -26,10 +26,10 @@ export default function SortingTableHead({
 	return (
 		<TableHead>
 			<TableRow>
-				{headCells.map(headCell => (
+				{headCells.map((headCell, idx) => (
 					<TableCell
 						key={headCell.id}
-						align={headCell.numeric ? 'right' : 'left'}
+						align={idx === 0 ? 'center' : headCell.numeric ? 'right' : 'left'}
 						padding={headCell.disablePadding ? 'none' : 'normal'}
 						sortDirection={orderBy === headCell.id ? order : false}
 						sx={{

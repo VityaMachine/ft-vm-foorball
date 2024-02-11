@@ -23,6 +23,7 @@ import SortingTableHead from '@/components/ui/SortingTable/SortingTableHead'
 
 import { getComparator, stableSort } from '@/utils/sortingTableUtils'
 import Image from 'next/image'
+import Link from 'next/link'
 
 export default function LeagueLeadersTable({
 	statType
@@ -107,18 +108,19 @@ export default function LeagueLeadersTable({
 		setOrderBy(property)
 	}
 
-	const tableHeadConfigs = tableRowsConfigCreator(basicLeadersTablesConfig, statType)
+	const tableHeadConfigs = tableRowsConfigCreator(
+		basicLeadersTablesConfig,
+		statType
+	)
 
-	const sortedRows = data ? stableSort(data, getComparator(order, orderBy)) : data
+	const sortedRows = data
+		? stableSort(data, getComparator(order, orderBy))
+		: data
 
 	console.log(sortedRows)
 
 	return (
-		<Box
-			// sx={{
-			// 	width: 750
-			// }}
-		>
+		<Box>
 			<TableContainer>
 				<Table size="small" sx={{ minWidth: 750 }}>
 					<SortingTableHead
@@ -132,14 +134,20 @@ export default function LeagueLeadersTable({
 							sortedRows.map(item => (
 								<TableRow key={item.id}>
 									<TableCell align="center">{item.rank}</TableCell>
-									<TableCell align="center">
-										<Image
-											src={item.teamLogo}
-											alt={item.teamName}
-											width={20}
-											height={20}
-											className="w-[20px] h-[20px] object-contain"
-										/>
+									<TableCell align="center" sx={{
+										":hover": {
+											borderBottom: '1px solid red'
+										}
+									}}>
+										<Link href={`/team/${item.teamId}`}>
+											<Image
+												src={item.teamLogo}
+												alt={item.teamName}
+												width={20}
+												height={20}
+												className="w-[20px] h-[20px] object-contain"
+											/>
+										</Link>
 									</TableCell>
 									<TableCell align="left">{item.playerName}</TableCell>
 									<TableCell
@@ -165,7 +173,11 @@ export default function LeagueLeadersTable({
 										align="right"
 									>
 										{statType === 'goals'
-											? item.goals
+											? `${item.goals} ${
+													item.penaltiesGoals > 0
+														? `(${item.penaltiesGoals})`
+														: ''
+											  } `
 											: statType === 'assists'
 											? item.assists
 											: statType === 'ycards'
