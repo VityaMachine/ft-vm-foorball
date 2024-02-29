@@ -1,12 +1,19 @@
 type TableSortOrder = 'asc' | 'desc'
 
-
 interface LeagLeadersTableHeadCell {
-	disablePadding: boolean
 	id: keyof PlayerLeadersTableData
-	label: string
-	numeric: boolean
+	label: {
+		en: string
+		ua: string
+	}
+	labelShort: {
+		en: string
+		ua: string
+	}
 	isSortable: boolean
+	justifyItems: 'center' | 'space-between' | 'space-around' | 'flex-start',
+	width: number,
+	noMobile: boolean
 }
 
 interface IPlayerStatInfo {
@@ -130,3 +137,11 @@ interface PlayerLeadersTableData {
 }
 
 type LeagueLeadersStatsTypes = 'goals' | 'assists' | 'ycards' | 'rcards'
+
+interface ILeagueLeadersData {
+	topScorers: PlayerLeadersTableData[] | null
+	topAssistants: PlayerLeadersTableData[] | null
+	topYellowCards: PlayerLeadersTableData[] | null
+	topRedCards: PlayerLeadersTableData[] | null
+}
+

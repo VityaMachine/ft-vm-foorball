@@ -121,6 +121,8 @@ export default function DesktopAndTabletTable({
 		}
 	}
 
+	console.log(standingsTableRows)
+
 	return (
 		<>
 			{/* position and teamName */}

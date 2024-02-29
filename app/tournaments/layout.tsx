@@ -10,10 +10,6 @@ export default function LeaguesLayout({ children }: { children: React.ReactNode 
 			className="tournaments-layout"
 			sx={{
 				width: '100%'
-
-				//   zIndex: 9999
-				//   minWidth: '1265px',
-				//   overflow: 'hidden'
 			}}
 		>
 			<LeagueTitle />

@@ -5,15 +5,17 @@ export const styles = {
 		display: 'flex',
 		// mt: '35px',
 		flexDirection: 'column'
+		// overflow: 'auto'
 	},
 
 	desktopTabletContainer: {
 		display: {
 			xs: 'none',
-			sm: 'flex'
+			md: 'flex'
 		},
 		width: '100%',
-		justifyContent: 'center'
+		justifyContent: 'center',
+		flexDirection: 'column'
 	},
 
 	infoTableContainer: {
@@ -41,7 +43,12 @@ export const styles = {
 		fontSize: '16px',
 		color: '#fff',
 		pr: '8px',
-		cursor: 'default'
+		cursor: 'default',
+		textUnderlineOffset: '4px', 
+		textDecoration: 'underline', 
+		":hover": {
+			textDecoration: 'none'
+		}
 	},
 
 	tableHeadRowSortIconBtn: (sortField: keyof ISortingResultsData, fieldName: keyof ISortingResultsData) => ({
@@ -139,7 +146,6 @@ export const styles = {
 		width: {
 			xs: 523,
 			md: 870
-			
 		},
 		overflowX: 'auto'
 	},
@@ -207,10 +213,9 @@ export const styles = {
 		justifyContent: 'center',
 		alignItems: 'center',
 		cursor: 'pointer',
-		borderBottom: `3px solid ${isHomeGame ? tableDataColors.colorHome : tableDataColors.colorAway}`,
+		borderBottom: `3px solid ${isHomeGame ? tableDataColors.colorHome : tableDataColors.colorAway}`
 		// width: '23px',
 		// height: "23px"
-
 	}),
 
 	// Mobile
@@ -218,15 +223,32 @@ export const styles = {
 	mobileContainer: {
 		display: {
 			xs: 'flex',
-			sm: 'none'
+			md: 'none'
 		}
 	},
-
 
 	mobileHeadCell: {
 		fontWeight: 700,
 		color: '#fff',
 		whiteSpace: 'nowrap'
+	},
+
+	mobileTableLegendBox: {
+		px: '24px',
+		mt: '16px'
+	},
+
+	mobileLegendTitle: {
+		fontWeight: 700,
+		fontSize: '16px'
+	},
+
+	mobileLegendRow: {
+		display: 'flex',
+	},
+
+	mobileLegendRowTitle: {
+		fontWeight: 700
 	},
 
 	// Descr component

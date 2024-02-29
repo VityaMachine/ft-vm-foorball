@@ -218,7 +218,7 @@ export const standingsTableRows = [
     id: 11,
     content: {
       en: {
-        textShort: "Next 5 fixtures",
+        textShort: "Next 5",
         textLong: "Next 5 fixtures" as const,
       },
       ua: {

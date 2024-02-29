@@ -3,20 +3,22 @@
 import { useState, useContext } from 'react'
 import { useParams } from 'next/navigation'
 
-import { Box, Chip, Container } from '@mui/material'
+import { Box, Chip, Container, Typography } from '@mui/material'
 
 import { LanguageContext } from '@/context/LanguageContext'
 
 import { styles } from './styles'
-import DesktopAndTabletTable from './DesktopAndTabletTable'
+import DesktoptTable from './DesktopTable'
 
 import { teamsResultsFromFixtures } from '@/helpers/leagueStandingsHelpers'
 
 import leaagueCorrections from '@/constants/leagues.corrections'
 
 import { tournamentsConfigs } from '@/configs/tournaments'
+import { standingsTableRows } from '@/configs/standingTableConfigs'
+
 import LeaguesDescr from './LeaguesDescr'
-import MobileTable from './MobileTable'
+import MobileAndTabletTable from './MobileAndTabletTable'
 
 const stylesChip = {
 	fontSize: {
@@ -85,12 +87,43 @@ export default function LeagueStandingsTable({ fixturesData }: { fixturesData: I
 
 			{/* desktop and tablet */}
 			<Box sx={styles.desktopTabletContainer}>
-				<DesktopAndTabletTable leagueData={leagueData} language={language} leagueParams={leagueParams} />
+				<Box
+					sx={{
+						display: 'flex'
+					}}
+				>
+					<DesktoptTable leagueData={leagueData} language={language} leagueParams={leagueParams} />
+				</Box>
+
+				<Box sx={{
+					mt: '24px',
+					px: '24px'
+				}}>
+
+					<Typography sx={{
+						fontWeight: 700
+					}}>{language === 'ua' ? 'Деталі таблиці:' : "Table description:"}</Typography>
+					{standingsTableRows.map(item => (
+						<Box key={item.id} sx={{
+							display: 'flex'
+						}}>
+							<Typography sx={{
+								fontWeight: 700,
+								width: '90px'
+							}}>
+								{language === 'ua' ? item.content.ua.textShort : item.content.en.textShort}
+							</Typography>
+							<Typography>
+								{" - "}{language === 'ua' ? item.content.ua.textLong : item.content.en.textLong}
+							</Typography>
+						</Box>
+					))}
+				</Box>
 			</Box>
 
 			{/* mobile */}
 			<Box sx={styles.mobileContainer}>
-				<MobileTable leagueData={leagueData} language={language} leagueParams={leagueParams} />
+				<MobileAndTabletTable leagueData={leagueData} language={language} leagueParams={leagueParams} />
 			</Box>
 
 			{/* league places description */}

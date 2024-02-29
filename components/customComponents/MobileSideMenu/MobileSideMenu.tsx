@@ -6,7 +6,6 @@ import { MobileSideMenuContext } from '@/context/MobileSideMenuContext'
 import { LanguageContext } from '@/context/LanguageContext'
 import { CustomThemeContext } from '@/context/CustomThemeContext'
 
-
 import { Box, Container, Divider, Drawer, IconButton, Typography } from '@mui/material'
 import HighlightOffIcon from '@mui/icons-material/HighlightOff'
 
@@ -17,7 +16,6 @@ import LeaguesList from '../LeaguesList/LeaguesList'
 export default function MobileSideMenu() {
 	const { open, toggleOpen } = useContext(MobileSideMenuContext)
 	const { language } = useContext(LanguageContext)
-	const { isDarkMode } = useContext(CustomThemeContext)
 
 	return (
 		<Drawer
@@ -45,8 +43,7 @@ export default function MobileSideMenu() {
 					sx={{
 						position: 'sticky',
 						top: 0,
-						zIndex: 999,
-				
+						zIndex: 999
 					}}
 				>
 					{/* header */}
@@ -85,10 +82,11 @@ export default function MobileSideMenu() {
 					</Box>
 
 					{/* search */}
-					<Box sx={{
-						py: '10px',
-						background: isDarkMode ? "#353535" : "#fff"
-					}}>
+					<Box
+						sx={{
+							py: '10px'
+						}}
+					>
 						<Container
 							disableGutters
 							sx={{
@@ -104,10 +102,8 @@ export default function MobileSideMenu() {
 						</Container>
 					</Box>
 
-
-				<Divider />		
+					<Divider />
 				</Box>
-	
 
 				{/* menu */}
 				<Box

@@ -1,27 +1,26 @@
-"use client";
+'use client'
 
-import { useContext } from "react";
-import { CustomThemeContext } from "@/context/CustomThemeContext";
+import { useTheme } from '@mui/material/styles'
 
-import { Box } from "@mui/material";
+import { Box } from '@mui/material'
 
-import LeaguesList from "../LeaguesList/LeaguesList";
+import LeaguesList from '../LeaguesList/LeaguesList'
 
 export default function DesktopMainMenu() {
-  const { isDarkMode } = useContext(CustomThemeContext);
+	const theme = useTheme()
 
-  return (
-    <Box
-      sx={{
-        borderRight: isDarkMode ? "1px solid #393939" : "1px solid #e0e0e0",
-        height: {
-          xs: "calc(100vh - 56px)",
-          sm: "calc(100vh - 90px)",
-        },
-        position: "relative",
-      }}
-    >
-      <LeaguesList />
-    </Box>
-  );
+	return (
+		<Box
+			sx={{
+				borderRight: `1px solid ${theme.palette.divider}`,
+				height: {
+					xs: 'calc(100vh - 56px)',
+					sm: 'calc(100vh - 90px)'
+				},
+				position: 'relative'
+			}}
+		>
+			<LeaguesList />
+		</Box>
+	)
 }

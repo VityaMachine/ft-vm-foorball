@@ -1,18 +1,9 @@
 import React, { useState, useContext } from 'react'
 
-import {
-	Box,
-	Collapse,
-	Divider,
-	IconButton,
-	SxProps,
-	Theme,
-	Typography
-} from '@mui/material'
-import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos'
-import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp'
+import { Box, Collapse, IconButton, SxProps, Theme } from '@mui/material'
+import { useTheme } from '@mui/material/styles'
 
-import { CustomThemeContext } from '@/context/CustomThemeContext'
+import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp'
 
 export default function CustomAccordion({
 	children,
@@ -27,13 +18,13 @@ export default function CustomAccordion({
 }) {
 	const [open, setOpen] = useState<boolean>(defaultOpen)
 
-	const { isDarkMode } = useContext(CustomThemeContext)
+	const theme = useTheme()
 
 	return (
 		<Box
 			sx={{
 				width: '100%',
-				border: `1px solid ${isDarkMode ? '#525252' : '#c4c4c4'}`,
+				border: `1px solid ${theme.palette.divider}`,
 				borderRadius: '4px',
 				px: '16px',
 				...sx
@@ -53,7 +44,7 @@ export default function CustomAccordion({
 						display: 'flex',
 						justifyContent: 'center',
 						alignItems: 'center',
-						border: `1px solid ${isDarkMode ? '#525252' : '#c4c4c4'}`,
+						border: `1px solid ${theme.palette.divider}`,
 						width: '24px',
 						height: '24px',
 						my: '4px'

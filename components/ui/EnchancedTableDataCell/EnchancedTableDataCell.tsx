@@ -1,7 +1,18 @@
 'use client'
 
 import { useContext } from 'react'
-import { Box, Divider, List, ListItem, Table, TableBody, TableCell, TableRow, Tooltip, Typography } from '@mui/material'
+import {
+	Box,
+	Divider,
+	List,
+	ListItem,
+	Table,
+	TableBody,
+	TableCell,
+	TableRow,
+	Tooltip,
+	Typography
+} from '@mui/material'
 
 import Image from 'next/image'
 
@@ -31,40 +42,76 @@ const TooltipTitleComponent = ({
 	const resultArray =
 		sortType === 'all'
 			? team.fixtures.filter(
-					item => item.status === 'FT' || item.status === 'HT' || item.status === '1H' || item.status === '2H'
+					item =>
+						item.status === 'FT' ||
+						item.status === 'HT' ||
+						item.status === '1H' ||
+						item.status === '2H'
 			  )
 			: team.fixtures
-					.filter(item => item.status === 'FT' || item.status === 'HT' || item.status === '1H' || item.status === '2H')
+					.filter(
+						item =>
+							item.status === 'FT' ||
+							item.status === 'HT' ||
+							item.status === '1H' ||
+							item.status === '2H'
+					)
 					.filter(item => item.result === sortType)
 
-	const textDataCreator = (field: keyof ITeamCalculatedResults, team: ITeamResultsFromFixtures) => {
+	const textDataCreator = (
+		field: keyof ITeamCalculatedResults,
+		team: ITeamResultsFromFixtures
+	) => {
 		const totalLeagueGames = team.fixtures.length
-		const { games, win, draw, lose, goalsFor, goalsAgainst, goalsDiff, points } = team.results
+		const {
+			games,
+			win,
+			draw,
+			lose,
+			goalsFor,
+			goalsAgainst,
+			goalsDiff,
+			points
+		} = team.results
 
 		switch (field) {
 			case 'games':
-				return language === 'ua' ? `Матчів: ${games} із ${totalLeagueGames}` : `Games: ${games} of ${totalLeagueGames}`
+				return language === 'ua'
+					? `Матчів: ${games} із ${totalLeagueGames}`
+					: `Games: ${games} of ${totalLeagueGames}`
 				break
 			case 'win':
-				return language === 'ua' ? `Виграно: ${win} із ${games}` : `Win: ${win} of ${games}`
+				return language === 'ua'
+					? `Виграно: ${win} із ${games}`
+					: `Win: ${win} of ${games}`
 				break
 			case 'draw':
-				return language === 'ua' ? `В нічию: ${draw} із ${games}` : `Draw: ${draw} of ${games}`
+				return language === 'ua'
+					? `В нічию: ${draw} із ${games}`
+					: `Draw: ${draw} of ${games}`
 				break
 			case 'lose':
-				return language === 'ua' ? `Програно: ${lose} із ${games}` : `Lose: ${lose} of ${games}`
+				return language === 'ua'
+					? `Програно: ${lose} із ${games}`
+					: `Lose: ${lose} of ${games}`
 				break
 
 			case 'goalsFor':
-				return language === 'ua' ? `Забито голів: ${goalsFor}` : `Scored goals: ${goalsFor}`
+				return language === 'ua'
+					? `Забито голів: ${goalsFor}`
+					: `Scored goals: ${goalsFor}`
 				break
 
 			case 'goalsAgainst':
-				return language === 'ua' ? `Пропущено голів: ${goalsAgainst}` : `Conceded goals: ${goalsAgainst}`
+				return language === 'ua'
+					? `Пропущено голів: ${goalsAgainst}`
+					: `Conceded goals: ${goalsAgainst}`
 				break
 
 			case 'goalsDiff':
-				return language === 'ua' ? `Різниця голів: ${goalsDiff}` : `Goals difference: ${goalsDiff}`
+				return language === 'ua'
+					? `Різниця голів: ${goalsDiff}`
+					: `Goals difference: ${goalsDiff}`
 				break
 
 			case 'points':
@@ -97,7 +144,11 @@ const TooltipTitleComponent = ({
 								src={team.teamLogo ? team.teamLogo : placeholderImg.src}
 								width={45}
 								height={45}
-								alt={team.teamNameOriginal ? team.teamNameOriginal : placeholderImg.src}
+								alt={
+									team.teamNameOriginal
+										? team.teamNameOriginal
+										: placeholderImg.src
+								}
 							/>
 						</Box>
 						<Box
@@ -157,7 +208,9 @@ const TooltipTitleComponent = ({
 											>
 												{' '}
 												<WarningIcon sx={{ fill: amber[700] }} />
-												{language === 'ua' ? item.comment?.ua : item.comment?.en}
+												{language === 'ua'
+													? item.comment?.ua
+													: item.comment?.en}
 											</Typography>
 										</ListItem>
 									))}
@@ -186,7 +239,13 @@ const TooltipTitleComponent = ({
 												cursor: 'default'
 											}}
 										>
-											{item.isHomeGame ? (language === 'ua' ? 'Д' : 'H') : language === 'ua' ? 'Г' : 'A'}
+											{item.isHomeGame
+												? language === 'ua'
+													? 'Д'
+													: 'H'
+												: language === 'ua'
+												? 'Г'
+												: 'A'}
 										</Typography>
 									</TableCell>
 
@@ -250,11 +309,14 @@ const TooltipTitleComponent = ({
 												height: '18px',
 												minWidth: '18px',
 												color:
-													(toolTipvalue === 'finalScore' || toolTipvalue === 'points') && item.result === 'D'
+													(toolTipvalue === 'finalScore' ||
+														toolTipvalue === 'points') &&
+													item.result === 'D'
 														? '#2b2b2b'
 														: '#FFF',
 												bgcolor:
-													toolTipvalue === 'finalScore' || toolTipvalue === 'points'
+													toolTipvalue === 'finalScore' ||
+													toolTipvalue === 'points'
 														? item.result === 'W'
 															? tableDataColors.colorWin
 															: item.result === 'D'
@@ -262,7 +324,8 @@ const TooltipTitleComponent = ({
 															: item.result === 'L'
 															? tableDataColors.colorLose
 															: 'transparent'
-														: toolTipvalue === 'goalsFor' && item.goalsFor !== null
+														: toolTipvalue === 'goalsFor' &&
+														  item.goalsFor !== null
 														? item.goalsFor === 0
 															? tableDataColors.colorGS0
 															: item.goalsFor === 1
@@ -272,7 +335,8 @@ const TooltipTitleComponent = ({
 															: item.goalsFor >= 3
 															? tableDataColors.colorGS3
 															: 'transparent'
-														: toolTipvalue === 'goalsAgainst' && item.goalsAgainst !== null
+														: toolTipvalue === 'goalsAgainst' &&
+														  item.goalsAgainst !== null
 														? item.goalsAgainst === 0
 															? tableDataColors.colorGC0
 															: item.goalsAgainst === 1
@@ -282,7 +346,8 @@ const TooltipTitleComponent = ({
 															: item.goalsAgainst >= 3
 															? tableDataColors.colorGC3
 															: 'transparent'
-														: toolTipvalue === 'goalsDiff' && item.goalsDiff !== null
+														: toolTipvalue === 'goalsDiff' &&
+														  item.goalsDiff !== null
 														? item.goalsDiff <= -3
 															? tableDataColors.colorGC3
 															: item.goalsDiff === -2
@@ -302,7 +367,9 @@ const TooltipTitleComponent = ({
 											}}
 										>
 											{!item.online && item[toolTipvalue]}
-											{item.online && toolTipvalue !== 'finalScore' && item[toolTipvalue]}
+											{item.online &&
+												toolTipvalue !== 'finalScore' &&
+												item[toolTipvalue]}
 											{item.online && toolTipvalue === 'finalScore' && (
 												<>
 													{item.online.goalsHome}-{item.online.goalsAway}
@@ -316,7 +383,9 @@ const TooltipTitleComponent = ({
 					</Table>
 				</Box>
 			) : (
-				<Typography>{language === 'ua' ? 'Відсутні дані' : 'No data'}</Typography>
+				<Typography>
+					{language === 'ua' ? 'Відсутні дані' : 'No data'}
+				</Typography>
 			)}
 		</>
 	)
@@ -358,13 +427,33 @@ export default function EnchancedTableDataCell({
 				}}
 				title={
 					field !== 'win' && field !== 'draw' && field !== 'lose' ? (
-						<TooltipTitleComponent toolTipvalue={toolTipvalue} sortType="all" team={team} field={field} />
+						<TooltipTitleComponent
+							toolTipvalue={toolTipvalue}
+							sortType="all"
+							team={team}
+							field={field}
+						/>
 					) : field === 'win' ? (
-						<TooltipTitleComponent toolTipvalue={toolTipvalue} sortType="W" team={team} field={field} />
+						<TooltipTitleComponent
+							toolTipvalue={toolTipvalue}
+							sortType="W"
+							team={team}
+							field={field}
+						/>
 					) : field === 'draw' ? (
-						<TooltipTitleComponent toolTipvalue={toolTipvalue} sortType="D" team={team} field={field} />
+						<TooltipTitleComponent
+							toolTipvalue={toolTipvalue}
+							sortType="D"
+							team={team}
+							field={field}
+						/>
 					) : field === 'lose' ? (
-						<TooltipTitleComponent toolTipvalue={toolTipvalue} sortType="L" team={team} field={field} />
+						<TooltipTitleComponent
+							toolTipvalue={toolTipvalue}
+							sortType="L"
+							team={team}
+							field={field}
+						/>
 					) : null
 				}
 			>

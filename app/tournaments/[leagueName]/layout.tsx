@@ -8,6 +8,7 @@ import { tournamentsConfigs } from '@/configs/tournaments'
 import { FixturesApiContext } from '@/context/Fixtures.api.context'
 
 import { apiFootball } from '@/services/api-football.rapidapi'
+import { checkRespErrors } from '@/utils/apiCheckRespErrors'
 
 export default function LeagueLayout({ children }: { children: React.ReactNode }) {
 	const { dispatch } = useContext(FixturesApiContext)
@@ -18,7 +19,6 @@ export default function LeagueLayout({ children }: { children: React.ReactNode }
 	const leagueData = tournamentsConfigs.leagues.find(league => league.shortName === params.leagueName)
 
 	useEffect(() => {
-
 		dispatch({
 			type: 'status',
 			payload: {
@@ -27,8 +27,6 @@ export default function LeagueLayout({ children }: { children: React.ReactNode }
 		})
 
 		const getFixturesData = async () => {
-
-
 			if (leagueData) {
 				const fixturesParams = {
 					urlPath: 'fixtures',
@@ -36,13 +34,8 @@ export default function LeagueLayout({ children }: { children: React.ReactNode }
 					timezone: true
 				}
 				const respFixtures = await apiFootball(fixturesParams)
-				
 
-				if (
-					Array.isArray(respFixtures.errors) &&
-					respFixtures.errors.length === 0 &&
-					respFixtures.response.length > 0
-				) {
+				if (checkRespErrors(respFixtures.errors, respFixtures.response)) {
 					dispatch({
 						type: 'data',
 						payload: {
@@ -61,18 +54,15 @@ export default function LeagueLayout({ children }: { children: React.ReactNode }
 		}
 
 		// initial load data
-		getFixturesData();
+		getFixturesData()
 
 		// refresh data every minute
 		intervalId.current = setInterval(getFixturesData, 60000)
 
-
 		return () => {
-			stopInterval();
+			stopInterval()
 		}
-
 	}, [dispatch, leagueData])
-
 
 	const stopInterval = (): void => {
 		clearInterval(intervalId.current)
