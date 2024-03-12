@@ -5,6 +5,7 @@ import Link from 'next/link'
 import ScoreTooltipBox from './ScoreTooltipBox'
 
 import { red } from '@mui/material/colors'
+import { useTheme } from '@mui/material'
 
 export default function RoundFixturesList({
 	round,
@@ -13,6 +14,10 @@ export default function RoundFixturesList({
 	round: IFixturesByRounds
 	language: LangStateType
 }) {
+
+
+	const theme = useTheme()
+
 	return (
 		<List dense disablePadding>
 			{round.roundMatches.map(fixture => (
@@ -139,6 +144,9 @@ export default function RoundFixturesList({
 											width={25}
 											height={25}
 											className="w-[25px] h-[25px] object-contain"
+											style={{
+												filter: fixture.homeTeamId === 496 && theme.palette.mode === 'dark' ? 'invert(1)' : 'none'
+											}}
 										/>
 									</Box>
 								</Link>
@@ -195,6 +203,9 @@ export default function RoundFixturesList({
 											width={25}
 											height={25}
 											className="w-[25px] h-[25px] object-contain"
+											style={{
+												filter: fixture.awayTeamId === 496 && theme.palette.mode === 'dark' ? 'invert(1)' : 'none'
+											}}
 										/>
 
 										<Typography

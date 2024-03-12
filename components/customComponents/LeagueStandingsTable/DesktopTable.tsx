@@ -15,6 +15,8 @@ import {
 	IconButton
 } from '@mui/material'
 
+import { useTheme } from '@mui/material'
+
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp'
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
 
@@ -46,6 +48,8 @@ export default function DesktopAndTabletTable({
 
 	const [hoveredTeamRow, setHoveredTeamRow] = useState<null | number>(null)
 	const [hoveredOpponentTeam, setHoveredOpponentTeam] = useState<null | number>(null)
+
+	const theme = useTheme()
 
 	const infoRows = standingsTableRows.filter(item => item.type === 'info')
 	const dataRows = standingsTableRows.filter(item => item.type === 'data')
@@ -121,7 +125,7 @@ export default function DesktopAndTabletTable({
 		}
 	}
 
-	console.log(standingsTableRows)
+	// console.log(standingsTableRows)
 
 	return (
 		<>
@@ -219,6 +223,9 @@ export default function DesktopAndTabletTable({
 															height={25}
 															alt={team.teamNameOriginal}
 															className="w-[25px] h-[25px] object-contain"
+															style={{
+																filter: team.teamId === 496 && theme.palette.mode === 'dark' ? 'invert(1)' : 'none'
+															}}
 														/>
 													</Box>
 													<Typography sx={styles.infoTableBodyTeamNameCellBoxText}>

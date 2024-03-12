@@ -26,6 +26,8 @@ export default function MobileTable({
 	const theme = useTheme()
 	const mobileResolution = useMediaQuery(theme.breakpoints.down('sm'))
 
+	// console.log(theme)
+
 	return (
 		<Box
 			sx={{
@@ -69,14 +71,18 @@ export default function MobileTable({
 								>
 									<TableCell>
 										{isTooltippedPlace(teamItem, leagueParams) ? (
-											<Box sx={styles.infoTableBodyPlace(teamItem, leagueParams)}>{teamItem.leaguePosition}</Box>
+											<Box sx={styles.infoTableBodyPlace(teamItem, leagueParams)}>
+												{teamItem.leaguePosition}
+											</Box>
 										) : (
-											<Box sx={styles.infoTableBodyPlace(teamItem, leagueParams)}>{teamItem.leaguePosition}</Box>
+											<Box sx={styles.infoTableBodyPlace(teamItem, leagueParams)}>
+												{teamItem.leaguePosition}
+											</Box>
 										)}
 									</TableCell>
 
 									<TableCell padding="none">
-										<Link href={`/teams/${teamItem.teamId}`}>
+										<Link href={`/team/${teamItem.teamId}`}>
 											<Box sx={styles.infoTableBodyTeamNameCellBox}>
 												<Box>
 													<Image
@@ -85,12 +91,18 @@ export default function MobileTable({
 														height={25}
 														alt={teamItem.teamNameOriginal ? teamItem.teamNameOriginal : ''}
 														className="w-[25px] h-[25px] object-contain"
+														style={{
+															filter:
+																teamItem.teamId === 496 && theme.palette.mode === 'dark'
+																	? 'invert(1)'
+																	: 'none'
+														}}
 													/>
 												</Box>
 												<Typography
 													sx={{
 														ml: '10px',
-														color: onlineRes === 'D' ? '#000' : onlineRes === 'W' || onlineRes === 'L' ? '#fff' : 'none'
+														color: onlineRes ? '#000' : 'none'
 													}}
 												>
 													{mobileResolution
@@ -98,7 +110,9 @@ export default function MobileTable({
 															? language === 'ua'
 																? teamItem.teamNameData.shortName.ua
 																: teamItem.teamNameData.shortName.en
-															: shortTeamNameFromOriginalHandler(teamItem.teamNameOriginal)
+															: shortTeamNameFromOriginalHandler(
+																	teamItem.teamNameOriginal
+															  )
 														: teamItem.teamNameData
 														? language === 'ua'
 															? teamItem.teamNameData.longName.ua
@@ -141,7 +155,6 @@ export default function MobileTable({
 											// color: onlineRes === 'D' ? '#000' : onlineRes === 'W' || onlineRes === 'L' ? '#fff' : 'none'
 											color: onlineRes ? '#000' : 'none'
 										}}
-
 									>
 										{teamItem.results.points}
 									</TableCell>
@@ -151,7 +164,6 @@ export default function MobileTable({
 					</TableBody>
 				</Table>
 			</TableContainer>
-
 
 			{/* Table description */}
 			<Box sx={styles.mobileTableLegendBox}>
@@ -166,7 +178,9 @@ export default function MobileTable({
 
 				<Box sx={styles.mobileLegendRow}>
 					<Typography sx={styles.mobileLegendRowTitle}>{language === 'ua' ? 'Ком' : 'Team'}</Typography>
-					<Typography>&nbsp;- {language === 'ua' ? 'Логотип та назва клубу' : 'Team logo and team name'}</Typography>
+					<Typography>
+						&nbsp;- {language === 'ua' ? 'Логотип та назва клубу' : 'Team logo and team name'}
+					</Typography>
 				</Box>
 
 				<Box sx={styles.mobileLegendRow}>
@@ -192,7 +206,6 @@ export default function MobileTable({
 				</Box>
 			</Box>
 
-
 			{/* online rows descr */}
 			<Box sx={styles.mobileTableLegendBox}>
 				<Typography sx={styles.mobileLegendTitle}>
@@ -200,41 +213,66 @@ export default function MobileTable({
 				</Typography>
 
 				<Box sx={styles.mobileLegendRow}>
-					<Box sx={{
-						height: '24px',
-						minWidth: '125px',
-						bgcolor: green[300],
-						px: '8px',
-						color: '#000',
-						borderRadius: '4px'
-					}}>{language === 'ua' ? 'Рядок таблиці' : 'Table row'}</Box>
-					<Typography>&nbsp;- {language === 'ua' ? 'Команда на даний час виграє матч' : 'The team is currently winning the match'}</Typography>
+					<Box
+						sx={{
+							height: '24px',
+							minWidth: '125px',
+							bgcolor: green[300],
+							px: '8px',
+							color: '#000',
+							borderRadius: '4px'
+						}}
+					>
+						{language === 'ua' ? 'Рядок таблиці' : 'Table row'}
+					</Box>
+					<Typography>
+						&nbsp;-{' '}
+						{language === 'ua'
+							? 'Команда на даний час виграє матч'
+							: 'The team is currently winning the match'}
+					</Typography>
 				</Box>
 
 				<Box sx={styles.mobileLegendRow}>
-					<Box sx={{
-						height: '24px',
-						minWidth: '125px',
-						bgcolor: amber[200],
-						px: '8px',
-						color: '#000',
-						borderRadius: '4px'
-
-					}}>{language === 'ua' ? 'Рядок таблиці' : 'Table row'}</Box>
-					<Typography>&nbsp;- {language === 'ua' ? 'Команда на даний час грає матч в нічию' : 'The team is currently playing a draw'}</Typography>
+					<Box
+						sx={{
+							height: '24px',
+							minWidth: '125px',
+							bgcolor: amber[200],
+							px: '8px',
+							color: '#000',
+							borderRadius: '4px'
+						}}
+					>
+						{language === 'ua' ? 'Рядок таблиці' : 'Table row'}
+					</Box>
+					<Typography>
+						&nbsp;-{' '}
+						{language === 'ua'
+							? 'Команда на даний час грає матч в нічию'
+							: 'The team is currently playing a draw'}
+					</Typography>
 				</Box>
 				<Box sx={styles.mobileLegendRow}>
-					<Box sx={{
-						height: '24px',
-						minWidth: '125px',
-						bgcolor: red[200],
-						px: '8px',
-						color: '#000',
-						borderRadius: '4px'
-					}}>{language === 'ua' ? 'Рядок таблиці' : 'Table row'}</Box>
-					<Typography>&nbsp;- {language === 'ua' ? 'Команда на даний час програє матч' : 'The team is currently loosing the match'}</Typography>
+					<Box
+						sx={{
+							height: '24px',
+							minWidth: '125px',
+							bgcolor: red[200],
+							px: '8px',
+							color: '#000',
+							borderRadius: '4px'
+						}}
+					>
+						{language === 'ua' ? 'Рядок таблиці' : 'Table row'}
+					</Box>
+					<Typography>
+						&nbsp;-{' '}
+						{language === 'ua'
+							? 'Команда на даний час програє матч'
+							: 'The team is currently loosing the match'}
+					</Typography>
 				</Box>
-
 			</Box>
 		</Box>
 	)

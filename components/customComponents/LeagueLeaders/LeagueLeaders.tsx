@@ -12,16 +12,11 @@ import LeagueLeadersMenu from './LeagueLeadersMenu'
 
 import { LanguageContext } from '@/context/LanguageContext'
 import LeagueLeadersData from './LeagueLeadersData'
+import TabPanel from '@/components/ui/TabPanel/TabPanel'
 import LoadingSpinner from '@/components/ui/LoadingSpinner/LoadingSpinner'
 import LoadingError from '@/components/ui/LoadingError/LoadingError'
 
-function TabPanel({ children, index, value }: { children?: React.ReactNode; index: number; value: number }) {
-	return (
-		<Box sx={{ py: 2 }} hidden={value !== index}>
-			{value === index && children}
-		</Box>
-	)
-}
+
 
 export default function LeagueLeaders() {
 	const [data, setData] = useState<ILeagueLeadersData>({
