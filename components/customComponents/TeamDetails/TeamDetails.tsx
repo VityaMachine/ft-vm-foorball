@@ -2,24 +2,40 @@ import { useState, useContext } from 'react'
 
 import { LanguageContext } from '@/context/LanguageContext'
 
-import { Box, Typography, Tabs, Tab } from '@mui/material'
+import { Box, Typography, Tabs, Tab, FormControl, InputLabel, Select, MenuItem } from '@mui/material'
+import { SelectChangeEvent } from '@mui/material/Select'
 import TabPanel from '@/components/ui/TabPanel/TabPanel'
 import { useTheme } from '@mui/material'
 
 import Image from 'next/image'
 
-import TeamStats from '../TeamStats/TeamStats'
 import TeamPlayersSquad from '../TeamPlayersSquad/TeamPlayersSquad'
+import TeamSeasons from '../TeamSeasons/TeamSeasons'
+import TeamSeasonLeagues from '../TeamSeasonLeagues/TeamSeasonLeagues'
+
+import defaultValues from '@/constants/api.constants'
+import TeamTournamentReport from '../TeamTournamentReport/TeamTournamentReport'
 
 export default function TeamDetails({ teamData }: { teamData: ITeamGeneralData }) {
-	const [tabValue, setTabValue] = useState(1)
+	const [dataType, setDataType] = useState<'stats' | 'squad'>('stats')
+	const [selectedSeason, setSelectedSeason] = useState<number>(defaultValues.currentSeason)
+	const [selectedTournamentId, setselectedTournamentId] = useState<number | ''>('')
 
 	const { language } = useContext(LanguageContext)
 
 	const theme = useTheme()
-	
-	const handleChangeTab = (e: React.SyntheticEvent, newValue: number) => {
-		setTabValue(newValue)
+
+	const handleChangeDataType = (e: SelectChangeEvent) => {
+		setDataType(e.target.value as 'stats' | 'squad')
+	}
+
+	const handleSeasonChange = (newSeason: number) => {
+		setSelectedSeason(newSeason)
+		setselectedTournamentId('')
+	}
+
+	const handleTournamentChange = (newTournamentId: number) => {
+		setselectedTournamentId(newTournamentId)
 	}
 
 	return (
@@ -40,9 +56,9 @@ export default function TeamDetails({ teamData }: { teamData: ITeamGeneralData }
 					<Image
 						src={teamData.team.logo}
 						alt={teamData.team.name}
-						width={150}
-						height={150}
-						className="min-w-[150px] min-h-[150px] max-w-[150px] max-h-[150px] object-contain"
+						width={120}
+						height={120}
+						className="min-w-[120px] min-h-[120px] max-w-[120px] max-h-[120px] object-contain"
 						style={{
 							filter: teamData.team.id === 496 && theme.palette.mode === 'dark' ? 'invert(1)' : 'none'
 						}}
@@ -58,7 +74,7 @@ export default function TeamDetails({ teamData }: { teamData: ITeamGeneralData }
 					}}
 				>
 					<Typography
-						variant="h3"
+						variant="h4"
 						sx={{
 							color: 'text.primary'
 						}}
@@ -66,7 +82,7 @@ export default function TeamDetails({ teamData }: { teamData: ITeamGeneralData }
 						{teamData.team.name}
 					</Typography>
 					<Typography
-						variant="h4"
+						variant="h5"
 						sx={{
 							color: 'text.disabled'
 						}}
@@ -74,7 +90,7 @@ export default function TeamDetails({ teamData }: { teamData: ITeamGeneralData }
 						{teamData.team.country}
 					</Typography>
 					<Typography
-						variant="h5"
+						variant="h6"
 						sx={{
 							color: 'text.disabled'
 						}}
@@ -84,20 +100,74 @@ export default function TeamDetails({ teamData }: { teamData: ITeamGeneralData }
 				</Box>
 			</Box>
 
-			{/* team data */}
+			{/* data menu */}
+			<Box
+				sx={{
+					mt: '16px',
+					display: 'flex',
+					gap: '24px',
+					justifyContent: 'center'
+				}}
+			>
+				<Box
+					sx={{
+						minWidth: '160px'
+					}}
+				>
+					<FormControl fullWidth>
+						<InputLabel>{language === 'ua' ? 'Дані' : 'Data'}</InputLabel>
+						<Select
+							value={dataType}
+							onChange={handleChangeDataType}
+							label={language === 'ua' ? 'Дані' : 'Data'}
+						>
+							<MenuItem value={'stats'}> {language === 'ua' ? 'Статистика' : 'Stats'}</MenuItem>
+							<MenuItem value={'squad'}>{language === 'ua' ? 'Склад' : 'Squad'}</MenuItem>
+						</Select>
+					</FormControl>
+				</Box>
 
-			<Tabs value={tabValue} onChange={handleChangeTab} centered>
-				<Tab label={language === 'ua' ? "Статистика" : "Stats"} />
-				<Tab label={language === 'ua' ? "Склад" : "Squad"} />
-			</Tabs>
+				{dataType === 'stats' && (
+					<Box
+						sx={{
+							display: 'flex',
+							gap: '24px'
+						}}
+					>
+						<TeamSeasons
+							teamId={teamData.team.id}
+							selectedSeason={selectedSeason}
+							onSeasonChange={handleSeasonChange}
+						/>
 
-			<Box>
-				<TabPanel index={0} value={tabValue}>
-					<TeamStats teamId={teamData.team.id} />
-				</TabPanel>
-				<TabPanel index={1} value={tabValue}>
-					<TeamPlayersSquad teamId={teamData.team.id} lang={language} />
-				</TabPanel>
+						<TeamSeasonLeagues
+							teamId={teamData.team.id}
+							selectedSeason={selectedSeason}
+							selectedTournamentId={selectedTournamentId}
+							onTournamentChange={handleTournamentChange}
+						/>
+					</Box>
+				)}
+			</Box>
+
+			{/* info */}
+			<Box
+				sx={{
+					mt: '24px'
+				}}
+			>
+				{dataType === 'squad' && <TeamPlayersSquad teamId={teamData.team.id} lang={language} />}
+
+				{dataType === 'stats' &&
+					(selectedTournamentId === '' ? (
+						<Box>Select the tournament to watch the report</Box>
+					) : (
+						<TeamTournamentReport
+							tournamentId={selectedTournamentId}
+							teamId={teamData.team.id}
+							season={selectedSeason}
+						/>
+					))}
 			</Box>
 		</Box>
 	)

@@ -1,12 +1,14 @@
 import { Box, CircularProgress } from '@mui/material'
-export default function LoadingSpinner() {
+export default function LoadingSpinner({mx, my}: {mx?: number, my?: number}) {
 	return (
 		<Box
 			sx={{
 				display: 'flex',
 				justifyContent: 'center',
 				alignItems: 'center',
-				my: '30px'
+				my: my ? `${my}px` : 0,
+				mx: mx ? `${mx}px` : 0
+
 			}}
 		>
 			<CircularProgress color="primary" size={50} thickness={5} />

@@ -45,7 +45,7 @@ export default function TeamPage() {
 	return (
 		<Box>
 			{/* preparing */}
-			{(teamDataStatus === 'idle' || teamDataStatus === 'pending') && <LoadingSpinner />}
+			{(teamDataStatus === 'idle' || teamDataStatus === 'pending') && <LoadingSpinner my={30}/>}
 
 			{/* error */}
 			{teamDataStatus === 'rejected' && (

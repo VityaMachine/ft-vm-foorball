@@ -97,3 +97,104 @@ interface ITeamSquadPlayer {
 	photo: string
 	position: 'Goalkeeper' | 'Defender' | 'Midfielder' | 'Attacker'
 }
+
+interface ITeamHATStat {
+	away: number
+	home: number
+	total: number
+}
+
+interface ITeamPercentageStat {
+	total: number | null
+	percentage: string | null
+}
+
+interface ITeamByMinsStats {
+	'0-15': ITeamPercentageStat
+	'16-30': ITeamPercentageStat
+	'31-45': ITeamPercentageStat
+	'46-60': ITeamPercentageStat
+	'61-75': ITeamPercentageStat
+	'76-90': ITeamPercentageStat
+	'91-105': ITeamPercentageStat
+	'106-120': ITeamPercentageStat
+}
+
+interface ITeamGoalsStat {
+	average: {
+		home: string
+		away: string
+		total: string
+	}
+	minute: ITeamByMinsStats
+	total: ITeamHATStat
+}
+
+interface ITeamFixturesGeneralData {
+	played: ITeamHATStat
+	wins: ITeamHATStat
+	draws: ITeamHATStat
+	loses: ITeamHATStat
+}
+
+interface ITeamGeneralStat {
+	biggest: {
+		goals: {
+			against: {
+				away: number
+				home: number
+			}
+			for: {
+				away: number
+				home: number
+			}
+		}
+		loses: {
+			away: string
+			home: string
+		}
+		wins: {
+			away: string
+			home: string
+		}
+		streak: {
+			wins: number
+			draws: number
+			loses: number
+		}
+	}
+	cards: {
+		red: ITeamByMinsStats
+		yellow: ITeamByMinsStats
+	}
+	clean_sheet: ITeamHATStat
+	failed_to_score: ITeamHATStat
+	fixtures: ITeamFixturesGeneralData
+	form: string
+	goals: {
+		for: ITeamGoalsStat
+		against: ITeamGoalsStat
+	}
+	league: {
+		country: string
+		flag: string
+		id: number
+		logo: string
+		name: string
+		season: number
+	}
+	lineups: {
+		formation: string
+		played: number
+	}[]
+	penalty: {
+		total: number
+		missed: ITeamPercentageStat
+		scored: ITeamPercentageStat
+	}
+	team: {
+		id: number
+		logo: string
+		name: string
+	}
+}

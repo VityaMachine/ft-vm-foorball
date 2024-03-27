@@ -114,7 +114,7 @@ export default function LeagueLeaders() {
 			}}
 		>
 			{status === 'idle' || status === 'pending' ? (
-				<LoadingSpinner />
+				<LoadingSpinner my={30}/>
 			) : (
 				<>
 					<LeagueLeadersMenu tabValue={tabValue} language={language} onTabChange={handleChangeTab} />

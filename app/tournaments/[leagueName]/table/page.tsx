@@ -12,7 +12,7 @@ export default function TournamentTable() {
 	const { data, status } = state
 
 	if (status === 'idle' || status === 'pending') {
-		return <LoadingSpinner />
+		return <LoadingSpinner my={30}/>
 	}
 
 	if (status === 'rejected') {
@@ -23,6 +23,4 @@ export default function TournamentTable() {
 		return <LeagueStandingsTable fixturesData={data}/>
 	}
 
-	// return <LoadingSpinner />
-	// return <LoadingError messageEn="Standings data missed" messageUa="Відсутня інформація про результати" />
 }

@@ -15,11 +15,11 @@ import { LanguageContext } from '@/context/LanguageContext'
 export default function TeamSeasons({
 	teamId,
 	selectedSeason,
-	setSelectedSeason
+	onSeasonChange
 }: {
 	teamId: number
 	selectedSeason: number
-	setSelectedSeason: Dispatch<SetStateAction<number>>
+	onSeasonChange: (newSeason: number) => void
 }) {
 	const [teamSeasons, setTeamSeasons] = useState<null | number[]>(null)
 	const [teamSeasonsStatus, setTeamSeasonsStatus] = useState<ApiStatusType>('idle')
@@ -48,12 +48,17 @@ export default function TeamSeasons({
 		getTeamSeasons()
 	}, [teamId])
 
-	const handleChange = (event: SelectChangeEvent) => {
-		setSelectedSeason(Number(event.target.value))
+	const handleSeasonChange = (e: SelectChangeEvent) => {
+		onSeasonChange(Number(e.target.value))
 	}
 
 	return (
-		<Box>
+		<Box
+			sx={{
+				minWidth: '150px'
+				// mt: '16px'
+			}}
+		>
 			{(teamSeasonsStatus === 'idle' || teamSeasonsStatus === 'pending') && <LoadingSpinner />}
 
 			{teamSeasonsStatus === 'rejected' && (
@@ -63,39 +68,21 @@ export default function TeamSeasons({
 				/>
 			)}
 
-			{teamSeasonsStatus === 'resolved' && (
-				<Box
-					sx={{
-						display: 'flex',
-						alignItems: 'center',
-						gap: '8px'
-					}}
-				>
-					<Box
-						sx={{
-							width: '150px',
-							mt: '16px'
-						}}
+			{teamSeasonsStatus === 'resolved' && teamSeasons && (
+				<FormControl fullWidth>
+					<InputLabel>{language === 'ua' ? 'Виберіть сезон' : 'Select the season'}</InputLabel>
+					<Select
+						value={selectedSeason.toString()}
+						label={language === 'ua' ? 'Виберіть сезон' : 'Select the season'}
+						onChange={handleSeasonChange}
 					>
-						{teamSeasons && (
-							<FormControl fullWidth size="small">
-								<InputLabel>{language === 'ua' ? 'Виберіть сезон' : 'Select the season'}</InputLabel>
-								<Select
-									labelId="demo-simple-select-label"
-									value={selectedSeason.toString()}
-									label={language === 'ua' ? 'Виберіть сезон' : 'Select the season'}
-									onChange={handleChange}
-								>
-									{teamSeasons.map(item => (
-										<MenuItem key={item} value={item}>
-											{item}-20{Number(item.toString().slice(2, 4)) + 1}
-										</MenuItem>
-									))}
-								</Select>
-							</FormControl>
-						)}
-					</Box>
-				</Box>
+						{teamSeasons.map(item => (
+							<MenuItem key={item} value={item}>
+								{item}-20{Number(item.toString().slice(2, 4)) + 1}
+							</MenuItem>
+						))}
+					</Select>
+				</FormControl>
 			)}
 		</Box>
 	)

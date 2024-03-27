@@ -72,7 +72,7 @@ export default function LeagueMatches({ fixturesData }: { fixturesData: IFixture
 
 	return (
 		<Box>
-			{(stateStatus === 'idle' || stateStatus === 'pending') && <LoadingSpinner />}
+			{(stateStatus === 'idle' || stateStatus === 'pending') && <LoadingSpinner my={30}/>}
 
 			{stateStatus === 'resolved' && (
 				<>

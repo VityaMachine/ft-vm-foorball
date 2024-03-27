@@ -27,8 +27,6 @@ export default function TeamPlayersSquad({ teamId, lang }: { teamId: number; lan
 			if (squadOk) {
 				const squadData = squadRespData.response[0].players as ITeamSquadPlayer[]
 
-				console.log(squadData)
-
 				setTeamSquad(squadData)
 				setTeamSquadStatus('resolved')
 			}
@@ -47,23 +45,27 @@ export default function TeamPlayersSquad({ teamId, lang }: { teamId: number; lan
 
 			{teamSquadStatus === 'resolved' && teamSquad && (
 				<Box
-					sx={
-						{
-							display: 'flex',
-							flexDirection: 'column',
-							gap: '16px'
-						}
-					}
+					sx={{
+						display: 'flex',
+						flexDirection: 'column',
+						gap: '16px'
+					}}
 				>
 					{/* goalkeepers */}
 					<Box>
-						<Typography sx={{
-							mb: '8px'
-						}} variant="h6">{lang === 'ua' ? 'Голкіпери' : 'Goalkeepers'}:</Typography>
+						<Typography
+							sx={{
+								mb: '8px'
+							}}
+							variant="h6"
+						>
+							{lang === 'ua' ? 'Голкіпери' : 'Goalkeepers'}:
+						</Typography>
 						<Box
 							sx={{
 								display: 'flex',
 								gap: '16px',
+								flexWrap: 'wrap'
 							}}
 						>
 							{teamSquad
@@ -76,9 +78,14 @@ export default function TeamPlayersSquad({ teamId, lang }: { teamId: number; lan
 
 					{/* defenders */}
 					<Box>
-						<Typography sx={{
-							mb: '8px'
-						}} variant="h6">{lang === 'ua' ? 'Захисники' : 'Defenders'}:</Typography>
+						<Typography
+							sx={{
+								mb: '8px'
+							}}
+							variant="h6"
+						>
+							{lang === 'ua' ? 'Захисники' : 'Defenders'}:
+						</Typography>
 						<Box
 							sx={{
 								display: 'flex',
@@ -96,9 +103,14 @@ export default function TeamPlayersSquad({ teamId, lang }: { teamId: number; lan
 
 					{/* midfielders */}
 					<Box>
-						<Typography sx={{
-							mb: '8px'
-						}} variant="h6">{lang === 'ua' ? 'Півзахисники' : 'Midfielders'}:</Typography>
+						<Typography
+							sx={{
+								mb: '8px'
+							}}
+							variant="h6"
+						>
+							{lang === 'ua' ? 'Півзахисники' : 'Midfielders'}:
+						</Typography>
 						<Box
 							sx={{
 								display: 'flex',
@@ -116,9 +128,14 @@ export default function TeamPlayersSquad({ teamId, lang }: { teamId: number; lan
 
 					{/* attakers */}
 					<Box>
-						<Typography sx={{
-							mb: '8px'
-						}} variant="h6">{lang === 'ua' ? 'Форварди' : 'Attackers'}:</Typography>
+						<Typography
+							sx={{
+								mb: '8px'
+							}}
+							variant="h6"
+						>
+							{lang === 'ua' ? 'Форварди' : 'Attackers'}:
+						</Typography>
 						<Box
 							sx={{
 								display: 'flex',

@@ -16,7 +16,7 @@ export default function PlayedMatches() {
 
 
 	if (status === 'idle' || status === 'pending') {
-		return <LoadingSpinner />
+		return <LoadingSpinner my={30}/>
 	}
 
 	if (status === 'rejected') {

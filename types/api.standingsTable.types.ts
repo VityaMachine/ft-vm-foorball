@@ -14,7 +14,7 @@ interface IApiResponse {
 		total: number
 	}
 	parameters: IApiOptionsCreatorParams
-	response: any[]
+	response: any
 	results: number
 }
 
