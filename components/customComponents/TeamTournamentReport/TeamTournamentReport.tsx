@@ -10,17 +10,17 @@ import { checkRespErrors } from '@/utils/apiCheckRespErrors'
 import LoadingSpinner from '@/components/ui/LoadingSpinner/LoadingSpinner'
 import LoadingError from '@/components/ui/LoadingError/LoadingError'
 
-import MatchesPivotData from './MatchesPivotData/MatchesPivotData'
-import GoalsData from './GoalsData/GoalsData'
-import PenaltiesData from './PenaltiesData/PenaltiesData'
 import TabPanel from '@/components/ui/TabPanel/TabPanel'
+import MatchesSlide from './Slides/MatchesSlide/MatchesSlide'
 
 export default function TeamTournamentReport({
 	tournamentId,
+	tournamentType,
 	teamId,
 	season
 }: {
 	tournamentId: number
+	tournamentType: TournamentType
 	teamId: number
 	season: number
 }) {
@@ -65,8 +65,9 @@ export default function TeamTournamentReport({
 		setReportPage(newValue)
 	}
 
-	console.log(generalData)
 
+	// console.log(1);
+	
 	return (
 		<Box>
 			{(generalDataStatus === 'idle' || generalDataStatus === 'pending') && <LoadingSpinner my={30} />}
@@ -76,85 +77,11 @@ export default function TeamTournamentReport({
 			)}
 
 			{generalDataStatus === 'resolved' && generalData && (
-				// <Box
-				// 	sx={{
-				// 		display: 'flex',
-				// 		gap: '24px',
-				// 		flexWrap: 'wrap',
-				// 		justifyContent: 'center'
-				// 	}}
-				// >
-				// 	{/* matches */}
-				// 	<Box>
-				// 		<Typography
-				// 			align="center"
-				// 			sx={{
-				// 				fontSize: '18px',
-				// 				fontWeight: 700
-				// 			}}
-				// 		>
-				// 			{language === 'ua' ? 'Матчі' : 'Matches'}:
-				// 		</Typography>
-				// 		<MatchesPivotData lang={language} fixtures={generalData.fixtures} />
-				// 	</Box>
-
-				// 	{/* goals total data */}
-				// 	<Box
-				// 		sx={{
-				// 			minWidth: '360px'
-				// 		}}
-				// 	>
-				// 		<Typography
-				// 			align="center"
-				// 			sx={{
-				// 				fontSize: '18px',
-				// 				fontWeight: 700
-				// 			}}
-				// 		>
-				// 			{language === 'ua' ? 'Голи' : 'Goals'}:
-				// 		</Typography>
-				// 		<Box
-				// 			sx={{
-				// 				display: 'flex',
-				// 				// flexDirection: 'column',
-				// 				gap: '24px',
-				// 				flexWrap: 'wrap',
-				// 				justifyContent: 'center',
-				// 				mt: '8px'
-				// 			}}
-				// 		>
-				// 			<Box>
-				// 				<Typography>{language === 'ua' ? 'Забиті' : 'For'}</Typography>
-				// 				<GoalsData lang={language} goalsData={generalData.goals.for} />
-				// 			</Box>
-				// 			<Box>
-				// 				<Typography>{language === 'ua' ? 'Пропущені' : 'Against'}</Typography>
-				// 				<GoalsData lang={language} goalsData={generalData.goals.against} />
-				// 			</Box>
-				// 		</Box>
-				// 	</Box>
-
-				// 	{/* GoalsByMinutes */}
-
-				// 	{/* penalties */}
-				// 	<Box>
-				// 	<Typography
-				// 			align="center"
-				// 			sx={{
-				// 				fontSize: '18px',
-				// 				fontWeight: 700
-				// 			}}
-				// 		>
-				// 			{language === 'ua' ? 'Пенальті' : 'Penalty'}:
-				// 		</Typography>
-				// 		<PenaltiesData />
-				// 	</Box>
-				// </Box>
-
 				<Box
 					sx={{
 						display: 'flex',
-						justifyContent: 'center'
+						flexDirection: 'column',
+						alignItems: 'center'
 					}}
 				>
 					<Tabs
@@ -171,8 +98,26 @@ export default function TeamTournamentReport({
 						<Tab label={language === 'ua' ? 'Рекорди' : 'Records'} />
 					</Tabs>
 
-					<Box>
-						<TabPanel index={0} value={reportPage}></TabPanel>
+					<Box
+						sx={{
+							width: '100%'
+						}}
+					>
+						<TabPanel index={0} value={reportPage}>
+							<MatchesSlide mathcesData={generalData.fixtures} tournamentType={tournamentType}/>
+						</TabPanel>
+						<TabPanel index={1} value={reportPage}>
+							2
+						</TabPanel>
+						<TabPanel index={2} value={reportPage}>
+							3
+						</TabPanel>
+						<TabPanel index={3} value={reportPage}>
+							4
+						</TabPanel>
+						<TabPanel index={4} value={reportPage}>
+							5
+						</TabPanel>
 					</Box>
 				</Box>
 			)}

@@ -116,7 +116,7 @@ export default function Header() {
 					<SettingsButton />
 
 					{/* <LanguageChanger />
-          <ModeSwitcher /> */}
+                      <ModeSwitcher /> */}
 				</Box>
 			</Toolbar>
 		</AppBar>

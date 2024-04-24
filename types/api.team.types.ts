@@ -55,10 +55,12 @@ interface ITeamLeaguesData {
 	}[]
 }
 
+type TournamentType = 'League' | 'Cup'
+
 interface ITeamTournamentParams {
 	tournamentId: number
 	tournamentName: string
-	tournamentType: string
+	tournamentType: TournamentType
 	tournamentLogo: string
 }
 

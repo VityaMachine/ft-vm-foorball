@@ -20,7 +20,7 @@ export default function TeamSeasonLeagues({
 	teamId: number
 	selectedSeason: number
 	selectedTournamentId: number | ''
-	onTournamentChange: (newTournamentId: number) => void
+	onTournamentChange: (newTournamentId: number, tournamentType: TournamentType) => void
 }) {
 	const [teamTournaments, setTeamTournaments] = useState<null | ITeamTournamentParams[]>(null)
 	const [teamTournamentsStatus, setTeamTournamentsStatus] = useState<ApiStatusType>('idle')
@@ -58,10 +58,14 @@ export default function TeamSeasonLeagues({
 	}, [selectedSeason, teamId])
 
 	const handleTournamentChange = (e: SelectChangeEvent) => {
-		onTournamentChange(Number(e.target.value))
+		const tournamentId = Number(e.target.value)
+		const tournamentType = teamTournaments?.find(item => item.tournamentId === tournamentId)
+			?.tournamentType as TournamentType
+
+		onTournamentChange(tournamentId, tournamentType)
 	}
 
-	console.log(teamTournaments)
+	// console.log(teamTournaments)
 
 	return (
 		<Box

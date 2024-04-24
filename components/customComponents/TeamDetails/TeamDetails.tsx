@@ -20,6 +20,7 @@ export default function TeamDetails({ teamData }: { teamData: ITeamGeneralData }
 	const [dataType, setDataType] = useState<'stats' | 'squad'>('stats')
 	const [selectedSeason, setSelectedSeason] = useState<number>(defaultValues.currentSeason)
 	const [selectedTournamentId, setselectedTournamentId] = useState<number | ''>('')
+	const [selectedTournamentType, setSelectedTournamentType] = useState<null | TournamentType>(null)
 
 	const { language } = useContext(LanguageContext)
 
@@ -34,8 +35,9 @@ export default function TeamDetails({ teamData }: { teamData: ITeamGeneralData }
 		setselectedTournamentId('')
 	}
 
-	const handleTournamentChange = (newTournamentId: number) => {
+	const handleTournamentChange = (newTournamentId: number, tournamentType: TournamentType) => {
 		setselectedTournamentId(newTournamentId)
+		setSelectedTournamentType(tournamentType)
 	}
 
 	return (
@@ -159,6 +161,7 @@ export default function TeamDetails({ teamData }: { teamData: ITeamGeneralData }
 				{dataType === 'squad' && <TeamPlayersSquad teamId={teamData.team.id} lang={language} />}
 
 				{dataType === 'stats' &&
+					selectedTournamentType &&
 					(selectedTournamentId === '' ? (
 						<Box>Select the tournament to watch the report</Box>
 					) : (
@@ -166,6 +169,7 @@ export default function TeamDetails({ teamData }: { teamData: ITeamGeneralData }
 							tournamentId={selectedTournamentId}
 							teamId={teamData.team.id}
 							season={selectedSeason}
+							tournamentType={selectedTournamentType}
 						/>
 					))}
 			</Box>
